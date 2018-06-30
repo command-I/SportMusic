@@ -29,6 +29,7 @@ namespace SportMusic.pages
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = "div.actions > ul > li.play")]
         public IWebElement IconPlay { get; set; }
+        public By IconPlayBy { get { return By.CssSelector("div.actions > ul > li.play"); } }
 
         /// <summary>
         /// Иконка "Скачать".

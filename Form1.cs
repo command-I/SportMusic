@@ -60,6 +60,11 @@ namespace SportMusic
         List<IWebElement> listDownload;
 
         /// <summary>
+        /// Список элементов с кнпвами "Play".
+        /// </summary>
+        List<IWebElement> listPlay;
+
+        /// <summary>
         /// Список с объектами, содержащими полную информацию по трекам.
         /// </summary>
         List<TrackOptions> listTrackOptions = new List<TrackOptions>();
@@ -74,6 +79,8 @@ namespace SportMusic
         /// </summary>
         string PATH_DOWNLOAD = Directory.GetCurrentDirectory() + "\\download\\";
 
+        int countChecking = 0;
+
         /// <summary>
         /// Ссылка на форму.
         /// </summary>
@@ -81,10 +88,7 @@ namespace SportMusic
 
         public Form1()
         {
-            InitializeComponent();
-
-            form2 = new Form2(this);
-            form2.Show();
+            InitializeComponent();           
         }
 
         /// <summary>
@@ -102,9 +106,26 @@ namespace SportMusic
             comboBoxCount.Text = "Количество";
             comboBoxGenre.Text = "Жанр";
 
+            comboBoxCount.Items.Add("10");
+            comboBoxCount.Items.Add("20");
+            comboBoxCount.Items.Add("30");
+            comboBoxCount.Items.Add("50");
+            comboBoxCount.Items.Add("100");
+
+            comboBoxDuration.Items.Add("Любая");
+            comboBoxDuration.Items.Add("05:00");
+            comboBoxDuration.Items.Add("04:30");
+            comboBoxDuration.Items.Add("04:00");
+            comboBoxDuration.Items.Add("03:30");
+            comboBoxDuration.Items.Add("03:00");
+            comboBoxDuration.Items.Add("02:30");
+            comboBoxDuration.Items.Add("02:00");
+            comboBoxDuration.Items.Add("01:30");
+            comboBoxDuration.Items.Add("01:00");
+
             textBoxArtistTrack.Enabled = true;
-            comboBoxDuration.Enabled = false;
-            comboBoxCount.Enabled = false;
+            comboBoxDuration.Enabled = true;
+            comboBoxCount.Enabled = true;            
 
             buttonSave.Enabled = false;
             buttonSearch.Enabled = false;
@@ -144,25 +165,34 @@ namespace SportMusic
         private void checkBoxSelect_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;
+            int num = Int32.Parse(checkBox.Name);
 
-            if(checkBox.Checked)
+            if (checkBox.Checked)
             {
+                countChecking++;
                 buttonSave.Enabled = true;
-                listSelectTrackOptions.Add(listTrackOptions[Int32.Parse(checkBox.Name)]);
+                listSelectTrackOptions.Add(listTrackOptions[num]);
             }
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void IdentifityCheckBoxSelectStatus()
-        {
-            foreach(TrackOptions trackOptions in listTrackOptions)
+            else
             {
+                countChecking--;
+
+                if (countChecking == 0)
+                {
+                    buttonSave.Enabled = false;
+                }
+
+                for(int i = 0; i < listSelectTrackOptions.Count; i++)
+                {
+                    if (listSelectTrackOptions[i].Num == num)
+                    {
+                        listSelectTrackOptions.RemoveAt(i);
+                    }
+                }
                 
             }
-        }
+
+        }        
 
         /// <summary>
         /// Действия по нажатию на кнопку "Поиск".
@@ -185,7 +215,25 @@ namespace SportMusic
                 }
 
                 LoadTracksFromSite();
-                ShowFromSiteToForm(listTrackOptions, panelResult);
+
+                int count = 0;
+
+                try
+                {
+                    count = Int32.Parse(comboBoxCount.Text);
+                    if(count > 100)
+                    {
+                        count = 100;
+                        comboBoxCount.Text = "100";
+                    }
+                }
+                catch(Exception)
+                {
+                    count = 100;
+                    comboBoxCount.Text = "100";
+                }
+
+                ShowFromSiteToForm(listTrackOptions, panelResult, count);
             }
             else
             {
@@ -209,6 +257,17 @@ namespace SportMusic
         }
 
         /// <summary>
+        /// Действия по нажатию на кнопку "Play".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonPlay_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;            
+            listPlay[Int32.Parse(button.Name)].Click();                        
+        }
+
+        /// <summary>
         /// Скачивание файлов по url.
         /// </summary>
         /// <param name="url">Принимает ссылку.</param>
@@ -219,6 +278,34 @@ namespace SportMusic
             WebClient client = new WebClient();
             client.DownloadFile(url, path + file);
         }
+
+        /// <summary>
+        /// Преобразование строки со значением длительности в числовое значение. 
+        /// </summary>
+        /// <param name="time">Принимает строку со значением времени.</param>
+        /// <returns>Возврашает количество секунд.</returns>
+        private int TimeStringToInt(string time)
+        {
+            int minDec = 0;
+            int minEd = 0;
+            int secDec = 0;
+            int secEd = 0;
+
+            try
+            {
+                minDec = Int32.Parse(time[0].ToString()) * 600;
+                minEd = Int32.Parse(time[1].ToString()) * 60;
+                secDec = Int32.Parse(time[3].ToString()) * 10;
+                secEd = Int32.Parse(time[4].ToString());
+            }
+            catch(Exception)
+            {
+                return -1;
+            }
+            
+
+            return minDec + minEd + secDec + secEd;
+        }        
 
         /// <summary>
         /// Загрузка информации со страницы поиска.
@@ -235,17 +322,26 @@ namespace SportMusic
             listTracks = browser.FindElements(pageSearchMuzoFon.TextTrackBy).ToList();
             listDuration = browser.FindElements(pageSearchMuzoFon.TextDurationBy).ToList();
             listDownload = browser.FindElements(pageSearchMuzoFon.IconDownloadBy).ToList();
+            listPlay = browser.FindElements(pageSearchMuzoFon.IconPlayBy).ToList();
 
             for (int i = 0; i < listArtists.Count; i++)
             {
-                TrackOptions trackOptions = new TrackOptions(
+
+                int durationTrack = TimeStringToInt(listDuration[i].Text);
+                int durationSetUser = TimeStringToInt(comboBoxDuration.Text);                                
+
+                if ((durationTrack < durationSetUser) || (durationSetUser == -1))
+                {
+                    TrackOptions trackOptions = new TrackOptions(
                                                                 i,
                                                                 listArtists[i].Text,
                                                                 listTracks[i].Text,
                                                                 listDuration[i].Text,
                                                                 listDownload[i].GetAttribute("href"),
                                                                 listTracks[i].Text + ".mp3");
-                listTrackOptions.Add(trackOptions);
+                    listTrackOptions.Add(trackOptions);
+                }
+                
             }
 
             return listTrackOptions;
@@ -303,23 +399,28 @@ namespace SportMusic
             }
         }
 
-        private void ShowFromSiteToForm(List<TrackOptions> listTrackOptions, Panel panel)
+        private void ShowFromSiteToForm(List<TrackOptions> listTrackOptions, Panel panel, int count)
         {
 
             int distanceTop = 40;            
             int leftLabelNum = 10;
             int leftCheckBoxSelectTrack = 40;
 
-            int leftButtonPlay = 100;
-            int leftLabelArtist = 150;
-            int leftLabelTrack = 250;
+            int leftButtonPlay = 70;
+            int leftLabelArtist = 120;
+            int leftLabelTrack = 230;
             int leftDurationTrack = 450;
 
             int leftButtonFindFormat = 520;
             int leftComboBoxFormats = 620;
             int leftButtonDownload = 720;
 
-            for (int i = 0; i < listTrackOptions.Count; i++)
+            if(listTrackOptions.Count < count)
+            {
+                count = listTrackOptions.Count;
+            }
+
+            for (int i = 0; i < count; i++)
             {
                 Label labelNum = new Label();
                 labelNum.Width = 30;
@@ -329,6 +430,7 @@ namespace SportMusic
                 panel.Controls.Add(labelNum);
 
                 CheckBox checkBoxSelectTrack = new CheckBox();
+                checkBoxSelectTrack.Width = 20;
                 checkBoxSelectTrack.Name = i.ToString();
                 checkBoxSelectTrack.Left = leftCheckBoxSelectTrack;
                 checkBoxSelectTrack.Top = 10 + i * distanceTop;
@@ -341,7 +443,7 @@ namespace SportMusic
                 buttonPlay.Left = leftButtonPlay;
                 buttonPlay.Top = 10 + i * distanceTop;
                 buttonPlay.Text = "Play";
-                //buttonPlay.Click += ;
+                buttonPlay.Click += buttonPlay_Click;
                 panel.Controls.Add(buttonPlay);
 
                 Label labelArtist = new Label();
@@ -351,6 +453,7 @@ namespace SportMusic
                 panel.Controls.Add(labelArtist);
 
                 Label labelTrack = new Label();
+                labelTrack.Width = 200;
                 labelTrack.Left = leftLabelTrack;
                 labelTrack.Top = 10 + i * distanceTop;
                 labelTrack.Text = listTrackOptions[i].Track;
@@ -442,7 +545,9 @@ namespace SportMusic
         {
             if(listTrackOptions.Count != 0)
             {
-                Result();
+
+                form2 = new Form2(this);
+                form2.Show();
 
                 form2.PanelSelectedTracks.Controls.Clear();
                 ShowSelectToForm(listSelectTrackOptions, form2.PanelSelectedTracks);
