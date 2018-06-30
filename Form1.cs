@@ -88,7 +88,7 @@ namespace SportMusic
 
         public Form1()
         {
-            InitializeComponent();           
+            InitializeComponent();            
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace SportMusic
             buttonSave.Enabled = false;
             buttonSearch.Enabled = false;
             comboBoxMood.Enabled = false;
-            comboBoxGenre.Enabled = false;
+            comboBoxGenre.Enabled = true;
 
         }
 
@@ -144,6 +144,7 @@ namespace SportMusic
             RadioButton radioButton = (RadioButton)sender;
 
             FormElementInit();
+            CatalogSportMuzoFon();
 
             if (pageHomeMuzoFon == null)
             {
@@ -265,6 +266,31 @@ namespace SportMusic
         {
             Button button = (Button)sender;            
             listPlay[Int32.Parse(button.Name)].Click();                        
+        }
+    
+
+        // !!! на МузоФон не работает.
+        private void buttonFindFormat_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;            
+
+            int num = Int32.Parse(button.Name);
+            string loadUrl = listTrackOptions[num].DownloadUrl;           
+
+            PageHomeSaveFromNet pageHomeSaveFromNet = new PageHomeSaveFromNet(browser);
+            pageHomeSaveFromNet.InputSearch.SendKeys(loadUrl + OpenQA.Selenium.Keys.Enter);
+            pageHomeSaveFromNet.LinkDownloadNoInst.Click();
+            pageHomeSaveFromNet.IconSelectFormat.Click();
+
+            List<IWebElement> listFileFormat = pageHomeSaveFromNet.ListFileFormat;
+           
+            foreach (IWebElement element in listFileFormat)
+            {
+                ComboBox cmb = panelResult.Controls["comboBoxFindFormat_" + Int32.Parse(button.Name)] as ComboBox;
+                cmb.Enabled = true;
+                cmb.Items.Add(element.Text);
+            }
+
         }
 
         /// <summary>
@@ -473,7 +499,7 @@ namespace SportMusic
                 buttonFindFormat.Top = 10 + i * distanceTop;
                 buttonFindFormat.Text = "Запросить";
                 panel.Controls.Add(buttonFindFormat);
-                //buttonFindFormat.Click += buttonFindFormat_Click;
+                buttonFindFormat.Click += buttonFindFormat_Click;
                 buttonFindFormat.Enabled = false;
 
                 ComboBox comboBox = new ComboBox();
@@ -554,5 +580,33 @@ namespace SportMusic
                 form2.Activate();
             }
         }
+
+        /// <summary>
+        /// Загрузка категорий в селектор категорий.
+        /// </summary>
+        private void CatalogSportMuzoFon()
+        {
+            if(pageHomeMuzoFon == null)
+            {
+                pageHomeMuzoFon = new PageHomeMuzoFon(browser);
+            }
+
+            browser.FindElement(pageHomeMuzoFon.LinkSportMusicBy).Click();
+
+            PageSportMuzoFon pageSportMuzoFon = new PageSportMuzoFon();
+            List<IWebElement> listCategory = browser.FindElements(pageSportMuzoFon.LinkCatalogSportMusicBy).ToList();            
+
+            foreach (IWebElement element in listCategory)
+            {
+                comboBoxGenre.Items.Add(element.Text);
+            }
+
+            comboBoxGenre.Text = listCategory[0].Text;
+            comboBoxGenre.Enabled = true;
+            buttonSearch.Enabled = true;
+
+        }
+
+        
     }
 }

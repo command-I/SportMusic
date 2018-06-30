@@ -52,11 +52,12 @@ namespace SportMusic.pages
             /// </summary>
             [FindsBy(How = How.LinkText, Using = "Спортивная музыка")]
             public IWebElement LinkSportMusic { get; set; }
+            public By LinkSportMusicBy { get { return By.LinkText("Спортивная музыка"); } }
 
-            /// <summary>
-            /// Ссылка на категорию в колонке справа.
-            /// </summary>
-            [FindsBy(How = How.LinkText, Using = "Саундтреки")]
+        /// <summary>
+        /// Ссылка на категорию в колонке справа.
+        /// </summary>
+        [FindsBy(How = How.LinkText, Using = "Саундтреки")]
             public IWebElement LinkSoundTraks { get; set; }
 
 

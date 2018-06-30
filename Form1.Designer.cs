@@ -80,27 +80,27 @@
             // comboBoxCount
             // 
             this.comboBoxCount.FormattingEnabled = true;
-            this.comboBoxCount.Location = new System.Drawing.Point(567, 103);
+            this.comboBoxCount.Location = new System.Drawing.Point(591, 103);
             this.comboBoxCount.Name = "comboBoxCount";
-            this.comboBoxCount.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCount.Size = new System.Drawing.Size(97, 21);
             this.comboBoxCount.TabIndex = 16;
             this.comboBoxCount.Text = "Количество";
             // 
             // comboBoxDuration
             // 
             this.comboBoxDuration.FormattingEnabled = true;
-            this.comboBoxDuration.Location = new System.Drawing.Point(392, 103);
+            this.comboBoxDuration.Location = new System.Drawing.Point(476, 103);
             this.comboBoxDuration.Name = "comboBoxDuration";
-            this.comboBoxDuration.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxDuration.Size = new System.Drawing.Size(100, 21);
             this.comboBoxDuration.TabIndex = 15;
             this.comboBoxDuration.Text = "Длительность";
             // 
             // comboBoxGenre
             // 
             this.comboBoxGenre.FormattingEnabled = true;
-            this.comboBoxGenre.Location = new System.Drawing.Point(206, 103);
+            this.comboBoxGenre.Location = new System.Drawing.Point(262, 103);
             this.comboBoxGenre.Name = "comboBoxGenre";
-            this.comboBoxGenre.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxGenre.Size = new System.Drawing.Size(199, 21);
             this.comboBoxGenre.TabIndex = 14;
             this.comboBoxGenre.Text = "Жанр";
             // 
@@ -109,7 +109,7 @@
             this.comboBoxMood.FormattingEnabled = true;
             this.comboBoxMood.Location = new System.Drawing.Point(16, 103);
             this.comboBoxMood.Name = "comboBoxMood";
-            this.comboBoxMood.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxMood.Size = new System.Drawing.Size(226, 21);
             this.comboBoxMood.TabIndex = 13;
             this.comboBoxMood.Text = "Настроение";
             // 
@@ -117,7 +117,7 @@
             // 
             this.buttonSearch.Location = new System.Drawing.Point(731, 52);
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(75, 23);
+            this.buttonSearch.Size = new System.Drawing.Size(75, 75);
             this.buttonSearch.TabIndex = 12;
             this.buttonSearch.Text = "Поиск";
             this.buttonSearch.UseVisualStyleBackColor = true;
