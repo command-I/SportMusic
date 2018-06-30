@@ -12,6 +12,8 @@ using OpenQA.Selenium.Support.UI;
 using System.Runtime.InteropServices;
 using SportMusic.pages;
 using SportMusic.selenium;
+using System.Net;
+using System.IO;
 
 namespace SportMusic
 {
@@ -57,8 +59,20 @@ namespace SportMusic
         /// </summary>
         List<IWebElement> listDownload;
 
+        /// <summary>
+        /// Список с объектами, содержащими полную информацию по трекам.
+        /// </summary>
         List<TrackOptions> listTrackOptions = new List<TrackOptions>();
+
+        /// <summary>
+        /// Список с выбранными объектами - для передачи в другие модули. 
+        /// </summary>
         List<TrackOptions> listSelectTrackOptions = new List<TrackOptions>();
+
+        /// <summary>
+        /// Путь для сохранения скачиваемых файлов.
+        /// </summary>
+        string PATH_DOWNLOAD = Directory.GetCurrentDirectory() + "\\download\\";
 
         /// <summary>
         /// Ссылка на форму.
@@ -188,7 +202,22 @@ namespace SportMusic
         {
             Button button = (Button)sender;
 
-            listDownload[Int32.Parse(button.Name)].Click();            
+            int index = Int32.Parse(button.Name);
+            listDownload[index].Click();
+
+            DownloadFromLink(listDownload[index].GetAttribute("href"), PATH_DOWNLOAD, listTracks[index].Text + ".mp3");
+        }
+
+        /// <summary>
+        /// Скачивание файлов по url.
+        /// </summary>
+        /// <param name="url">Принимает ссылку.</param>
+        /// <param name="path">Принимает путь для сохранения.</param>
+        /// <param name="file">Принимает имя файла.</param>
+        private void DownloadFromLink(string url, string path, string file)
+        {
+            WebClient client = new WebClient();
+            client.DownloadFile(url, path + file);
         }
 
         /// <summary>
@@ -215,13 +244,18 @@ namespace SportMusic
                                                                 listTracks[i].Text,
                                                                 listDuration[i].Text,
                                                                 listDownload[i].GetAttribute("href"),
-                                                                "not defined");
+                                                                listTracks[i].Text + ".mp3");
                 listTrackOptions.Add(trackOptions);
             }
 
             return listTrackOptions;
         }
 
+        /// <summary>
+        /// Вывод выбранных элементов, содержащих полную инфрмацию по трекам.
+        /// </summary>
+        /// <param name="listTrackOptions"></param>
+        /// <param name="panel"></param>
         private void ShowSelectToForm(List<TrackOptions> listTrackOptions, Panel panel)
         {
 
@@ -383,10 +417,33 @@ namespace SportMusic
             }
         }
 
+        /// <summary>
+        /// Клонирование объектов для передачи в следующие модули.
+        /// </summary>
+        /// <returns></returns>
+        public List<TrackOptions> Result()
+        {
+            List<TrackOptions> forNextModules = new List<TrackOptions>();
+
+            foreach (TrackOptions trackOptions in listTrackOptions)
+            {
+                forNextModules.Add((TrackOptions)trackOptions.Clone());
+            }
+
+            return forNextModules;
+        }
+
+        /// <summary>
+        /// Действия по нажатию на кнопку "Сохранить".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSave_Click(object sender, EventArgs e)
         {
             if(listTrackOptions.Count != 0)
             {
+                Result();
+
                 form2.PanelSelectedTracks.Controls.Clear();
                 ShowSelectToForm(listSelectTrackOptions, form2.PanelSelectedTracks);
                 form2.Activate();

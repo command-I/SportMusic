@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SportMusic.selenium
 {
-    public class TrackOptions
+    public class TrackOptions : ICloneable
     {
         public int Num { get; set; }
         public string Artist { get; set; }
@@ -14,10 +14,6 @@ namespace SportMusic.selenium
         public string Duration { get; set; }
         public string DownloadUrl { get; set; }
         public string FileName { get; set; }
-
-
-
-
 
         /// <summary>
         /// Конструктор класса.
@@ -36,6 +32,15 @@ namespace SportMusic.selenium
             Duration = duration;
             DownloadUrl = url;
             FileName = name;
+        }
+
+        /// <summary>
+        /// Клонирование объектов класса.
+        /// </summary>
+        /// <returns>Возвращает клон объекта.</returns>
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
 
         /// <summary>
