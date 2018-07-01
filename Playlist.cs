@@ -25,7 +25,7 @@ namespace SportMusic
         public int author { get; set; }
         public string title { get; set; }
         public System.DateTime date_create { get; set; }
-        public System.DateTime date_edit { get; set; }
+        public Nullable<System.DateTime> date_edit { get; set; }
         public System.TimeSpan duration { get; set; }
         public string surname { get; set; }
         public string name { get; set; }

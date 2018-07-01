@@ -30,7 +30,7 @@ namespace SportMusic
         public Nullable<int> bitrate { get; set; }
         public string source { get; set; }
         public string path { get; set; }
-        public Nullable<System.TimeSpan> duration { get; set; }
+        public System.TimeSpan duration { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Edit_Track> Edit_Track { get; set; }
