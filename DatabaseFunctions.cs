@@ -39,7 +39,11 @@ namespace SportMusic
         {
             switch (command)
             {
-                case "Добавить": break;
+                case "Добавить":
+                    {
+
+                        break;
+                    }
                 case "Редактировать": break;
                 case "Удалить": break;
             }
