@@ -17,9 +17,9 @@ namespace SportMusic.pages
         readonly public string urlMuzoFon = "https://muzofond.org/";
 
         public PageHomeMuzoFon(IWebDriver browser)
-        {                
-            browser.Navigate().GoToUrl(urlMuzoFon);
-            browser.Manage().Window.Minimize();
+        {            
+            browser.Manage().Window.Minimize();            
+            browser.Navigate().GoToUrl(urlMuzoFon);            
             PageFactory.InitElements(browser, this);
         }
 

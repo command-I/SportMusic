@@ -98,7 +98,7 @@
             // comboBoxGenre
             // 
             this.comboBoxGenre.FormattingEnabled = true;
-            this.comboBoxGenre.Location = new System.Drawing.Point(262, 103);
+            this.comboBoxGenre.Location = new System.Drawing.Point(16, 103);
             this.comboBoxGenre.Name = "comboBoxGenre";
             this.comboBoxGenre.Size = new System.Drawing.Size(199, 21);
             this.comboBoxGenre.TabIndex = 14;
@@ -108,7 +108,7 @@
             // comboBoxMood
             // 
             this.comboBoxMood.FormattingEnabled = true;
-            this.comboBoxMood.Location = new System.Drawing.Point(16, 103);
+            this.comboBoxMood.Location = new System.Drawing.Point(230, 103);
             this.comboBoxMood.Name = "comboBoxMood";
             this.comboBoxMood.Size = new System.Drawing.Size(226, 21);
             this.comboBoxMood.TabIndex = 13;
@@ -166,7 +166,7 @@
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.panelResult);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Музыка для спорта";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.panelControl.ResumeLayout(false);
             this.panelControl.PerformLayout();
