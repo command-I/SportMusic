@@ -65,6 +65,16 @@ namespace SportMusic
         List<IWebElement> listPlay;
 
         /// <summary>
+        /// Список с категориями "Настроение".
+        /// </summary>
+        List<IWebElement> listMoodMuzoFon;
+
+        /// <summary>
+        /// Список с категориями "Жанр".
+        /// </summary>
+        List<IWebElement> listGenreMuzoFon;
+
+        /// <summary>
         /// Список с объектами, содержащими полную информацию по трекам.
         /// </summary>
         List<TrackOptions> listTrackOptions = new List<TrackOptions>();
@@ -79,6 +89,9 @@ namespace SportMusic
         /// </summary>
         string PATH_DOWNLOAD = Directory.GetCurrentDirectory() + "\\download\\";
 
+        /// <summary>
+        /// Счётчик выбранных треков.
+        /// </summary>
         int countChecking = 0;
 
         /// <summary>
@@ -129,8 +142,8 @@ namespace SportMusic
 
             buttonSave.Enabled = false;
             buttonSearch.Enabled = false;
-            comboBoxMood.Enabled = false;
-            comboBoxGenre.Enabled = true;
+            comboBoxMood.Enabled = true;
+            comboBoxGenre.Enabled = true;            
 
         }
 
@@ -144,7 +157,8 @@ namespace SportMusic
             RadioButton radioButton = (RadioButton)sender;
 
             FormElementInit();
-            CatalogSportMuzoFon();
+            CatalogGenreMuzoFon();
+            CatalogMoodMuzoFon();
 
             if (pageHomeMuzoFon == null)
             {
@@ -209,11 +223,26 @@ namespace SportMusic
                     pageHomeMuzoFon = new PageHomeMuzoFon(browser);
                 }
 
-                if (textBoxArtistTrack.Text != "Трек, исполнитель")
+                if(comboBoxMood.Enabled == false)
                 {
-                    pageHomeMuzoFon.InputSearch.SendKeys(textBoxArtistTrack.Text);
-                    pageHomeMuzoFon.ButtonSearch.Click();
+                    if (textBoxArtistTrack.Text != "Трек, исполнитель")
+                    {
+                        pageHomeMuzoFon.InputSearch.SendKeys(textBoxArtistTrack.Text);
+                        pageHomeMuzoFon.ButtonSearch.Click();
+                    }
                 }
+                else
+                {
+                    for (int i = 0; i < listMoodMuzoFon.Count; i++)
+                    {
+                        if (listMoodMuzoFon[i].Text == comboBoxMood.Text)
+                        {
+                            browser.Navigate().GoToUrl(listMoodMuzoFon[i].GetAttribute("href"));
+                            break;
+                        }
+                    }
+                }
+                
 
                 LoadTracksFromSite();
 
@@ -238,7 +267,7 @@ namespace SportMusic
             }
             else
             {
-
+             
             }
         }
 
@@ -498,27 +527,29 @@ namespace SportMusic
                 buttonFindFormat.Left = leftButtonFindFormat;
                 buttonFindFormat.Top = 10 + i * distanceTop;
                 buttonFindFormat.Text = "Запросить";
+                buttonFindFormat.Click += buttonFindFormat_Click;                
+                buttonFindFormat.Enabled = false;                
                 panel.Controls.Add(buttonFindFormat);
+                                
+                ComboBox comboBoxSelectFormat = new ComboBox();
+                comboBoxSelectFormat.Name = "comboBoxFindFormat_" + i.ToString();
+                comboBoxSelectFormat.Width = 80;
+                comboBoxSelectFormat.Left = leftComboBoxFormats;
+                comboBoxSelectFormat.Top = 10 + i * distanceTop;
                 buttonFindFormat.Click += buttonFindFormat_Click;
-                buttonFindFormat.Enabled = false;
-
-                ComboBox comboBox = new ComboBox();
-                comboBox.Name = "comboBoxFindFormat_" + i.ToString();
-                comboBox.Width = 80;
-                comboBox.Left = leftComboBoxFormats;
-                comboBox.Top = 10 + i * distanceTop;
-                panel.Controls.Add(comboBox);
-                comboBox.Enabled = false;
-
+                comboBoxSelectFormat.Enabled = false;
+                panel.Controls.Add(comboBoxSelectFormat);
+                
                 Button buttonDownload = new Button();
                 buttonDownload.Name = i.ToString();
                 buttonDownload.Width = 80;
                 buttonDownload.Left = leftButtonDownload;
                 buttonDownload.Top = 10 + i * distanceTop;
                 buttonDownload.Text = "Скачать";
-                panel.Controls.Add(buttonDownload);
                 buttonDownload.Click += buttonDownload_Click;
                 buttonDownload.Enabled = true;
+                panel.Controls.Add(buttonDownload);
+                
 
             }
         }
@@ -530,6 +561,15 @@ namespace SportMusic
         /// <param name="e"></param>
         private void textBoxArtistTrack_TextChanged(object sender, EventArgs e)
         {
+            if ((textBoxArtistTrack.Text == "") || (textBoxArtistTrack.Text == "Трек, исполнитель"))
+            {
+                comboBoxMood.Enabled = true;
+            }
+            else
+            {
+                comboBoxMood.Enabled = false;
+            }
+
             buttonSearch.Enabled = true;
         }
 
@@ -582,9 +622,9 @@ namespace SportMusic
         }
 
         /// <summary>
-        /// Загрузка категорий в селектор категорий.
+        /// Загрузка категории спорт в селектор "Настроение".
         /// </summary>
-        private void CatalogSportMuzoFon()
+        private void CatalogMoodMuzoFon()
         {
             if(pageHomeMuzoFon == null)
             {
@@ -594,19 +634,96 @@ namespace SportMusic
             browser.FindElement(pageHomeMuzoFon.LinkSportMusicBy).Click();
 
             PageSportMuzoFon pageSportMuzoFon = new PageSportMuzoFon();
-            List<IWebElement> listCategory = browser.FindElements(pageSportMuzoFon.LinkCatalogSportMusicBy).ToList();            
+            listMoodMuzoFon = browser.FindElements(pageSportMuzoFon.LinkCatalogSportMusicBy).ToList();
 
-            foreach (IWebElement element in listCategory)
+            comboBoxMood.Items.Add("--- Отменить выбор ---");
+
+            foreach (IWebElement element in listMoodMuzoFon)
             {
-                comboBoxGenre.Items.Add(element.Text);
+                comboBoxMood.Items.Add(element.Text);
             }
 
-            comboBoxGenre.Text = listCategory[0].Text;
+            //comboBoxMood.Text = listMoodMuzoFon[0].Text;
+            comboBoxMood.Enabled = true;
+            buttonSearch.Enabled = true;
+
+        }
+
+        /// <summary>
+        /// Загрузка категорий в селектор "Жанр".
+        /// </summary>
+        private void CatalogGenreMuzoFon()
+        {
+            if (pageHomeMuzoFon == null)
+            {
+                pageHomeMuzoFon = new PageHomeMuzoFon(browser);
+            }
+
+            listGenreMuzoFon = browser.FindElements(pageHomeMuzoFon.ButtonGenreBy).ToList();
+           
+            for (int i = 0; i < listGenreMuzoFon.Count; i++)
+            {
+                if((listGenreMuzoFon[i].Text == "Все сборники"))
+                {
+                    listGenreMuzoFon.RemoveAt(i);                    
+                }
+            }
+
+            comboBoxGenre.Items.Add("--- Отменить выбор ---");
+
+            foreach (IWebElement element in listGenreMuzoFon)
+            {
+                comboBoxGenre.Items.Add(element.Text);            
+            }
+
+            //comboBoxGenre.Text = listGenreMuzoFon[0].Text;
             comboBoxGenre.Enabled = true;
             buttonSearch.Enabled = true;
 
         }
 
-        
+        /// <summary>
+        /// При поиске по "Настроение" блокируется выбор по "Жанр" и "Артист-Трек".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBoxMood_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+
+            if (comboBox.SelectedIndex == 0)
+            {
+                comboBoxGenre.Enabled = true;
+                textBoxArtistTrack.Enabled = true;
+                comboBoxMood.SelectedText = "Настроение";              
+            }
+            else
+            {
+                comboBoxGenre.Enabled = false;
+                textBoxArtistTrack.Enabled = false;
+            }            
+        }
+
+        /// <summary>
+        /// При поиске по "Жанр" блокируется выбор по "Настроение" и "Артист-Трек".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBoxGenre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+
+            if (comboBox.SelectedIndex == 0)
+            {
+                comboBoxMood.Enabled = true;
+                textBoxArtistTrack.Enabled = true;
+                comboBoxGenre.SelectedText = "Жанр";                
+            }
+            else
+            {
+                comboBoxMood.Enabled = false;
+                textBoxArtistTrack.Enabled = false;
+            }            
+        }
     }
 }

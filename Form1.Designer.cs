@@ -103,6 +103,7 @@
             this.comboBoxGenre.Size = new System.Drawing.Size(199, 21);
             this.comboBoxGenre.TabIndex = 14;
             this.comboBoxGenre.Text = "Жанр";
+            this.comboBoxGenre.SelectedIndexChanged += new System.EventHandler(this.comboBoxGenre_SelectedIndexChanged);
             // 
             // comboBoxMood
             // 
@@ -112,6 +113,7 @@
             this.comboBoxMood.Size = new System.Drawing.Size(226, 21);
             this.comboBoxMood.TabIndex = 13;
             this.comboBoxMood.Text = "Настроение";
+            this.comboBoxMood.SelectedIndexChanged += new System.EventHandler(this.comboBoxMood_SelectedIndexChanged);
             // 
             // buttonSearch
             // 
