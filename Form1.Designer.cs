@@ -168,6 +168,7 @@
             this.Name = "Form1";
             this.Text = "Музыка для спорта";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.panelControl.ResumeLayout(false);
             this.panelControl.PerformLayout();
             this.ResumeLayout(false);

@@ -14,6 +14,7 @@ using SportMusic.pages;
 using SportMusic.selenium;
 using System.Net;
 using System.IO;
+using System.Threading;
 
 namespace SportMusic
 {
@@ -99,10 +100,18 @@ namespace SportMusic
         /// </summary>
         Form2 form2;
 
+        /// <summary>
+        /// Для доступа к элементам формы из другого потока.
+        /// </summary>
+        public delegate void OtherFlowDelegate();
+
+        Thread flowPreloader;
+        PictureBox animation = new PictureBox();
+
         public Form1()
         {
             InitializeComponent();
-            browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);                      
         }
 
         /// <summary>
@@ -146,6 +155,29 @@ namespace SportMusic
             comboBoxMood.Enabled = true;
             comboBoxGenre.Enabled = true;            
 
+        }
+
+        /// <summary>
+        /// Управление элементами формы из другого потока.
+        /// </summary>
+        public void PreloaderControl()
+        {            
+            this.Text = "Идёт загрузка";
+            panelResult.Visible = false;
+            animation.ImageLocation = "E:\\001.gif";
+            animation.Top = 300;
+            animation.Left = 450;            
+            animation.Show();
+            this.Controls.Add(animation);                                    
+        }
+       
+
+        /// <summary>
+        /// Выполняется в отдельном потоке.
+        /// </summary>
+        public void OtherFlow()
+        {
+            BeginInvoke(new OtherFlowDelegate(PreloaderControl));
         }
 
         /// <summary>
@@ -216,9 +248,9 @@ namespace SportMusic
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonSearch_Click(object sender, EventArgs e)
-        {
+        {            
 
-            if(listArtists != null)
+            if (listArtists != null)
             {
                 listArtists.Clear();
             }
@@ -256,6 +288,10 @@ namespace SportMusic
             }
             else
             {
+                flowPreloader.Start();
+
+                buttonSearch.Enabled = false;
+
                 if (radioButtonMuzoFon.Checked)
                 {
                     if (pageHomeMuzoFon == null)
@@ -335,7 +371,11 @@ namespace SportMusic
 
                 }
             }
-            
+
+            flowPreloader.Abort();
+            panelResult.Visible = true;
+            buttonSearch.Enabled = true;
+            this.Text = "Музыка для спорта";            
         }
 
         /// <summary>
@@ -800,6 +840,11 @@ namespace SportMusic
                 comboBoxMood.Enabled = false;
                 textBoxArtistTrack.Enabled = false;
             }            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            flowPreloader = new Thread(OtherFlow);            
         }
     }
 }
