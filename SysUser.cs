@@ -12,10 +12,10 @@ namespace SportMusic
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class SysUser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public SysUser()
         {
             this.Edit_Playlist = new HashSet<Edit_Playlist>();
             this.Edit_Track = new HashSet<Edit_Track>();

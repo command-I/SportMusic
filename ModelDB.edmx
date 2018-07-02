@@ -48,6 +48,20 @@
           <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="SysUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" />
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pass" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="int" Nullable="false" />
+          <Property Name="path_to_files" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Track">
           <Key>
             <PropertyRef Name="id" />
@@ -63,20 +77,6 @@
           <Property Name="path" Type="varchar" MaxLength="50" />
           <Property Name="duration" Type="time" Precision="7" Nullable="false" />
           <Property Name="date_add" Type="date" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="role" Type="varchar" MaxLength="50" />
-          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="pass" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="phone" Type="int" Nullable="false" />
-          <Property Name="path_to_files" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "Intensiv2018.dbo.User_Playlist" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -128,10 +128,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Edit_Playlist_Users">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SysUser" Type="Self.SysUser" Multiplicity="1" />
           <End Role="Edit_Playlist" Type="Self.Edit_Playlist" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="SysUser">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Edit_Playlist">
@@ -152,10 +152,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Edit_Track_Users">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SysUser" Type="Self.SysUser" Multiplicity="1" />
           <End Role="Edit_Track" Type="Self.Edit_Track" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="SysUser">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Edit_Track">
@@ -164,10 +164,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Edit_User_Users">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SysUser" Type="Self.SysUser" Multiplicity="1" />
           <End Role="Edit_User" Type="Self.Edit_User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="SysUser">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Edit_User">
@@ -176,10 +176,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Edit_User_Users1">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SysUser" Type="Self.SysUser" Multiplicity="1" />
           <End Role="Edit_User" Type="Self.Edit_User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="SysUser">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Edit_User">
@@ -188,10 +188,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Playlist_Users">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SysUser" Type="Self.SysUser" Multiplicity="1" />
           <End Role="Playlist" Type="Self.Playlist" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="SysUser">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Playlist">
@@ -200,10 +200,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tracks_Users">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SysUser" Type="Self.SysUser" Multiplicity="1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="SysUser">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Track">
@@ -224,10 +224,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Playlist_Users">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SysUser" Type="Self.SysUser" Multiplicity="1" />
           <End Role="User_Playlist" Type="Self.User_Playlist" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="SysUser">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="User_Playlist">
@@ -260,10 +260,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Track_Users">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SysUser" Type="Self.SysUser" Multiplicity="0..1" />
           <End Role="User_Track" Type="Self.User_Track" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="SysUser">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="User_Track">
@@ -276,8 +276,8 @@
           <EntitySet Name="Edit_Track" EntityType="Self.Edit_Track" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Edit_User" EntityType="Self.Edit_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Playlist" EntityType="Self.Playlist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysUser" EntityType="Self.SysUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Track" EntityType="Self.User_Track" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Track_Playlist" EntityType="Self.User_Track_Playlist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Playlist" EntityType="Self.User_Playlist" store:Type="Tables" store:Schema="dbo">
@@ -292,7 +292,7 @@
             <End Role="Edit_Playlist" EntitySet="Edit_Playlist" />
           </AssociationSet>
           <AssociationSet Name="FK_Edit_Playlist_Users" Association="Self.FK_Edit_Playlist_Users">
-            <End Role="User" EntitySet="User" />
+            <End Role="SysUser" EntitySet="SysUser" />
             <End Role="Edit_Playlist" EntitySet="Edit_Playlist" />
           </AssociationSet>
           <AssociationSet Name="FK_Edit_Track_User_Track" Association="Self.FK_Edit_Track_User_Track">
@@ -300,23 +300,23 @@
             <End Role="Edit_Track" EntitySet="Edit_Track" />
           </AssociationSet>
           <AssociationSet Name="FK_Edit_Track_Users" Association="Self.FK_Edit_Track_Users">
-            <End Role="User" EntitySet="User" />
+            <End Role="SysUser" EntitySet="SysUser" />
             <End Role="Edit_Track" EntitySet="Edit_Track" />
           </AssociationSet>
           <AssociationSet Name="FK_Edit_User_Users" Association="Self.FK_Edit_User_Users">
-            <End Role="User" EntitySet="User" />
+            <End Role="SysUser" EntitySet="SysUser" />
             <End Role="Edit_User" EntitySet="Edit_User" />
           </AssociationSet>
           <AssociationSet Name="FK_Edit_User_Users1" Association="Self.FK_Edit_User_Users1">
-            <End Role="User" EntitySet="User" />
+            <End Role="SysUser" EntitySet="SysUser" />
             <End Role="Edit_User" EntitySet="Edit_User" />
           </AssociationSet>
           <AssociationSet Name="FK_Playlist_Users" Association="Self.FK_Playlist_Users">
-            <End Role="User" EntitySet="User" />
+            <End Role="SysUser" EntitySet="SysUser" />
             <End Role="Playlist" EntitySet="Playlist" />
           </AssociationSet>
           <AssociationSet Name="FK_Tracks_Users" Association="Self.FK_Tracks_Users">
-            <End Role="User" EntitySet="User" />
+            <End Role="SysUser" EntitySet="SysUser" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Playlist_Playlist" Association="Self.FK_User_Playlist_Playlist">
@@ -324,7 +324,7 @@
             <End Role="User_Playlist" EntitySet="User_Playlist" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Playlist_Users" Association="Self.FK_User_Playlist_Users">
-            <End Role="User" EntitySet="User" />
+            <End Role="SysUser" EntitySet="SysUser" />
             <End Role="User_Playlist" EntitySet="User_Playlist" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Track_Playlist_Playlist" Association="Self.FK_User_Track_Playlist_Playlist">
@@ -336,7 +336,7 @@
             <End Role="User_Track_Playlist" EntitySet="User_Track_Playlist" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Track_Users" Association="Self.FK_User_Track_Users">
-            <End Role="User" EntitySet="User" />
+            <End Role="SysUser" EntitySet="SysUser" />
             <End Role="User_Track" EntitySet="User_Track" />
           </AssociationSet>
         </EntityContainer>
@@ -354,7 +354,7 @@
           <Property Name="action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Playlist" Relationship="Self.FK_Edit_Playlist_Playlist" FromRole="Edit_Playlist" ToRole="Playlist" />
-          <NavigationProperty Name="User" Relationship="Intensiv2018Model.FK_Edit_Playlist_Users1" FromRole="Edit_Playlist" ToRole="User" />
+          <NavigationProperty Name="SysUser" Relationship="Intensiv2018Model.FK_Edit_Playlist_Users" FromRole="Edit_Playlist" ToRole="SysUser" />
         </EntityType>
         <EntityType Name="Edit_Track">
           <Key>
@@ -366,7 +366,7 @@
           <Property Name="action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="User_Track" Relationship="Self.FK_Edit_Track_User_Track" FromRole="Edit_Track" ToRole="User_Track" />
-          <NavigationProperty Name="User" Relationship="Intensiv2018Model.FK_Edit_Track_Users1" FromRole="Edit_Track" ToRole="User" />
+          <NavigationProperty Name="SysUser" Relationship="Intensiv2018Model.FK_Edit_Track_Users" FromRole="Edit_Track" ToRole="SysUser" />
         </EntityType>
         <EntityType Name="Edit_User">
           <Key>
@@ -377,8 +377,8 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="User" Relationship="Intensiv2018Model.FK_Edit_User_Users2" FromRole="Edit_User" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="Intensiv2018Model.FK_Edit_User_Users11" FromRole="Edit_User" ToRole="User" />
+          <NavigationProperty Name="SysUser" Relationship="Intensiv2018Model.FK_Edit_User_Users" FromRole="Edit_User" ToRole="SysUser" />
+          <NavigationProperty Name="SysUser1" Relationship="Intensiv2018Model.FK_Edit_User_Users1" FromRole="Edit_User" ToRole="SysUser" />
         </EntityType>
         <EntityType Name="Playlist">
           <Key>
@@ -394,8 +394,8 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Edit_Playlist" Relationship="Self.FK_Edit_Playlist_Playlist" FromRole="Playlist" ToRole="Edit_Playlist" />
           <NavigationProperty Name="User_Playlist" Relationship="Self.FK_User_Playlist_Playlist" FromRole="Playlist" ToRole="User_Playlist" />
-          <NavigationProperty Name="User" Relationship="Intensiv2018Model.FK_Playlist_Users1" FromRole="Playlist" ToRole="User" />
           <NavigationProperty Name="User_Track_Playlist" Relationship="Intensiv2018Model.FK_User_Track_Playlist_Playlist" FromRole="Playlist" ToRole="User_Track_Playlist" />
+          <NavigationProperty Name="SysUser" Relationship="Intensiv2018Model.FK_Playlist_Users" FromRole="Playlist" ToRole="SysUser" />
         </EntityType>
         <EntityType Name="User_Track">
           <Key>
@@ -414,7 +414,7 @@
           <Property Name="duration" Type="Time" Precision="7" Nullable="false" />
           <NavigationProperty Name="Edit_Track" Relationship="Self.FK_Edit_Track_User_Track" FromRole="User_Track" ToRole="Edit_Track" />
           <Property Name="date_add" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="User" Relationship="Intensiv2018Model.FK_User_Track_Users1" FromRole="User_Track" ToRole="User" />
+          <NavigationProperty Name="SysUser" Relationship="Intensiv2018Model.FK_User_Track_Users" FromRole="User_Track" ToRole="SysUser" />
         </EntityType>
         <EntityType Name="User_Playlist">
           <Key>
@@ -426,7 +426,7 @@
           <Property Name="playlist_id" Type="Int32" Nullable="false" />
           <Property Name="visibility" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Playlist" Relationship="Self.FK_User_Playlist_Playlist" FromRole="User_Playlist" ToRole="Playlist" />
-          <NavigationProperty Name="User" Relationship="Intensiv2018Model.FK_User_Playlist_Users1" FromRole="User_Playlist" ToRole="User" />
+          <NavigationProperty Name="SysUser" Relationship="Intensiv2018Model.FK_User_Playlist_Users" FromRole="User_Playlist" ToRole="SysUser" />
         </EntityType>
         <Association Name="FK_Edit_Playlist_Playlist">
           <End Role="Playlist" Type="Self.Playlist" Multiplicity="1" />
@@ -484,39 +484,6 @@
             <End Role="User_Playlist" EntitySet="User_Playlist" />
           </AssociationSet>
           <EntitySet Name="Tracks1" EntityType="Intensiv2018Model.Track" />
-          <EntitySet Name="Users1" EntityType="Intensiv2018Model.User" />
-          <AssociationSet Name="FK_Edit_Playlist_Users1" Association="Intensiv2018Model.FK_Edit_Playlist_Users1">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="Edit_Playlist" EntitySet="Edit_Playlist" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Edit_Track_Users1" Association="Intensiv2018Model.FK_Edit_Track_Users1">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="Edit_Track" EntitySet="Edit_Track" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Edit_User_Users2" Association="Intensiv2018Model.FK_Edit_User_Users2">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="Edit_User" EntitySet="Edit_User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Edit_User_Users11" Association="Intensiv2018Model.FK_Edit_User_Users11">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="Edit_User" EntitySet="Edit_User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Playlist_Users1" Association="Intensiv2018Model.FK_Playlist_Users1">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="Playlist" EntitySet="Playlist" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tracks_Users1" Association="Intensiv2018Model.FK_Tracks_Users1">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="Track" EntitySet="Tracks1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Playlist_Users1" Association="Intensiv2018Model.FK_User_Playlist_Users1">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="User_Playlist" EntitySet="User_Playlist" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Track_Users1" Association="Intensiv2018Model.FK_User_Track_Users1">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="User_Track" EntitySet="User_Track" />
-          </AssociationSet>
           <EntitySet Name="User_Track_Playlist" EntityType="Intensiv2018Model.User_Track_Playlist" />
           <AssociationSet Name="FK_User_Track_Playlist_Playlist" Association="Intensiv2018Model.FK_User_Track_Playlist_Playlist">
             <End Role="Playlist" EntitySet="Playlist" />
@@ -525,6 +492,39 @@
           <AssociationSet Name="FK_User_Track_Playlist_Track" Association="Intensiv2018Model.FK_User_Track_Playlist_Track">
             <End Role="Track" EntitySet="Tracks1" />
             <End Role="User_Track_Playlist" EntitySet="User_Track_Playlist" />
+          </AssociationSet>
+          <EntitySet Name="SysUsers" EntityType="Intensiv2018Model.SysUser" />
+          <AssociationSet Name="FK_Edit_Playlist_Users" Association="Intensiv2018Model.FK_Edit_Playlist_Users">
+            <End Role="SysUser" EntitySet="SysUsers" />
+            <End Role="Edit_Playlist" EntitySet="Edit_Playlist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Edit_Track_Users" Association="Intensiv2018Model.FK_Edit_Track_Users">
+            <End Role="SysUser" EntitySet="SysUsers" />
+            <End Role="Edit_Track" EntitySet="Edit_Track" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Edit_User_Users" Association="Intensiv2018Model.FK_Edit_User_Users">
+            <End Role="SysUser" EntitySet="SysUsers" />
+            <End Role="Edit_User" EntitySet="Edit_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Edit_User_Users1" Association="Intensiv2018Model.FK_Edit_User_Users1">
+            <End Role="SysUser" EntitySet="SysUsers" />
+            <End Role="Edit_User" EntitySet="Edit_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Playlist_Users" Association="Intensiv2018Model.FK_Playlist_Users">
+            <End Role="SysUser" EntitySet="SysUsers" />
+            <End Role="Playlist" EntitySet="Playlist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracks_Users" Association="Intensiv2018Model.FK_Tracks_Users">
+            <End Role="SysUser" EntitySet="SysUsers" />
+            <End Role="Track" EntitySet="Tracks1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Playlist_Users" Association="Intensiv2018Model.FK_User_Playlist_Users">
+            <End Role="SysUser" EntitySet="SysUsers" />
+            <End Role="User_Playlist" EntitySet="User_Playlist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Track_Users" Association="Intensiv2018Model.FK_User_Track_Users">
+            <End Role="SysUser" EntitySet="SysUsers" />
+            <End Role="User_Track" EntitySet="User_Track" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Track">
@@ -542,127 +542,9 @@
           <Property Name="path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="duration" Type="Time" Nullable="false" Precision="7" />
           <Property Name="date_add" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="User" Relationship="Intensiv2018Model.FK_Tracks_Users1" FromRole="Track" ToRole="User" />
           <NavigationProperty Name="User_Track_Playlist" Relationship="Intensiv2018Model.FK_User_Track_Playlist_Track" FromRole="Track" ToRole="User_Track_Playlist" />
+          <NavigationProperty Name="SysUser" Relationship="Intensiv2018Model.FK_Tracks_Users" FromRole="Track" ToRole="SysUser" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pass" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="phone" Type="Int32" Nullable="false" />
-          <Property Name="path_to_files" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Edit_Playlist" Relationship="Intensiv2018Model.FK_Edit_Playlist_Users1" FromRole="User" ToRole="Edit_Playlist" />
-          <NavigationProperty Name="Edit_Track" Relationship="Intensiv2018Model.FK_Edit_Track_Users1" FromRole="User" ToRole="Edit_Track" />
-          <NavigationProperty Name="Edit_User" Relationship="Intensiv2018Model.FK_Edit_User_Users2" FromRole="User" ToRole="Edit_User" />
-          <NavigationProperty Name="Edit_User1" Relationship="Intensiv2018Model.FK_Edit_User_Users11" FromRole="User" ToRole="Edit_User" />
-          <NavigationProperty Name="Playlists" Relationship="Intensiv2018Model.FK_Playlist_Users1" FromRole="User" ToRole="Playlist" />
-          <NavigationProperty Name="Tracks" Relationship="Intensiv2018Model.FK_Tracks_Users1" FromRole="User" ToRole="Track" />
-          <NavigationProperty Name="User_Playlist" Relationship="Intensiv2018Model.FK_User_Playlist_Users1" FromRole="User" ToRole="User_Playlist" />
-          <NavigationProperty Name="User_Track" Relationship="Intensiv2018Model.FK_User_Track_Users1" FromRole="User" ToRole="User_Track" />
-        </EntityType>
-        <Association Name="FK_Edit_Playlist_Users1">
-          <End Type="Intensiv2018Model.User" Role="User" Multiplicity="1" />
-          <End Type="Intensiv2018Model.Edit_Playlist" Role="Edit_Playlist" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Edit_Playlist">
-              <PropertyRef Name="author" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Edit_Track_Users1">
-          <End Type="Intensiv2018Model.User" Role="User" Multiplicity="1" />
-          <End Type="Intensiv2018Model.Edit_Track" Role="Edit_Track" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Edit_Track">
-              <PropertyRef Name="author" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Edit_User_Users2">
-          <End Type="Intensiv2018Model.User" Role="User" Multiplicity="1" />
-          <End Type="Intensiv2018Model.Edit_User" Role="Edit_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Edit_User">
-              <PropertyRef Name="author" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Edit_User_Users11">
-          <End Type="Intensiv2018Model.User" Role="User" Multiplicity="1" />
-          <End Type="Intensiv2018Model.Edit_User" Role="Edit_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Edit_User">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Playlist_Users1">
-          <End Type="Intensiv2018Model.User" Role="User" Multiplicity="1" />
-          <End Type="Intensiv2018Model.Playlist" Role="Playlist" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Playlist">
-              <PropertyRef Name="author" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tracks_Users1">
-          <End Type="Intensiv2018Model.User" Role="User" Multiplicity="1" />
-          <End Type="Intensiv2018Model.Track" Role="Track" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Track">
-              <PropertyRef Name="downloader" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_Playlist_Users1">
-          <End Type="Intensiv2018Model.User" Role="User" Multiplicity="1" />
-          <End Type="Intensiv2018Model.User_Playlist" Role="User_Playlist" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="User_Playlist">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_Track_Users1">
-          <End Type="Intensiv2018Model.User" Role="User" Multiplicity="0..1" />
-          <End Type="Intensiv2018Model.User_Track" Role="User_Track" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="User_Track">
-              <PropertyRef Name="author" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="User_Track_Playlist">
           <Key>
             <PropertyRef Name="id" />
@@ -694,6 +576,124 @@
             </Principal>
             <Dependent Role="User_Track_Playlist">
               <PropertyRef Name="track_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SysUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="Int32" Nullable="false" />
+          <Property Name="path_to_files" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Edit_Playlist" Relationship="Intensiv2018Model.FK_Edit_Playlist_Users" FromRole="SysUser" ToRole="Edit_Playlist" />
+          <NavigationProperty Name="Edit_Track" Relationship="Intensiv2018Model.FK_Edit_Track_Users" FromRole="SysUser" ToRole="Edit_Track" />
+          <NavigationProperty Name="Edit_User" Relationship="Intensiv2018Model.FK_Edit_User_Users" FromRole="SysUser" ToRole="Edit_User" />
+          <NavigationProperty Name="Edit_User1" Relationship="Intensiv2018Model.FK_Edit_User_Users1" FromRole="SysUser" ToRole="Edit_User" />
+          <NavigationProperty Name="Playlists" Relationship="Intensiv2018Model.FK_Playlist_Users" FromRole="SysUser" ToRole="Playlist" />
+          <NavigationProperty Name="Tracks" Relationship="Intensiv2018Model.FK_Tracks_Users" FromRole="SysUser" ToRole="Track" />
+          <NavigationProperty Name="User_Playlist" Relationship="Intensiv2018Model.FK_User_Playlist_Users" FromRole="SysUser" ToRole="User_Playlist" />
+          <NavigationProperty Name="User_Track" Relationship="Intensiv2018Model.FK_User_Track_Users" FromRole="SysUser" ToRole="User_Track" />
+        </EntityType>
+        <Association Name="FK_Edit_Playlist_Users">
+          <End Type="Intensiv2018Model.SysUser" Role="SysUser" Multiplicity="1" />
+          <End Type="Intensiv2018Model.Edit_Playlist" Role="Edit_Playlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Edit_Playlist">
+              <PropertyRef Name="author" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Edit_Track_Users">
+          <End Type="Intensiv2018Model.SysUser" Role="SysUser" Multiplicity="1" />
+          <End Type="Intensiv2018Model.Edit_Track" Role="Edit_Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Edit_Track">
+              <PropertyRef Name="author" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Edit_User_Users">
+          <End Type="Intensiv2018Model.SysUser" Role="SysUser" Multiplicity="1" />
+          <End Type="Intensiv2018Model.Edit_User" Role="Edit_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Edit_User">
+              <PropertyRef Name="author" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Edit_User_Users1">
+          <End Type="Intensiv2018Model.SysUser" Role="SysUser" Multiplicity="1" />
+          <End Type="Intensiv2018Model.Edit_User" Role="Edit_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Edit_User">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Playlist_Users">
+          <End Type="Intensiv2018Model.SysUser" Role="SysUser" Multiplicity="1" />
+          <End Type="Intensiv2018Model.Playlist" Role="Playlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Playlist">
+              <PropertyRef Name="author" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracks_Users">
+          <End Type="Intensiv2018Model.SysUser" Role="SysUser" Multiplicity="1" />
+          <End Type="Intensiv2018Model.Track" Role="Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="downloader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Playlist_Users">
+          <End Type="Intensiv2018Model.SysUser" Role="SysUser" Multiplicity="1" />
+          <End Type="Intensiv2018Model.User_Playlist" Role="User_Playlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_Playlist">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Track_Users">
+          <End Type="Intensiv2018Model.SysUser" Role="SysUser" Multiplicity="0..1" />
+          <End Type="Intensiv2018Model.User_Track" Role="User_Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_Track">
+              <PropertyRef Name="author" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -794,9 +794,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users1">
-            <EntityTypeMapping TypeName="Intensiv2018Model.User">
-              <MappingFragment StoreEntitySet="User">
+          <EntitySetMapping Name="User_Track_Playlist">
+            <EntityTypeMapping TypeName="Intensiv2018Model.User_Track_Playlist">
+              <MappingFragment StoreEntitySet="User_Track_Playlist">
+                <ScalarProperty Name="track_id" ColumnName="track_id" />
+                <ScalarProperty Name="playlist_id" ColumnName="playlist_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysUsers">
+            <EntityTypeMapping TypeName="Intensiv2018Model.SysUser">
+              <MappingFragment StoreEntitySet="SysUser">
                 <ScalarProperty Name="path_to_files" ColumnName="path_to_files" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -805,15 +814,6 @@
                 <ScalarProperty Name="pass" ColumnName="pass" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="role" ColumnName="role" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="User_Track_Playlist">
-            <EntityTypeMapping TypeName="Intensiv2018Model.User_Track_Playlist">
-              <MappingFragment StoreEntitySet="User_Track_Playlist">
-                <ScalarProperty Name="track_id" ColumnName="track_id" />
-                <ScalarProperty Name="playlist_id" ColumnName="playlist_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

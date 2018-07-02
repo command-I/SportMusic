@@ -21,6 +21,6 @@ namespace SportMusic
         public Nullable<System.DateTime> date { get; set; }
     
         public virtual User_Track User_Track { get; set; }
-        public virtual User User { get; set; }
+        public virtual SysUser SysUser { get; set; }
     }
 }

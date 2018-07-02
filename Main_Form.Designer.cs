@@ -1,6 +1,6 @@
 ﻿namespace SportMusic
 {
-    partial class Form1
+    partial class Main_Form
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main_Form));
             this.panelResult = new System.Windows.Forms.Panel();
             this.panelControl = new System.Windows.Forms.Panel();
             this.buttonSave = new System.Windows.Forms.Button();

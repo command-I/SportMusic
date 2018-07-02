@@ -15,18 +15,18 @@
         <AssociationConnector Association="Intensiv2018Model.FK_Edit_Track_User_Track" ManuallyRouted="false" />
         <AssociationConnector Association="Intensiv2018Model.FK_User_Playlist_Playlist" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Intensiv2018Model.Track" Width="1.5" PointX="4.25" PointY="15.125" />
-        <EntityTypeShape EntityType="Intensiv2018Model.User" Width="1.5" PointX="3" PointY="9.75" />
-        <AssociationConnector Association="Intensiv2018Model.FK_Edit_Playlist_Users1" />
-        <AssociationConnector Association="Intensiv2018Model.FK_Edit_Track_Users1" />
-        <AssociationConnector Association="Intensiv2018Model.FK_Edit_User_Users2" />
-        <AssociationConnector Association="Intensiv2018Model.FK_Edit_User_Users11" />
-        <AssociationConnector Association="Intensiv2018Model.FK_Playlist_Users1" />
-        <AssociationConnector Association="Intensiv2018Model.FK_Tracks_Users1" />
-        <AssociationConnector Association="Intensiv2018Model.FK_User_Playlist_Users1" />
-        <AssociationConnector Association="Intensiv2018Model.FK_User_Track_Users1" />
         <EntityTypeShape EntityType="Intensiv2018Model.User_Track_Playlist" Width="1.5" PointX="6.5" PointY="17.625" />
         <AssociationConnector Association="Intensiv2018Model.FK_User_Track_Playlist_Playlist" />
         <AssociationConnector Association="Intensiv2018Model.FK_User_Track_Playlist_Track" />
+        <EntityTypeShape EntityType="Intensiv2018Model.SysUser" Width="1.5" PointX="3" PointY="9.625" />
+        <AssociationConnector Association="Intensiv2018Model.FK_Edit_Playlist_Users" />
+        <AssociationConnector Association="Intensiv2018Model.FK_Edit_Track_Users" />
+        <AssociationConnector Association="Intensiv2018Model.FK_Edit_User_Users" />
+        <AssociationConnector Association="Intensiv2018Model.FK_Edit_User_Users1" />
+        <AssociationConnector Association="Intensiv2018Model.FK_Playlist_Users" />
+        <AssociationConnector Association="Intensiv2018Model.FK_Tracks_Users" />
+        <AssociationConnector Association="Intensiv2018Model.FK_User_Playlist_Users" />
+        <AssociationConnector Association="Intensiv2018Model.FK_User_Track_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

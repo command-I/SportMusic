@@ -22,13 +22,29 @@ namespace SportMusic
         /// Функции добавления, редактирования, удаления
         /// </summary>
         /// <param name="command"></param>
-        public void UserEdit(string command)
+        public void UserEdit(string command, int id, string role, string login, string pass, string name, string surname, string email, int phone, string path)
         {
             switch (command)
             {
-                case "Добавить": break;
+                case "Добавить":
+                    {
+                        SysUser user = new SysUser();
+                        user.id = -1;
+                        user.role = role;
+                        user.login = login;
+                        user.pass = pass;
+                        user.name = name;
+                        user.surname = surname;
+                        user.email = email;
+                        user.phone = phone;
+                        user.path_to_files = path;
+                        context.Entry(user).State = EntityState.Added;
+                        context.SaveChanges();
+                        break;
+                    }
                 case "Редактировать": break;
                 case "Удалить": break;
+                
             }
         }
 

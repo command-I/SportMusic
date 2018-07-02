@@ -20,7 +20,7 @@ namespace SportMusic
         /// <summary>
         /// Указатель на главную форму.
         /// </summary>
-        private Form1 form1;
+        private Main_Form form1;
 
         public Form2()
         {
@@ -31,7 +31,7 @@ namespace SportMusic
         /// Констркутор взаимодействия с формами.
         /// </summary>
         /// <param name="form">Принимает указатель на главную форму.</param>
-        public Form2(Form1 form)
+        public Form2(Main_Form form)
         {
             InitializeComponent();
             form1 = form;

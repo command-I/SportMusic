@@ -20,7 +20,7 @@ namespace SportMusic
         public string action { get; set; }
         public Nullable<System.DateTime> date { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
+        public virtual SysUser SysUser { get; set; }
+        public virtual SysUser SysUser1 { get; set; }
     }
 }

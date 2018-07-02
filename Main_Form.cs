@@ -18,7 +18,7 @@ using System.IO;
 
 namespace SportMusic
 {
-    public partial class Form1 : Form
+    public partial class Main_Form : Form
     {
         /// <summary>
         /// Текущий адрес браузера. 
@@ -102,7 +102,7 @@ namespace SportMusic
 
 
         List<string> music, path;
-        public Form1()
+        public Main_Form()
         {
             
             music = new List<string>();

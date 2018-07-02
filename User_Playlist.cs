@@ -19,6 +19,6 @@ namespace SportMusic
         public string visibility { get; set; }
     
         public virtual Playlist Playlist { get; set; }
-        public virtual User User { get; set; }
+        public virtual SysUser SysUser { get; set; }
     }
 }

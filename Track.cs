@@ -32,8 +32,8 @@ namespace SportMusic
         public System.TimeSpan duration { get; set; }
         public Nullable<System.DateTime> date_add { get; set; }
     
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Track_Playlist> User_Track_Playlist { get; set; }
+        public virtual SysUser SysUser { get; set; }
     }
 }
