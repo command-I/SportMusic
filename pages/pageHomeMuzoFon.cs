@@ -13,54 +13,61 @@ namespace SportMusic.pages
     /// Главная страница поиска сайта МузоФон.
     /// </summary>
     public class PageHomeMuzoFon
-        {
-            readonly public string urlMuzoFon = "https://muzofond.org/";
+    {
+        readonly public string urlMuzoFon = "https://muzofond.org/";
 
-            public PageHomeMuzoFon(IWebDriver browser)
-            {                
-                browser.Navigate().GoToUrl(urlMuzoFon);
-                browser.Manage().Window.Minimize();
-                PageFactory.InitElements(browser, this);
-            }
+        public PageHomeMuzoFon(IWebDriver browser)
+        {            
+            browser.Manage().Window.Minimize();            
+            browser.Navigate().GoToUrl(urlMuzoFon);            
+            PageFactory.InitElements(browser, this);
+        }
 
-            /// <summary>
-            /// Поле для поиска "Трек, исполнитель"
-            /// </summary>
-            [FindsBy(How = How.CssSelector, Using = ".inInputSearch input")]
-            public IWebElement InputSearch { get; set; }
+        /// <summary>
+        /// Поле для поиска "Трек, исполнитель"
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = ".inInputSearch input")]
+        public IWebElement InputSearch { get; set; }
 
-            /// <summary>
-            /// Кнопка поиска "Трек, исполнитель".
-            /// </summary>
-            [FindsBy(How = How.CssSelector, Using = ".module-search button")]
-            public IWebElement ButtonSearch { get; set; }
+        /// <summary>
+        /// Кнопка поиска "Трек, исполнитель".
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = ".module-search button")]
+        public IWebElement ButtonSearch { get; set; }
 
-            /// <summary>
-            /// Ссылка на категорию в колонке справа.
-            /// </summary>
-            [FindsBy(How = How.LinkText, Using = "Популярные сборники")]
-            public IWebElement LinkPopularCollections { get; set; }
+        /// <summary>
+        /// Ссылка на категорию в колонке справа.
+        /// </summary>
+        [FindsBy(How = How.LinkText, Using = "Популярные сборники")]
+        public IWebElement LinkPopularCollections { get; set; }
 
-            /// <summary>
-            /// Ссылка на категорию в колонке справа.
-            /// </summary>
-            [FindsBy(How = How.LinkText, Using = "Музыка на радио и ТВ")]
-            public IWebElement LinkRadioTv { get; set; }
+        /// <summary>
+        /// Ссылка на категорию в колонке справа.
+        /// </summary>
+        [FindsBy(How = How.LinkText, Using = "Музыка на радио и ТВ")]
+        public IWebElement LinkRadioTv { get; set; }
 
-            /// <summary>
-            /// Ссылка на категорию в колонке справа.
-            /// </summary>
-            [FindsBy(How = How.LinkText, Using = "Спортивная музыка")]
-            public IWebElement LinkSportMusic { get; set; }
-            public By LinkSportMusicBy { get { return By.LinkText("Спортивная музыка"); } }
+        /// <summary>
+        /// Ссылка на категорию в колонке справа.
+        /// </summary>
+        [FindsBy(How = How.LinkText, Using = "Спортивная музыка")]
+        public IWebElement LinkSportMusic { get; set; }
+        public By LinkSportMusicBy { get { return By.LinkText("Спортивная музыка"); } }
 
         /// <summary>
         /// Ссылка на категорию в колонке справа.
         /// </summary>
         [FindsBy(How = How.LinkText, Using = "Саундтреки")]
-            public IWebElement LinkSoundTraks { get; set; }
+        public IWebElement LinkSoundTraks { get; set; }
+        
+        /// <summary>
+        /// Кнопка выбора категории "Жанр".
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = ".module-popular a")]
+        public IWebElement ButtonGenre { get; set; }
+        public By ButtonGenreBy { get { return By.CssSelector(".module-popular a"); } }
 
 
-        }
+    }
 
 }

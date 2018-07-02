@@ -16,8 +16,8 @@ namespace SportMusic.pages
 
         public PageHomeSaveFromNet(IWebDriver browser)
         {
-            browser.Navigate().GoToUrl(urlSaveFromNet);
             browser.Manage().Window.Minimize();
+            browser.Navigate().GoToUrl(urlSaveFromNet);            
             PageFactory.InitElements(browser, this);
         }
 

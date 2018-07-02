@@ -38,6 +38,7 @@
             this.panelSelectedTracks.Name = "panelSelectedTracks";
             this.panelSelectedTracks.Size = new System.Drawing.Size(860, 458);
             this.panelSelectedTracks.TabIndex = 0;
+            this.panelSelectedTracks.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSelectedTracks_Paint);
             // 
             // Form2
             // 
@@ -47,6 +48,7 @@
             this.Controls.Add(this.panelSelectedTracks);
             this.Name = "Form2";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
 
         }
