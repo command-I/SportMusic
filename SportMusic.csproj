@@ -109,16 +109,19 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="selenium\TrackOptions.cs" />
-    <Compile Include="Tracks.cs">
+    <Compile Include="Track.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Users.cs">
+    <Compile Include="User.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="User_Playlist.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="User_Track.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_Track_Playlist.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">

@@ -12,6 +12,7 @@ using OpenQA.Selenium.Support.UI;
 using System.Runtime.InteropServices;
 using SportMusic.pages;
 using SportMusic.selenium;
+using System.Data.Entity.Validation;
 using System.Net;
 using System.IO;
 
@@ -571,10 +572,35 @@ namespace SportMusic
         {
             if(listTrackOptions.Count != 0)
             {
+                //Кусок кода для проверки
+                int downloader = 1; //Крашилось на нуле
+                DatabaseFunctions function = new DatabaseFunctions();
+                foreach (TrackOptions element in listSelectTrackOptions)
+                {
+                    try
+                    {
+                        function.TrackEdit("Добавить", 0, downloader, element.Artist, element.Track, "жанр", "настроение", 0, element.DownloadUrl, "path", TimeSpan.Parse("00:" + element.Duration));
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        foreach (var eve in ex.EntityValidationErrors)
+                        {
+                            MessageBox.Show(String.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                MessageBox.Show(String.Format("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage));
+                            }
+                        }
+                        throw;
+                    }
+
+                }
+
 
                 form2 = new Form2(this);
                 form2.Show();
-
                 form2.PanelSelectedTracks.Controls.Clear();
                 ShowSelectToForm(listSelectTrackOptions, form2.PanelSelectedTracks);
                 form2.Activate();

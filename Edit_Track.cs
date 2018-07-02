@@ -18,9 +18,9 @@ namespace SportMusic
         public int author { get; set; }
         public int track_id { get; set; }
         public string action { get; set; }
-        public System.DateTime date { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
     
         public virtual User_Track User_Track { get; set; }
-        public virtual Users Users { get; set; }
+        public virtual User User { get; set; }
     }
 }

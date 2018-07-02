@@ -19,12 +19,13 @@ namespace SportMusic
         {
             this.Edit_Playlist = new HashSet<Edit_Playlist>();
             this.User_Playlist = new HashSet<User_Playlist>();
+            this.User_Track_Playlist = new HashSet<User_Track_Playlist>();
         }
     
         public int id { get; set; }
         public int author { get; set; }
         public string title { get; set; }
-        public System.DateTime date_create { get; set; }
+        public Nullable<System.DateTime> date_create { get; set; }
         public Nullable<System.DateTime> date_edit { get; set; }
         public System.TimeSpan duration { get; set; }
         public string surname { get; set; }
@@ -32,8 +33,10 @@ namespace SportMusic
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Edit_Playlist> Edit_Playlist { get; set; }
-        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Playlist> User_Playlist { get; set; }
+        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User_Track_Playlist> User_Track_Playlist { get; set; }
     }
 }

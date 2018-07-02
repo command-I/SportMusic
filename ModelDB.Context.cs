@@ -29,9 +29,10 @@ namespace SportMusic
         public virtual DbSet<Edit_Track> Edit_Track { get; set; }
         public virtual DbSet<Edit_User> Edit_User { get; set; }
         public virtual DbSet<Playlist> Playlist { get; set; }
-        public virtual DbSet<Tracks> Tracks { get; set; }
         public virtual DbSet<User_Track> User_Track { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<User_Playlist> User_Playlist { get; set; }
+        public virtual DbSet<Track> Tracks1 { get; set; }
+        public virtual DbSet<User> Users1 { get; set; }
+        public virtual DbSet<User_Track_Playlist> User_Track_Playlist { get; set; }
     }
 }

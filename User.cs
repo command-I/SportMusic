@@ -12,19 +12,19 @@ namespace SportMusic
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public User()
         {
             this.Edit_Playlist = new HashSet<Edit_Playlist>();
             this.Edit_Track = new HashSet<Edit_Track>();
             this.Edit_User = new HashSet<Edit_User>();
             this.Edit_User1 = new HashSet<Edit_User>();
-            this.Playlist = new HashSet<Playlist>();
-            this.Tracks = new HashSet<Tracks>();
-            this.User_Track = new HashSet<User_Track>();
+            this.Playlists = new HashSet<Playlist>();
+            this.Tracks = new HashSet<Track>();
             this.User_Playlist = new HashSet<User_Playlist>();
+            this.User_Track = new HashSet<User_Track>();
         }
     
         public int id { get; set; }
@@ -46,12 +46,12 @@ namespace SportMusic
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Edit_User> Edit_User1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Playlist> Playlist { get; set; }
+        public virtual ICollection<Playlist> Playlists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tracks> Tracks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User_Track> User_Track { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Playlist> User_Playlist { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User_Track> User_Track { get; set; }
     }
 }

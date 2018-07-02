@@ -12,20 +12,13 @@ namespace SportMusic
     using System;
     using System.Collections.Generic;
     
-    public partial class Tracks
+    public partial class User_Track_Playlist
     {
         public int id { get; set; }
-        public int downloader { get; set; }
-        public string artist { get; set; }
-        public string title { get; set; }
-        public string genre { get; set; }
-        public string mood { get; set; }
-        public Nullable<int> bitrate { get; set; }
-        public string source { get; set; }
-        public string path { get; set; }
-        public System.TimeSpan duration { get; set; }
-        public byte[] date_add { get; set; }
+        public int playlist_id { get; set; }
+        public int track_id { get; set; }
     
-        public virtual Users Users { get; set; }
+        public virtual Playlist Playlist { get; set; }
+        public virtual Track Track { get; set; }
     }
 }
