@@ -48,21 +48,14 @@ namespace SportMusic
             }
         }
 
-        
+        private void Form2_Load(object sender, EventArgs e)
+        {
 
-        
+        }
 
-       
-        
+        private void panelSelectedTracks_Paint(object sender, PaintEventArgs e)
+        {
 
-        
-
-        
-
-
-
-        
-
-        
+        }
     }
 }

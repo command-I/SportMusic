@@ -99,10 +99,16 @@ namespace SportMusic
         /// </summary>
         Form2 form2;
 
+
+        List<string> music, path;
         public Form1()
         {
+            
+            music = new List<string>();
+            path = new List<string>();
             InitializeComponent();
             browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            axWindowsMediaPlayer1.uiMode = "none";
         }
 
         /// <summary>
@@ -800,6 +806,72 @@ namespace SportMusic
                 comboBoxMood.Enabled = false;
                 textBoxArtistTrack.Enabled = false;
             }            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo dir = new DirectoryInfo("D:\\Музыка\\Легенды советской эстрады 70-80 годы");
+            FileInfo[] files = dir.GetFiles("*.mp3");
+
+            foreach (FileInfo fi in files)
+            {
+                listBox1.Items.Add(fi.ToString());
+                path.Add(fi.FullName);
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.URL = path[listBox1.SelectedIndex];
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.play();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.stop();
+        }
+
+        bool paused = false;
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (paused == false)
+            {
+                axWindowsMediaPlayer1.Ctlcontrols.pause();
+                paused = true;
+            } else
+            {
+                axWindowsMediaPlayer1.Ctlcontrols.play();
+                paused = false;
+            }
+
+            
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.fastForward();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                music.AddRange(openFileDialog1.SafeFileNames);
+                path.AddRange(openFileDialog1.FileNames);
+                for (var i = 0; i < music.Count; i++)
+                {
+                    listBox1.Items.Add(music[i]);
+                }
+            }
         }
     }
 }
