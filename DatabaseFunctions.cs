@@ -129,8 +129,18 @@ namespace SportMusic
         /// Функции добавления, редактирования, удаления
         /// </summary>
         /// <param name="command"></param>
-        public void User_Track_Edit(string command, int id, int author, string artist, string title, string genre, string mood, int bitrate,
-            string sourse, string path, TimeSpan duration)
+        /// <param name="id"></param>
+        /// <param name="author"></param>
+        /// <param name="artist"></param>
+        /// <param name="title"></param>
+        /// <param name="genre"></param>
+        /// <param name="mood"></param>
+        /// <param name="bitrate"></param>
+        /// <param name="sourse"></param>
+        /// <param name="path"></param>
+        /// <param name="duration"></param>
+        public void User_Track_Edit(string command, int id, int author=0, string artist="", string title="", string genre="", string mood="", int bitrate=0,
+            string sourse="", string path="", TimeSpan duration=new TimeSpan())
         {
             switch (command)
             {
@@ -205,21 +215,159 @@ namespace SportMusic
             }
         }
 
+        public List<User_Track> Get_User_Track(int id)
+        {
+            return context.User_Track.OrderBy(a => a.id).Where(a=>a.author == id).ToList();
+        }
 
         /// <summary>
         /// Работа с таблицей Playlist (Плейлисты)
         /// Функции добавления, редактирования, удаления 
         /// </summary>
         /// <param name="command"></param>
-        public void PlaylistEdit(string command)
+        /// <param name="id"></param>
+        /// <param name="author"></param>
+        /// <param name="surname"></param>
+        /// <param name="name"></param>
+        /// <param name="title"></param>
+        /// <param name="duration"></param>
+        public void PlaylistEdit(string command,int id,  List<User_Track> tracks, int author= 0, string surname="", string name="", string title="", TimeSpan duration = new TimeSpan())
         {
             switch (command)
             {
-                case "Добавить": break;
-                case "Редактировать": break;
-                case "Удалить": break;
+                case "Добавить":
+                    {
+                        Playlist playlist = new Playlist();
+                        string full_title= title + "Автор: " + surname + " " + name;
+
+                        playlist.id = id;
+                        playlist.author = author;
+                        playlist.title = full_title;
+                        playlist.date_create = DateTime.Now;
+                        playlist.date_edit = DateTime.Now;
+                        playlist.duration = duration;
+                        playlist.surname = surname;
+                        playlist.name = name;
+
+                        context.Entry(playlist).State = EntityState.Added;
+                        context.SaveChanges();
+
+                        foreach (User_Track track in tracks)
+                        {
+                            User_Track_Playlist_Edit("Добавить", -1, playlist.id, track.track_id);
+                        }
+
+                        break;
+                    }
+                case "Редактировать":
+                    {
+                        try
+                        {
+                            //Добавление в треки пользователя
+                            Playlist playlist = context.Playlist.Find(id);
+
+                            string full_title = title + ". Автор: " + surname + " " + name;
+
+                            playlist.id = id;
+                            playlist.author = author;
+                            playlist.title = full_title;
+                            playlist.date_create = DateTime.Now;
+                            playlist.date_edit = DateTime.Now;
+                            playlist.duration = duration;
+                            playlist.surname = surname;
+                            playlist.name = name;
+
+                            context.Entry(playlist).State = EntityState.Modified;
+                            context.SaveChanges();
+
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
+                        break;
+                    }
+                case "Удалить":
+                    {
+                        try
+                        {
+                            Playlist playlist = context.Playlist.Find(id);
+                            context.Entry(playlist).State = EntityState.Deleted;
+                            context.SaveChanges();
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
+                        break;
+                    }
             }
         }
+
+
+        public List<Playlist> Get_Playlist(int id)
+        {
+            return context.Playlist.OrderBy(a => a.id).Where(a=>a.author==id).ToList();
+        }
+
+        /// <summary>
+        /// Работа с таблицей User_Track_Playlist (Таблица, соединяющая треки и плейлисты)
+        /// Функции добавления, удаления, редактирования
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="id"></param>
+        /// <param name="playlist_id"></param>
+        /// <param name="track_id"></param>
+        public void User_Track_Playlist_Edit(string command, int id, int playlist_id, int track_id)
+        {
+            switch (command)
+            {
+                case "Добавить":
+                    {
+                        User_Track_Playlist user_Track_Playlist = new User_Track_Playlist();
+
+                        user_Track_Playlist.id = id;
+                        user_Track_Playlist.playlist_id = playlist_id;
+                        user_Track_Playlist.track_id = track_id;
+
+                        context.Entry(user_Track_Playlist).State = EntityState.Added;
+                        context.SaveChanges();
+
+
+
+                        break;
+                    }
+                case "Редактировать":
+                    {
+                        try
+                        {
+                            //Добавление в треки пользователя
+                            User_Track_Playlist user_Track_Playlist = context.User_Track_Playlist.Find(id);
+
+                            user_Track_Playlist.id = id;
+                            user_Track_Playlist.playlist_id = playlist_id;
+                            user_Track_Playlist.track_id = track_id;
+
+                            context.Entry(user_Track_Playlist).State = EntityState.Modified;
+                            context.SaveChanges();
+
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
+                        break;
+                    }
+                case "Удалить":
+                    {
+                        try
+                        {
+                            User_Track_Playlist user_Track_Playlist = context.User_Track_Playlist.Find(id);
+                            context.Entry(user_Track_Playlist).State = EntityState.Deleted;
+                            context.SaveChanges();
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
+                        break;
+                    }
+            }
+        }
+
+        public List<User_Track_Playlist> GetUser_Track_Playlist(int id)
+        {
+            return context.User_Track_Playlist.OrderBy(a => a.id).Where(a => a.playlist_id == id).ToList();
+        }
+
 
         /// <summary>
         /// Работа с таблицей User_Playlist (Пользователи-Плейлисты). Предназначена для установки видимости плейлистов другим пользователям
@@ -235,6 +383,8 @@ namespace SportMusic
                 case "Удалить": break;
             }
         }
+
+
 
         /// <summary>
         /// Работа с таблицей Edit_User (Изменения пользователей). Предназначена для хранения истории изменений данных аккаунтов

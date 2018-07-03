@@ -51,17 +51,19 @@ namespace SportMusic
         {
             Intensiv2018Entities asd = new Intensiv2018Entities();
 
-            string role = "temp";
-            role = asd.SysUsers.Where(a => a.login == textBox1.Text && a.pass == textBox2.Text).Select(a => a.role).FirstOrDefault();
-            if (role != "Тренер" && role != "Администратор")
+            SysUser user = new SysUser();
+            user = asd.SysUsers.Where(a => a.login == textBox1.Text && a.pass == textBox2.Text).FirstOrDefault();
+            if (user.role != "Тренер" && user.role != "Администратор")
             {
                 MessageBox.Show("Такого пользователя в системе нет");
             }
             else
             {
-                Form ifrm = new Main_Form();
-                ifrm.Show(); // отображаем Form1
-                this.Hide(); // скрываем Form3
+                Form ifrm = new Main_Form(user.id, user.login,user.name, user.surname);
+                this.Hide(); // скрываем форму авторизации
+                ifrm.ShowDialog(); // отображаем Главную форму
+                this.Show(); //Снова открываем авторизацию
+                
             }
             
             

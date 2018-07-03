@@ -42,30 +42,40 @@
             this.radioButtonMuzoFon = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.поискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.моиКомпозицииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.моиПлейлистыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.доступныеПлейлистыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.пользователиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.историяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label_Login = new System.Windows.Forms.Label();
+            this.label_Name = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.panelControl.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.panel2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelResult
             // 
             this.panelResult.AutoScroll = true;
-            this.panelResult.Location = new System.Drawing.Point(12, 156);
+            this.panelResult.Location = new System.Drawing.Point(12, 202);
             this.panelResult.Name = "panelResult";
             this.panelResult.Size = new System.Drawing.Size(860, 380);
             this.panelResult.TabIndex = 10;
@@ -81,7 +91,7 @@
             this.panelControl.Controls.Add(this.textBoxArtistTrack);
             this.panelControl.Controls.Add(this.radioButtonYandexSound);
             this.panelControl.Controls.Add(this.radioButtonMuzoFon);
-            this.panelControl.Location = new System.Drawing.Point(12, 13);
+            this.panelControl.Location = new System.Drawing.Point(12, 57);
             this.panelControl.Name = "panelControl";
             this.panelControl.Size = new System.Drawing.Size(860, 137);
             this.panelControl.TabIndex = 11;
@@ -162,13 +172,13 @@
             this.radioButtonYandexSound.Name = "radioButtonYandexSound";
             this.radioButtonYandexSound.Size = new System.Drawing.Size(103, 17);
             this.radioButtonYandexSound.TabIndex = 10;
-            this.radioButtonYandexSound.TabStop = true;
             this.radioButtonYandexSound.Text = "ЯндексМузыка";
             this.radioButtonYandexSound.UseVisualStyleBackColor = true;
             // 
             // radioButtonMuzoFon
             // 
             this.radioButtonMuzoFon.AutoSize = true;
+            this.radioButtonMuzoFon.Checked = true;
             this.radioButtonMuzoFon.Location = new System.Drawing.Point(16, 16);
             this.radioButtonMuzoFon.Name = "radioButtonMuzoFon";
             this.radioButtonMuzoFon.Size = new System.Drawing.Size(74, 17);
@@ -187,7 +197,7 @@
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(878, 12);
+            this.panel1.Location = new System.Drawing.Point(878, 58);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(307, 524);
             this.panel1.TabIndex = 12;
@@ -207,32 +217,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(307, 60);
             this.tableLayoutPanel2.TabIndex = 2;
-            // 
-            // button1
-            // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(147, 54);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(156, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(148, 54);
-            this.button2.TabIndex = 1;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -297,41 +281,77 @@
             this.openFileDialog1.Multiselect = true;
             this.openFileDialog1.Title = "Выберите файлы";
             // 
-            // button3
+            // menuStrip1
             // 
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.Location = new System.Drawing.Point(97, 358);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(54, 59);
-            this.button3.TabIndex = 3;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.поискToolStripMenuItem,
+            this.моиКомпозицииToolStripMenuItem,
+            this.моиПлейлистыToolStripMenuItem,
+            this.доступныеПлейлистыToolStripMenuItem,
+            this.пользователиToolStripMenuItem,
+            this.историяToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1200, 24);
+            this.menuStrip1.TabIndex = 13;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // button4
+            // поискToolStripMenuItem
             // 
-            this.button4.FlatAppearance.BorderSize = 0;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-            this.button4.Location = new System.Drawing.Point(35, 358);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(54, 59);
-            this.button4.TabIndex = 4;
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.поискToolStripMenuItem.Enabled = false;
+            this.поискToolStripMenuItem.Name = "поискToolStripMenuItem";
+            this.поискToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.поискToolStripMenuItem.Text = "Поиск";
             // 
-            // button6
+            // моиКомпозицииToolStripMenuItem
             // 
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
-            this.button6.Location = new System.Drawing.Point(157, 358);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(54, 59);
-            this.button6.TabIndex = 6;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.моиКомпозицииToolStripMenuItem.Name = "моиКомпозицииToolStripMenuItem";
+            this.моиКомпозицииToolStripMenuItem.Size = new System.Drawing.Size(116, 20);
+            this.моиКомпозицииToolStripMenuItem.Text = "Мои композиции";
+            this.моиКомпозицииToolStripMenuItem.Click += new System.EventHandler(this.моиКомпозицииToolStripMenuItem_Click);
+            // 
+            // моиПлейлистыToolStripMenuItem
+            // 
+            this.моиПлейлистыToolStripMenuItem.Name = "моиПлейлистыToolStripMenuItem";
+            this.моиПлейлистыToolStripMenuItem.Size = new System.Drawing.Size(108, 20);
+            this.моиПлейлистыToolStripMenuItem.Text = "Мои плейлисты";
+            this.моиПлейлистыToolStripMenuItem.Click += new System.EventHandler(this.моиПлейлистыToolStripMenuItem_Click);
+            // 
+            // доступныеПлейлистыToolStripMenuItem
+            // 
+            this.доступныеПлейлистыToolStripMenuItem.Name = "доступныеПлейлистыToolStripMenuItem";
+            this.доступныеПлейлистыToolStripMenuItem.Size = new System.Drawing.Size(144, 20);
+            this.доступныеПлейлистыToolStripMenuItem.Text = "Доступные плейлисты";
+            // 
+            // пользователиToolStripMenuItem
+            // 
+            this.пользователиToolStripMenuItem.Name = "пользователиToolStripMenuItem";
+            this.пользователиToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
+            this.пользователиToolStripMenuItem.Text = "Пользователи";
+            // 
+            // историяToolStripMenuItem
+            // 
+            this.историяToolStripMenuItem.Name = "историяToolStripMenuItem";
+            this.историяToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.историяToolStripMenuItem.Text = "История";
+            // 
+            // label_Login
+            // 
+            this.label_Login.AutoSize = true;
+            this.label_Login.Location = new System.Drawing.Point(1034, 28);
+            this.label_Login.Name = "label_Login";
+            this.label_Login.Size = new System.Drawing.Size(35, 13);
+            this.label_Login.TabIndex = 14;
+            this.label_Login.Text = "label2";
+            // 
+            // label_Name
+            // 
+            this.label_Name.AutoSize = true;
+            this.label_Name.Location = new System.Drawing.Point(1075, 28);
+            this.label_Name.Name = "label_Name";
+            this.label_Name.Size = new System.Drawing.Size(35, 13);
+            this.label_Name.TabIndex = 15;
+            this.label_Name.Text = "label3";
             // 
             // button5
             // 
@@ -345,15 +365,81 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click_1);
             // 
-            // Form1
+            // button6
+            // 
+            this.button6.FlatAppearance.BorderSize = 0;
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
+            this.button6.Location = new System.Drawing.Point(157, 358);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(54, 59);
+            this.button6.TabIndex = 6;
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button4
+            // 
+            this.button4.FlatAppearance.BorderSize = 0;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
+            this.button4.Location = new System.Drawing.Point(35, 358);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(54, 59);
+            this.button4.TabIndex = 4;
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Location = new System.Drawing.Point(97, 358);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(54, 59);
+            this.button3.TabIndex = 3;
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(3, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(147, 54);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.Location = new System.Drawing.Point(156, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(148, 54);
+            this.button2.TabIndex = 1;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1197, 562);
+            this.ClientSize = new System.Drawing.Size(1200, 594);
+            this.Controls.Add(this.label_Name);
+            this.Controls.Add(this.label_Login);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.panelResult);
-            this.Name = "Form1";
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "Main_Form";
             this.Text = "Музыка для спорта";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.panelControl.ResumeLayout(false);
@@ -364,7 +450,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -395,6 +484,15 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem поискToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem моиКомпозицииToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem моиПлейлистыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem доступныеПлейлистыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem пользователиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem историяToolStripMenuItem;
+        private System.Windows.Forms.Label label_Login;
+        private System.Windows.Forms.Label label_Name;
     }
 }
 

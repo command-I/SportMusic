@@ -101,13 +101,28 @@ namespace SportMusic
         Form2 form2;
 
 
+        /// <summary>
+        /// Переменные для хранения данных о пользователе
+        /// </summary>
+        int id;
+        string login;
+        string name;
+        string surname;
         List<string> music, path;
-        public Main_Form()
+        public Main_Form(int id, string login, string name, string surname)
         {
+            this.id = id;
+            this.login = login;
+            this.name = name;
+            this.surname = surname;
             
+
             music = new List<string>();
             path = new List<string>();
             InitializeComponent();
+            label_Login.Text = login;
+            label_Name.Text = surname + " " + name;
+
             browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
             axWindowsMediaPlayer1.uiMode = "none";
         }
@@ -886,6 +901,28 @@ namespace SportMusic
         private void button5_Click_1(object sender, EventArgs e)
         {
             axWindowsMediaPlayer1.Ctlcontrols.fastForward();
+        }
+
+        private void tabPageSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void моиКомпозицииToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MyTracks f = new MyTracks(id, login, name, surname);
+            this.Hide();
+            f.ShowDialog();
+            this.Show();
+            
+        }
+
+        private void моиПлейлистыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MyPlaylist f = new MyPlaylist(id, login, name, surname);
+            this.Hide();
+            f.ShowDialog();
+            this.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
