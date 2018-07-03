@@ -15,6 +15,7 @@ using SportMusic.selenium;
 using System.Net;
 using System.IO;
 using System.Threading;
+using OpenQA.Selenium.Chrome;
 
 namespace SportMusic
 {
@@ -28,18 +29,21 @@ namespace SportMusic
         /// <summary>
         /// Драйвер управляющий браузером.
         /// </summary>
-        static IWebDriver browser = new OpenQA.Selenium.Chrome.ChromeDriver();       
+        IWebDriver browser;
+        IWebDriver browserMood;
 
         /// <summary>
         /// Домашняя страница сайта МузоФон.
         /// </summary>
         PageHomeMuzoFon pageHomeMuzoFon;
+        PageHomeMuzoFon pageHomeMuzoFonGenre;
+        PageHomeMuzoFon pageHomeMuzoFonMood;
 
         /// <summary>
         /// Страница с результатами поиска сайта МузоФон.
         /// </summary>
         PageSearchMuzoFon pageSearchMuzoFon;
-       
+
         /// <summary>
         /// Список элементов с именами артистов.
         /// </summary>
@@ -99,13 +103,38 @@ namespace SportMusic
         /// Ссылка на форму.
         /// </summary>
         Form2 form2;
-        
-        PictureBox animation = new PictureBox();
+
+        /// <summary>
+        /// Форма для вывода индикации о процессе загрузки.
+        /// Используется при загрузке категорий в момент открытия формы и при загрузке треков.
+        /// Выводится в основном процессе, закрывается из параллельного процесса при его завершении.
+        /// </summary>
+        Form formPreloaderTracks;
+        Form formPreloaderGenre;
+        Form formPreloaderMood;
+
+        //PictureBox animation = new PictureBox();
+
+        int durationTrack;
+        int durationSetUser;
 
         public Form1()
         {
             InitializeComponent();
-            browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);                      
+            StartPosition = FormStartPosition.CenterScreen;            
+            panelHead.Visible = false;
+            panelControl.Visible = false;
+            panelResult.Visible = false;
+
+            ChromeOptions options = new ChromeOptions();
+            ChromeDriverService service = ChromeDriverService.CreateDefaultService();
+            service.HideCommandPromptWindow = true;
+
+            browser = new ChromeDriver(service, options);
+            browserMood = new ChromeDriver(service, options);
+                        
+            browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            browserMood.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
         }
 
         /// <summary>
@@ -123,33 +152,36 @@ namespace SportMusic
             comboBoxCount.Text = "Количество";
             comboBoxGenre.Text = "Жанр";
 
+            comboBoxCount.Items.Clear();
             comboBoxCount.Items.Add("10");
             comboBoxCount.Items.Add("20");
             comboBoxCount.Items.Add("30");
             comboBoxCount.Items.Add("50");
             comboBoxCount.Items.Add("100");
 
+            comboBoxDuration.Items.Clear();
             comboBoxDuration.Items.Add("Любая");
-            comboBoxDuration.Items.Add("05:00");
-            comboBoxDuration.Items.Add("04:30");
-            comboBoxDuration.Items.Add("04:00");
-            comboBoxDuration.Items.Add("03:30");
-            comboBoxDuration.Items.Add("03:00");
-            comboBoxDuration.Items.Add("02:30");
-            comboBoxDuration.Items.Add("02:00");
-            comboBoxDuration.Items.Add("01:30");
             comboBoxDuration.Items.Add("01:00");
+            comboBoxDuration.Items.Add("01:30");
+            comboBoxDuration.Items.Add("02:00");
+            comboBoxDuration.Items.Add("02:30");
+            comboBoxDuration.Items.Add("03:00");
+            comboBoxDuration.Items.Add("03:30");
+            comboBoxDuration.Items.Add("04:00");
+            comboBoxDuration.Items.Add("04:30");
+            comboBoxDuration.Items.Add("05:00");
 
             textBoxArtistTrack.Enabled = true;
             comboBoxDuration.Enabled = true;
-            comboBoxCount.Enabled = true;            
+            comboBoxCount.Enabled = true;
 
             buttonSave.Enabled = false;
             buttonSearch.Enabled = false;
             comboBoxMood.Enabled = true;
-            comboBoxGenre.Enabled = true;            
+            comboBoxGenre.Enabled = true;
+            radioButtonMuzoFon.Checked = true;
 
-        }           
+        }
 
         /// <summary>
         /// Действия по выбору сайта "МузоФон".
@@ -160,9 +192,12 @@ namespace SportMusic
         {
             RadioButton radioButton = (RadioButton)sender;
 
-            FormElementInit();
-            CatalogGenreMuzoFon();
-            CatalogMoodMuzoFon();
+            ShowPreloaderGenreForm();
+            ShowPreloaderMoodForm();
+            FormElementInit();           
+
+            //CatalogGenreMuzoFon();
+            //CatalogMoodMuzoFon();
 
             if (pageHomeMuzoFon == null)
             {
@@ -201,34 +236,34 @@ namespace SportMusic
                     buttonSave.Enabled = false;
                 }
 
-                for(int i = 0; i < listSelectTrackOptions.Count; i++)
+                for (int i = 0; i < listSelectTrackOptions.Count; i++)
                 {
                     if (listSelectTrackOptions[i].Num == num)
                     {
                         listSelectTrackOptions.RemoveAt(i);
                     }
                 }
-                
+
             }
 
         }
 
-        /// <summary>
-        /// Выводит индикатор загрузки в отдельном потоке.
-        /// </summary>
-        void FormPreloader()
-        {
-            Form form = new Form();
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.Width = 100;
-            form.Height = 100;
-            form.Top = this.Top/2;
-            form.Left = this.Left/2;
-            PictureBox pictureBox = new PictureBox();
-            pictureBox.ImageLocation = "E:\\001.gif";
-            form.Controls.Add(pictureBox);
-            form.ShowDialog();            
-        }
+        ///// <summary>
+        ///// Выводит индикатор загрузки в отдельном потоке.
+        ///// </summary>
+        //void FormPreloader()
+        //{
+        //    Form form = new Form();
+        //    form.FormBorderStyle = FormBorderStyle.None;
+        //    form.Width = 100;
+        //    form.Height = 100;
+        //    form.Top = this.Top/2;
+        //    form.Left = this.Left/2;
+        //    PictureBox pictureBox = new PictureBox();
+        //    pictureBox.ImageLocation = "E:\\001.gif";
+        //    form.Controls.Add(pictureBox);
+        //    form.ShowDialog();            
+        //}
 
         /// <summary>
         /// Действия по нажатию на кнопку "Поиск".
@@ -236,7 +271,7 @@ namespace SportMusic
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonSearch_Click(object sender, EventArgs e)
-        {            
+        {
 
             if (listArtists != null)
             {
@@ -267,18 +302,18 @@ namespace SportMusic
             {
                 listTrackOptions.Clear();
             }
-            
+
             panelResult.Controls.Clear();
 
-            if((textBoxArtistTrack.Text == "Трек, исполнитель") && (comboBoxMood.Text == "Настроение") && (comboBoxGenre.Text == "Жанр"))
+            if ((textBoxArtistTrack.Text == "Трек, исполнитель") && (comboBoxMood.Text == "Настроение") && (comboBoxGenre.Text == "Жанр"))
             {
                 MessageBox.Show("Необходимо выбрать один из критериев поиска");
             }
             else
-            {
-                //new Thread(NewForm).Start();
+            {               
 
                 countChecking = 0;
+                durationSetUser = TimeStringToInt(comboBoxDuration.Text);
 
                 buttonSearch.Enabled = false;
 
@@ -291,80 +326,35 @@ namespace SportMusic
 
                     if ((comboBoxMood.Enabled == false) && (comboBoxGenre.Enabled == false))
                     {
-                        if (textBoxArtistTrack.Text != "Трек, исполнитель")
-                        {
-                            pageHomeMuzoFon.InputSearch.Clear();
-                            pageHomeMuzoFon.InputSearch.SendKeys(textBoxArtistTrack.Text);
-                            pageHomeMuzoFon.ButtonSearch.Click();
-                        }
+                        ArtistTrackSearch();
                     }
                     else
                     {
                         if (comboBoxMood.Enabled == true)
                         {
-                            for (int i = 0; i < listMoodMuzoFon.Count; i++)
-                            {
-                                if (listMoodMuzoFon[i].Text == comboBoxMood.Text)
-                                {
-                                    browser.Navigate().GoToUrl(listMoodMuzoFon[i].GetAttribute("href"));
-                                    break;
-                                }
-                            }
+                            GoToSelectMood();
                         }
                         else
                         {
-
-                            if (pageHomeMuzoFon == null)
-                            {
-                                pageHomeMuzoFon = new PageHomeMuzoFon(browser);
-                            }
-
-                            browser.Navigate().GoToUrl(pageHomeMuzoFon.urlMuzoFon);
-                            listGenreMuzoFon = browser.FindElements(pageHomeMuzoFon.ButtonGenreBy).ToList();
-
-                            for (int i = 0; i < listGenreMuzoFon.Count; i++)
-                            {
-                                if (listGenreMuzoFon[i].Text == comboBoxGenre.Text)
-                                {
-                                    browser.Navigate().GoToUrl(listGenreMuzoFon[i].GetAttribute("href"));
-                                    break;
-                                }
-                            }
-
+                            GoToSelectGenre();
                         }
 
                     }
 
-                    LoadTracksFromSite();
+                    ShowPreloaderTracksForm();
+                    //LoadTracksFromSite();
 
-                    int count = 0;
-
-                    try
-                    {
-                        count = Int32.Parse(comboBoxCount.Text);
-                        if (count > 100)
-                        {
-                            count = 100;
-                            comboBoxCount.Text = "100";
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        count = 100;
-                        comboBoxCount.Text = "100";
-                    }
-
-                    ShowFromSiteToForm(listTrackOptions, panelResult, count);
+                   // ShowFromSiteToForm(listTrackOptions, panelResult, SetCountShowTracks());
                 }
                 else
                 {
-
+                    // Здесь будет Яндекс.
                 }
             }
-
             
-            buttonSearch.Enabled = true;                        
+            buttonSearch.Enabled = true;
         }
+
 
         /// <summary>
         /// Действия по нажатию на кнопку сохранить.
@@ -388,18 +378,18 @@ namespace SportMusic
         /// <param name="e"></param>
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            Button button = (Button)sender;            
-            listPlay[Int32.Parse(button.Name)].Click();                        
+            Button button = (Button)sender;
+            listPlay[Int32.Parse(button.Name)].Click();
         }
-    
+
 
         // !!! на МузоФон не работает.
         private void buttonFindFormat_Click(object sender, EventArgs e)
         {
-            Button button = (Button)sender;            
+            Button button = (Button)sender;
 
             int num = Int32.Parse(button.Name);
-            string loadUrl = listTrackOptions[num].DownloadUrl;           
+            string loadUrl = listTrackOptions[num].DownloadUrl;
 
             PageHomeSaveFromNet pageHomeSaveFromNet = new PageHomeSaveFromNet(browser);
             pageHomeSaveFromNet.InputSearch.SendKeys(loadUrl + OpenQA.Selenium.Keys.Enter);
@@ -407,7 +397,7 @@ namespace SportMusic
             pageHomeSaveFromNet.IconSelectFormat.Click();
 
             List<IWebElement> listFileFormat = pageHomeSaveFromNet.ListFileFormat;
-           
+
             foreach (IWebElement element in listFileFormat)
             {
                 ComboBox cmb = panelResult.Controls["comboBoxFindFormat_" + Int32.Parse(button.Name)] as ComboBox;
@@ -448,14 +438,14 @@ namespace SportMusic
                 secDec = Int32.Parse(time[3].ToString()) * 10;
                 secEd = Int32.Parse(time[4].ToString());
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return -1;
             }
-            
+
 
             return minDec + minEd + secDec + secEd;
-        }        
+        }
 
         /// <summary>
         /// Загрузка информации со страницы поиска.
@@ -478,7 +468,7 @@ namespace SportMusic
             {
 
                 int durationTrack = TimeStringToInt(listDuration[i].Text);
-                int durationSetUser = TimeStringToInt(comboBoxDuration.Text);                                
+                int durationSetUser = TimeStringToInt(comboBoxDuration.Text);
 
                 if ((durationTrack < durationSetUser) || (durationSetUser == -1))
                 {
@@ -491,7 +481,7 @@ namespace SportMusic
                                                                 listTracks[i].Text + ".mp3");
                     listTrackOptions.Add(trackOptions);
                 }
-                
+
             }
 
             return listTrackOptions;
@@ -505,7 +495,7 @@ namespace SportMusic
         private void ShowSelectToForm(List<TrackOptions> listTrackOptions, Panel panel)
         {
 
-            int distanceTop = 40;          
+            int distanceTop = 40;
             int leftLabelArtist = 150;
             int leftLabelTrack = 250;
             int leftDurationTrack = 450;
@@ -520,7 +510,7 @@ namespace SportMusic
                 labelNum.Top = 10 + i * distanceTop;
                 labelNum.Text = (i + 1).ToString() + ".";
                 panel.Controls.Add(labelNum);
-                
+
                 Label labelArtist = new Label();
                 labelArtist.Left = leftLabelArtist;
                 labelArtist.Top = 10 + i * distanceTop;
@@ -552,7 +542,7 @@ namespace SportMusic
         private void ShowFromSiteToForm(List<TrackOptions> listTrackOptions, Panel panel, int count)
         {
 
-            int distanceTop = 40;            
+            int distanceTop = 40;
             int leftLabelNum = 10;
             int leftCheckBoxSelectTrack = 40;
 
@@ -565,7 +555,7 @@ namespace SportMusic
             int leftComboBoxFormats = 620;
             int leftButtonDownload = 720;
 
-            if(listTrackOptions.Count < count)
+            if (listTrackOptions.Count < count)
             {
                 count = listTrackOptions.Count;
             }
@@ -584,7 +574,7 @@ namespace SportMusic
                 checkBoxSelectTrack.Name = i.ToString();
                 checkBoxSelectTrack.Left = leftCheckBoxSelectTrack;
                 checkBoxSelectTrack.Top = 10 + i * distanceTop;
-                checkBoxSelectTrack.CheckedChanged += checkBoxSelect_CheckedChanged;                
+                checkBoxSelectTrack.CheckedChanged += checkBoxSelect_CheckedChanged;
                 panel.Controls.Add(checkBoxSelectTrack);
 
                 Button buttonPlay = new Button();
@@ -615,7 +605,7 @@ namespace SportMusic
                 labelDuration.Top = 10 + i * distanceTop;
                 labelDuration.Text = listTrackOptions[i].Duration;
                 panel.Controls.Add(labelDuration);
-                
+
                 /*
                 Button buttonFindFormat = new Button();
                 buttonFindFormat.Name = i.ToString();
@@ -646,7 +636,7 @@ namespace SportMusic
                 buttonDownload.Click += buttonDownload_Click;
                 buttonDownload.Enabled = true;
                 panel.Controls.Add(buttonDownload);
-                
+
 
             }
         }
@@ -662,17 +652,18 @@ namespace SportMusic
             {
                 buttonClearTrackArtist.Enabled = true;
             }
-            else if ((textBoxArtistTrack.Text == "") || (textBoxArtistTrack.Text == "Трек, исполнитель"))
+
+            if ((textBoxArtistTrack.Text == "") || (textBoxArtistTrack.Text == "Трек, исполнитель"))
             {
                 comboBoxMood.Enabled = true;
-                comboBoxGenre.Enabled = true;                
+                comboBoxGenre.Enabled = true;
             }
             else
             {
                 comboBoxMood.Enabled = false;
                 comboBoxGenre.Enabled = false;
             }
-                            
+
             buttonSearch.Enabled = true;
         }
 
@@ -686,6 +677,11 @@ namespace SportMusic
             if (browser != null)
             {
                 browser.Quit();
+            }
+
+            if (browserMood != null)
+            {
+                browserMood.Quit();
             }
         }
 
@@ -712,7 +708,7 @@ namespace SportMusic
         /// <param name="e"></param>
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if(listTrackOptions.Count != 0)
+            if (listTrackOptions.Count != 0)
             {
                 form2 = new Form2(this);
                 form2.Show();
@@ -721,7 +717,7 @@ namespace SportMusic
                 ShowSelectToForm(listSelectTrackOptions, form2.PanelSelectedTracks);
                 form2.Activate();
 
-                
+
             }
         }
 
@@ -730,7 +726,7 @@ namespace SportMusic
         /// </summary>
         private void CatalogMoodMuzoFon()
         {
-            if(pageHomeMuzoFon == null)
+            if (pageHomeMuzoFon == null)
             {
                 pageHomeMuzoFon = new PageHomeMuzoFon(browser);
             }
@@ -764,18 +760,18 @@ namespace SportMusic
             }
 
             listGenreMuzoFon = browser.FindElements(pageHomeMuzoFon.ButtonGenreBy).ToList();
-           
+
             for (int i = 0; i < listGenreMuzoFon.Count; i++)
             {
-                if((listGenreMuzoFon[i].Text == "Все сборники"))
+                if ((listGenreMuzoFon[i].Text == "Все сборники"))
                 {
-                    listGenreMuzoFon.RemoveAt(i);                    
+                    listGenreMuzoFon.RemoveAt(i);
                 }
             }
 
             comboBoxGenre.Items.Add("--- Отменить выбор ---");
 
-            for(int i = 0; i < 18; i++)
+            for (int i = 0; i < 18; i++)
             {
                 comboBoxGenre.Items.Add(listGenreMuzoFon[i].Text);
             }
@@ -805,13 +801,13 @@ namespace SportMusic
             {
                 comboBoxGenre.Enabled = true;
                 textBoxArtistTrack.Enabled = true;
-                comboBoxMood.SelectedText = "Настроение";              
+                comboBoxMood.SelectedText = "Настроение";
             }
             else
             {
                 comboBoxGenre.Enabled = false;
                 textBoxArtistTrack.Enabled = false;
-            }            
+            }
         }
 
         /// <summary>
@@ -827,13 +823,13 @@ namespace SportMusic
             {
                 comboBoxMood.Enabled = true;
                 textBoxArtistTrack.Enabled = true;
-                comboBoxGenre.SelectedText = "Жанр";                
+                comboBoxGenre.SelectedText = "Жанр";
             }
             else
             {
                 comboBoxMood.Enabled = false;
                 textBoxArtistTrack.Enabled = false;
-            }            
+            }
         }
 
         /// <summary>
@@ -845,7 +841,293 @@ namespace SportMusic
         {
             textBoxArtistTrack.Text = "";
             Button button = (Button)sender;
-            button.Enabled = false;            
+            button.Enabled = false;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            FormElementInit();           
+        }
+
+        /// <summary>
+        /// Переход в выбранный раздел категории "Настроение" сайта МузоФон.
+        /// Выполняется после выбора категории и нажатия кнопки "Поиск".
+        /// </summary>
+        private void GoToSelectMood()
+        {
+            for (int i = 0; i < listMoodMuzoFon.Count; i++)
+            {
+                if (listMoodMuzoFon[i].Text == comboBoxMood.Text)
+                {
+                    browser.Navigate().GoToUrl(listMoodMuzoFon[i].GetAttribute("href"));
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Поиск по критерию "Артист-Трек".
+        /// Выпоняется после ввода имени артиста или названия трека и нажатия кнопки "Пуск".
+        /// </summary>
+        private void ArtistTrackSearch()
+        {
+            if (textBoxArtistTrack.Text != "Трек, исполнитель")
+            {
+                pageHomeMuzoFon.InputSearch.Clear();
+                pageHomeMuzoFon.InputSearch.SendKeys(textBoxArtistTrack.Text);
+                pageHomeMuzoFon.ButtonSearch.Click();
+            }
+        }
+
+
+        /// <summary>
+        /// Ограничение количества выводимых треков в результатах поиска.
+        /// Устанавливается пользователем на форме поиска треков.
+        /// </summary>
+        private int SetCountShowTracks()
+        {
+            int countShowTreks = 0;
+
+            try
+            {
+                countShowTreks = Int32.Parse(comboBoxCount.Text);
+
+                if (countShowTreks > 100)
+                {
+                    countShowTreks = 100;
+                    comboBoxCount.Text = "100";
+                }
+            }
+            catch (Exception)
+            {
+                comboBoxCount.Text = "100";
+                return countShowTreks = 100;
+            }
+
+            return countShowTreks;
+        }
+
+
+        /// <summary>
+        /// Загрузка с сайта Музофон в категорию "Жанр".
+        /// Производится при открытии формы для поиска треков.
+        /// </summary>
+        private void GoToSelectGenre()
+        {
+            if (pageHomeMuzoFon == null)
+            {
+                pageHomeMuzoFon = new PageHomeMuzoFon(browser);
+            }
+
+            browser.Navigate().GoToUrl(pageHomeMuzoFon.urlMuzoFon);
+            listGenreMuzoFon = browser.FindElements(pageHomeMuzoFon.ButtonGenreBy).ToList();
+
+            for (int i = 0; i < listGenreMuzoFon.Count; i++)
+            {
+                if (listGenreMuzoFon[i].Text == comboBoxGenre.Text)
+                {
+                    browser.Navigate().GoToUrl(listGenreMuzoFon[i].GetAttribute("href"));
+                    break;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Вывод формы для индикации о процессе загрузки.
+        /// Используется при загрузке категорий в момент открытия формы и при загрузке треков.
+        /// Выводится в основном процессе, закрывается из параллельного процесса при его завершении.
+        /// </summary>
+        private void ShowPreloaderTracksForm()
+        {
+            PictureBox pic = new PictureBox();
+            pic.ImageLocation = (Directory.GetCurrentDirectory() + "\\gif\\preloader_line_2.gif");
+
+            formPreloaderTracks = new Form();
+            formPreloaderTracks.Size = new Size(140, 21);
+            formPreloaderTracks.FormBorderStyle = FormBorderStyle.None;
+            formPreloaderTracks.StartPosition = FormStartPosition.CenterScreen;
+            formPreloaderTracks.Shown += LoadTraksThread;
+            formPreloaderTracks.Controls.Add(pic);
+            formPreloaderTracks.TopMost = true;
+            formPreloaderTracks.Show();
+        }
+
+        private void ShowPreloaderGenreForm()
+        {
+            PictureBox pic = new PictureBox();
+            pic.ImageLocation = (Directory.GetCurrentDirectory() + "\\gif\\preloader_line_2.gif");
+
+            formPreloaderGenre = new Form();
+            formPreloaderGenre.Size = new Size(140, 21);
+            formPreloaderGenre.FormBorderStyle = FormBorderStyle.None;
+            formPreloaderGenre.StartPosition = FormStartPosition.CenterScreen;
+            formPreloaderGenre.Shown += LoadGenreThread;
+            formPreloaderGenre.Controls.Add(pic);
+            formPreloaderGenre.TopMost = true;
+            formPreloaderGenre.Show();
+        }
+
+        private void ShowPreloaderMoodForm()
+        {
+            PictureBox pic = new PictureBox();
+            pic.ImageLocation = (Directory.GetCurrentDirectory() + "\\gif\\preloader_line_2.gif");
+
+            formPreloaderMood = new Form();
+            formPreloaderMood.Size = new Size(140, 21);
+            formPreloaderMood.FormBorderStyle = FormBorderStyle.None;
+            formPreloaderMood.StartPosition = FormStartPosition.CenterScreen;
+            formPreloaderMood.Shown += LoadMoodThread;
+            formPreloaderMood.Controls.Add(pic);
+            formPreloaderMood.TopMost = true;
+            formPreloaderMood.Show();
+        }
+
+
+        public void LoadTraksThread(object sender, EventArgs e)
+        {
+            //Создние нового процесса. 
+            ThreadPool.QueueUserWorkItem((object o) =>
+            {
+                //Загрузка данных.                
+                if (pageSearchMuzoFon == null)
+                {
+                    pageSearchMuzoFon = new PageSearchMuzoFon(browser);
+                }
+
+                listArtists = browser.FindElements(pageSearchMuzoFon.TextArtistBy).ToList();
+                listTracks = browser.FindElements(pageSearchMuzoFon.TextTrackBy).ToList();
+                listDuration = browser.FindElements(pageSearchMuzoFon.TextDurationBy).ToList();
+                listDownload = browser.FindElements(pageSearchMuzoFon.IconDownloadBy).ToList();
+                listPlay = browser.FindElements(pageSearchMuzoFon.IconPlayBy).ToList();                
+
+                for (int i = 0; i < listArtists.Count; i++)
+                {
+                    durationTrack = TimeStringToInt(listDuration[i].Text);
+
+                    if ((durationTrack < durationSetUser) || (durationSetUser == -1))
+                    {
+                        TrackOptions trackOptions = new TrackOptions(
+                                                                    i,
+                                                                    listArtists[i].Text,
+                                                                    listTracks[i].Text,
+                                                                    listDuration[i].Text,
+                                                                    listDownload[i].GetAttribute("href"),
+                                                                    listTracks[i].Text + ".mp3");
+                        listTrackOptions.Add(trackOptions);
+                    }
+                }
+
+                //Обращение к элементам формы основного потока и закрытие прелоадера в основном потоке.
+                this.Invoke(new MethodInvoker(() =>
+                {                    
+                    formPreloaderTracks.Close();
+                    ShowFromSiteToForm(listTrackOptions, panelResult, SetCountShowTracks());
+
+                }));
+            });
+
+        }
+
+
+        public void LoadGenreThread(object sender, EventArgs e)
+        {
+            //Создние нового процесса. 
+            ThreadPool.QueueUserWorkItem((object o) =>
+            {
+                //Загрузка данных.                
+                if (pageHomeMuzoFonGenre == null)
+                {
+                    pageHomeMuzoFonGenre = new PageHomeMuzoFon(browser);
+                }
+
+                listGenreMuzoFon = browser.FindElements(pageHomeMuzoFon.ButtonGenreBy).ToList();
+
+                for (int i = 0; i < listGenreMuzoFon.Count; i++)
+                {
+                    if ((listGenreMuzoFon[i].Text == "Все сборники"))
+                    {
+                        listGenreMuzoFon.RemoveAt(i);
+                    }
+                }
+
+                //Загрузка данных и закрытие прелоадера в основном потоке.
+                this.Invoke(new MethodInvoker(() =>
+                {
+
+                    comboBoxGenre.Items.Add("--- Отменить выбор ---");
+
+                    for (int i = 0; i < 18; i++)
+                    {
+                        comboBoxGenre.Items.Add(listGenreMuzoFon[i].Text);
+                    }
+
+                    formPreloaderGenre.Close();
+
+                }));
+            });
+
+        }
+
+
+        public void LoadMoodThread(object sender, EventArgs e)
+        {
+            //Создние нового процесса. 
+            ThreadPool.QueueUserWorkItem((object o) =>
+            {
+                //Загрузка данных.                
+                if (pageHomeMuzoFonMood == null)
+                {
+                    pageHomeMuzoFonMood = new PageHomeMuzoFon(browserMood);
+                }
+
+                browserMood.FindElement(pageHomeMuzoFonMood.LinkSportMusicBy).Click();
+
+                PageSportMuzoFon pageSportMuzoFon = new PageSportMuzoFon();
+                listMoodMuzoFon = browserMood.FindElements(pageSportMuzoFon.LinkCatalogSportMusicBy).ToList();
+
+                //Загрузка данных и закрытие прелоадера в основном потоке.
+                this.Invoke(new MethodInvoker(() =>
+                {
+
+                    comboBoxMood.Items.Add("--- Отменить выбор ---");
+
+                    foreach (IWebElement element in listMoodMuzoFon)
+                    {
+                        comboBoxMood.Items.Add(element.Text);
+                    }
+
+                    //comboBoxMood.Text = listMoodMuzoFon[0].Text;
+                    comboBoxMood.Enabled = true;
+                    buttonSearch.Enabled = true;
+
+                    formPreloaderMood.Close();
+                    panelHead.Visible = true;
+                    panelControl.Visible = true;
+                    panelResult.Visible = true;
+
+                }));
+            });
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            comboBoxGenre.Text = "Жанр";
+            comboBoxMood.Enabled = true;
+            textBoxArtistTrack.Enabled = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            comboBoxMood.Text = "Настроение";
+            comboBoxGenre.Enabled = true;
+            textBoxArtistTrack.Enabled = true;
         }
     }
 }

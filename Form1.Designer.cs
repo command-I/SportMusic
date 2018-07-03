@@ -30,23 +30,24 @@
         {
             this.panelResult = new System.Windows.Forms.Panel();
             this.panelControl = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.buttonClearTrackArtist = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.comboBoxCount = new System.Windows.Forms.ComboBox();
-            this.comboBoxDuration = new System.Windows.Forms.ComboBox();
             this.comboBoxGenre = new System.Windows.Forms.ComboBox();
             this.comboBoxMood = new System.Windows.Forms.ComboBox();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.textBoxArtistTrack = new System.Windows.Forms.TextBox();
             this.radioButtonYandexSound = new System.Windows.Forms.RadioButton();
             this.radioButtonMuzoFon = new System.Windows.Forms.RadioButton();
+            this.comboBoxCount = new System.Windows.Forms.ComboBox();
+            this.comboBoxDuration = new System.Windows.Forms.ComboBox();
             this.panelHead = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
-            this.buttonClearTrackArtist = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.panelControl.SuspendLayout();
             this.panelHead.SuspendLayout();
             this.SuspendLayout();
@@ -54,9 +55,9 @@
             // panelResult
             // 
             this.panelResult.AutoScroll = true;
-            this.panelResult.Location = new System.Drawing.Point(12, 195);
+            this.panelResult.Location = new System.Drawing.Point(12, 230);
             this.panelResult.Name = "panelResult";
-            this.panelResult.Size = new System.Drawing.Size(860, 341);
+            this.panelResult.Size = new System.Drawing.Size(860, 306);
             this.panelResult.TabIndex = 10;
             // 
             // panelControl
@@ -76,6 +77,36 @@
             this.panelControl.Size = new System.Drawing.Size(860, 137);
             this.panelControl.TabIndex = 11;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(642, 103);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(46, 23);
+            this.button2.TabIndex = 20;
+            this.button2.Text = "X";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(331, 103);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(46, 23);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "X";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // buttonClearTrackArtist
+            // 
+            this.buttonClearTrackArtist.Location = new System.Drawing.Point(642, 53);
+            this.buttonClearTrackArtist.Name = "buttonClearTrackArtist";
+            this.buttonClearTrackArtist.Size = new System.Drawing.Size(46, 23);
+            this.buttonClearTrackArtist.TabIndex = 18;
+            this.buttonClearTrackArtist.Text = "X";
+            this.buttonClearTrackArtist.UseVisualStyleBackColor = true;
+            this.buttonClearTrackArtist.Click += new System.EventHandler(this.button1_Click);
+            // 
             // buttonSave
             // 
             this.buttonSave.Enabled = false;
@@ -86,22 +117,6 @@
             this.buttonSave.Text = "Сохранить";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // comboBoxCount
-            // 
-            this.comboBoxCount.FormattingEnabled = true;
-            this.comboBoxCount.Location = new System.Drawing.Point(708, 6);
-            this.comboBoxCount.Name = "comboBoxCount";
-            this.comboBoxCount.Size = new System.Drawing.Size(97, 21);
-            this.comboBoxCount.TabIndex = 16;
-            // 
-            // comboBoxDuration
-            // 
-            this.comboBoxDuration.FormattingEnabled = true;
-            this.comboBoxDuration.Location = new System.Drawing.Point(569, 6);
-            this.comboBoxDuration.Name = "comboBoxDuration";
-            this.comboBoxDuration.Size = new System.Drawing.Size(100, 21);
-            this.comboBoxDuration.TabIndex = 15;
             // 
             // comboBoxGenre
             // 
@@ -156,18 +171,35 @@
             // radioButtonMuzoFon
             // 
             this.radioButtonMuzoFon.AutoSize = true;
-            this.radioButtonMuzoFon.Checked = true;
             this.radioButtonMuzoFon.Location = new System.Drawing.Point(16, 16);
             this.radioButtonMuzoFon.Name = "radioButtonMuzoFon";
             this.radioButtonMuzoFon.Size = new System.Drawing.Size(74, 17);
             this.radioButtonMuzoFon.TabIndex = 9;
-            this.radioButtonMuzoFon.TabStop = true;
             this.radioButtonMuzoFon.Text = "МузоФон";
             this.radioButtonMuzoFon.UseVisualStyleBackColor = true;
             this.radioButtonMuzoFon.CheckedChanged += new System.EventHandler(this.radioButtonMuzoFon_CheckedChanged);
             // 
+            // comboBoxCount
+            // 
+            this.comboBoxCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCount.FormattingEnabled = true;
+            this.comboBoxCount.Location = new System.Drawing.Point(669, 37);
+            this.comboBoxCount.Name = "comboBoxCount";
+            this.comboBoxCount.Size = new System.Drawing.Size(75, 21);
+            this.comboBoxCount.TabIndex = 16;
+            // 
+            // comboBoxDuration
+            // 
+            this.comboBoxDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDuration.FormattingEnabled = true;
+            this.comboBoxDuration.Location = new System.Drawing.Point(470, 37);
+            this.comboBoxDuration.Name = "comboBoxDuration";
+            this.comboBoxDuration.Size = new System.Drawing.Size(72, 21);
+            this.comboBoxDuration.TabIndex = 15;
+            // 
             // panelHead
             // 
+            this.panelHead.Controls.Add(this.label4);
             this.panelHead.Controls.Add(this.label3);
             this.panelHead.Controls.Add(this.label2);
             this.panelHead.Controls.Add(this.comboBoxDuration);
@@ -176,22 +208,31 @@
             this.panelHead.Controls.Add(this.checkBoxSelectAll);
             this.panelHead.Location = new System.Drawing.Point(13, 157);
             this.panelHead.Name = "panelHead";
-            this.panelHead.Size = new System.Drawing.Size(859, 32);
+            this.panelHead.Size = new System.Drawing.Size(859, 67);
             this.panelHead.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(638, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(135, 13);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Показывать на странице";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(445, 9);
+            this.label3.Location = new System.Drawing.Point(447, 10);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 13);
+            this.label3.Size = new System.Drawing.Size(118, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Длительность";
+            this.label3.Text = "Длительность треков";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(249, 9);
+            this.label2.Location = new System.Drawing.Point(242, 10);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 6;
@@ -200,7 +241,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(121, 9);
+            this.label1.Location = new System.Drawing.Point(122, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 5;
@@ -209,39 +250,12 @@
             // checkBoxSelectAll
             // 
             this.checkBoxSelectAll.AutoSize = true;
-            this.checkBoxSelectAll.Location = new System.Drawing.Point(35, 9);
+            this.checkBoxSelectAll.Enabled = false;
+            this.checkBoxSelectAll.Location = new System.Drawing.Point(39, 9);
             this.checkBoxSelectAll.Name = "checkBoxSelectAll";
             this.checkBoxSelectAll.Size = new System.Drawing.Size(15, 14);
             this.checkBoxSelectAll.TabIndex = 4;
             this.checkBoxSelectAll.UseVisualStyleBackColor = true;
-            // 
-            // buttonClearTrackArtist
-            // 
-            this.buttonClearTrackArtist.Location = new System.Drawing.Point(642, 53);
-            this.buttonClearTrackArtist.Name = "buttonClearTrackArtist";
-            this.buttonClearTrackArtist.Size = new System.Drawing.Size(46, 23);
-            this.buttonClearTrackArtist.TabIndex = 18;
-            this.buttonClearTrackArtist.Text = "<<";
-            this.buttonClearTrackArtist.UseVisualStyleBackColor = true;
-            this.buttonClearTrackArtist.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(331, 103);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(46, 23);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "<<";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(642, 103);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(46, 23);
-            this.button2.TabIndex = 20;
-            this.button2.Text = "<<";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -254,6 +268,8 @@
             this.Name = "Form1";
             this.Text = "Музыка для спорта";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.panelControl.ResumeLayout(false);
             this.panelControl.PerformLayout();
             this.panelHead.ResumeLayout(false);
@@ -283,6 +299,7 @@
         private System.Windows.Forms.Button buttonClearTrackArtist;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label4;
     }
 }
 
