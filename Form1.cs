@@ -99,13 +99,7 @@ namespace SportMusic
         /// Ссылка на форму.
         /// </summary>
         Form2 form2;
-
-        /// <summary>
-        /// Для доступа к элементам формы из другого потока.
-        /// </summary>
-        public delegate void OtherFlowDelegate();
-
-        Thread flowPreloader;
+        
         PictureBox animation = new PictureBox();
 
         public Form1()
@@ -155,30 +149,7 @@ namespace SportMusic
             comboBoxMood.Enabled = true;
             comboBoxGenre.Enabled = true;            
 
-        }
-
-        /// <summary>
-        /// Управление элементами формы из другого потока.
-        /// </summary>
-        public void PreloaderControl()
-        {            
-            this.Text = "Идёт загрузка";
-            panelResult.Visible = false;
-            animation.ImageLocation = "E:\\001.gif";
-            animation.Top = 300;
-            animation.Left = 450;            
-            animation.Show();
-            this.Controls.Add(animation);                                    
-        }
-       
-
-        /// <summary>
-        /// Выполняется в отдельном потоке.
-        /// </summary>
-        public void OtherFlow()
-        {
-            BeginInvoke(new OtherFlowDelegate(PreloaderControl));
-        }
+        }           
 
         /// <summary>
         /// Действия по выбору сайта "МузоФон".
@@ -240,7 +211,24 @@ namespace SportMusic
                 
             }
 
-        }        
+        }
+
+        /// <summary>
+        /// Выводит индикатор загрузки в отдельном потоке.
+        /// </summary>
+        void FormPreloader()
+        {
+            Form form = new Form();
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Width = 100;
+            form.Height = 100;
+            form.Top = this.Top/2;
+            form.Left = this.Left/2;
+            PictureBox pictureBox = new PictureBox();
+            pictureBox.ImageLocation = "E:\\001.gif";
+            form.Controls.Add(pictureBox);
+            form.ShowDialog();            
+        }
 
         /// <summary>
         /// Действия по нажатию на кнопку "Поиск".
@@ -288,7 +276,9 @@ namespace SportMusic
             }
             else
             {
-                flowPreloader.Start();
+                //new Thread(NewForm).Start();
+
+                countChecking = 0;
 
                 buttonSearch.Enabled = false;
 
@@ -372,10 +362,8 @@ namespace SportMusic
                 }
             }
 
-            flowPreloader.Abort();
-            panelResult.Visible = true;
-            buttonSearch.Enabled = true;
-            this.Text = "Музыка для спорта";            
+            
+            buttonSearch.Enabled = true;                        
         }
 
         /// <summary>
@@ -627,7 +615,8 @@ namespace SportMusic
                 labelDuration.Top = 10 + i * distanceTop;
                 labelDuration.Text = listTrackOptions[i].Duration;
                 panel.Controls.Add(labelDuration);
-
+                
+                /*
                 Button buttonFindFormat = new Button();
                 buttonFindFormat.Name = i.ToString();
                 buttonFindFormat.Width = 80;
@@ -646,7 +635,8 @@ namespace SportMusic
                 buttonFindFormat.Click += buttonFindFormat_Click;
                 comboBoxSelectFormat.Enabled = false;
                 panel.Controls.Add(comboBoxSelectFormat);
-                
+                */
+
                 Button buttonDownload = new Button();
                 buttonDownload.Name = i.ToString();
                 buttonDownload.Width = 80;
@@ -668,17 +658,21 @@ namespace SportMusic
         /// <param name="e"></param>
         private void textBoxArtistTrack_TextChanged(object sender, EventArgs e)
         {
-            if ((textBoxArtistTrack.Text == "") || (textBoxArtistTrack.Text == "Трек, исполнитель"))
+            if (textBoxArtistTrack.Text != "")
+            {
+                buttonClearTrackArtist.Enabled = true;
+            }
+            else if ((textBoxArtistTrack.Text == "") || (textBoxArtistTrack.Text == "Трек, исполнитель"))
             {
                 comboBoxMood.Enabled = true;
-                comboBoxGenre.Enabled = true;
+                comboBoxGenre.Enabled = true;                
             }
             else
             {
                 comboBoxMood.Enabled = false;
                 comboBoxGenre.Enabled = false;
             }
-
+                            
             buttonSearch.Enabled = true;
         }
 
@@ -842,9 +836,16 @@ namespace SportMusic
             }            
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Очистка элемента "Трек-Артист".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click(object sender, EventArgs e)
         {
-            flowPreloader = new Thread(OtherFlow);            
+            textBoxArtistTrack.Text = "";
+            Button button = (Button)sender;
+            button.Enabled = false;            
         }
     }
 }
