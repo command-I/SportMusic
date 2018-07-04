@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bunifu_UI_v1.5.3">
+      <HintPath>packages\Bunifu_UI_v1.5.3.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -63,6 +66,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="boardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="boardForm.Designer.cs">
+      <DependentUpon>boardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseFunctions.cs" />
     <Compile Include="Edit_Playlist.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
@@ -137,6 +146,15 @@
     <Compile Include="User_Track_Playlist.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="boardForm.asa-TZ.resx">
+      <DependentUpon>boardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="boardForm.lkt-US.resx">
+      <DependentUpon>boardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="boardForm.resx">
+      <DependentUpon>boardForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main_Form.resx">
       <DependentUpon>Main_Form.cs</DependentUpon>
     </EmbeddedResource>

@@ -110,6 +110,13 @@ namespace SportMusic
             InitializeComponent();
             browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
             axWindowsMediaPlayer1.uiMode = "none";
+            axWindowsMediaPlayer1.settings.volume = 50;
+            trackBar1.Value = 50;
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            FormBorderStyle = FormBorderStyle.None;
         }
 
         /// <summary>
@@ -890,6 +897,12 @@ namespace SportMusic
         private void button5_Click_1(object sender, EventArgs e)
         {
             axWindowsMediaPlayer1.Ctlcontrols.fastForward();
+        }
+
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.settings.volume = trackBar1.Value;
         }
 
         private void button2_Click(object sender, EventArgs e)
