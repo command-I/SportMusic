@@ -64,7 +64,7 @@ namespace SportMusic
         {
             Form ifm = new Authorization();
             ifm.Show();
-            this.Hide;
+            this.Hide();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
