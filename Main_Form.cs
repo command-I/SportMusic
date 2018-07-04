@@ -126,6 +126,13 @@ namespace SportMusic
 
             browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
             axWindowsMediaPlayer1.uiMode = "none";
+            axWindowsMediaPlayer1.settings.volume = 50;
+            trackBar1.Value = 50;
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            FormBorderStyle = FormBorderStyle.None;
         }
 
         /// <summary>
@@ -370,10 +377,16 @@ namespace SportMusic
         {
             Button button = (Button)sender;
 
+            string name;
+            string url;
             int index = Int32.Parse(button.Name);
-            listDownload[index].Click();
+            listDownload[index].FindElement(By.XPath($"/html/body/div[2]/div[1]/div[4]/div/ul/li[1]/div[1]/ul/li[3]/a")).ToString();
 
-            DownloadFromLink(listDownload[index].GetAttribute("href"), PATH_DOWNLOAD, listTracks[index].Text + ".mp3");
+            name = ".\\Download\\" + listTracks[index].Text + ".mp3";
+            url = listDownload[index].GetAttribute("href");
+            //textBox1.Text = url;
+            //MessageBox.Show(url);
+            Download(url, name);
         }
 
         /// <summary>
@@ -383,10 +396,44 @@ namespace SportMusic
         /// <param name="e"></param>
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            Button button = (Button)sender;            
-            listPlay[Int32.Parse(button.Name)].Click();                        
+            Button button = (Button)sender;
+            listPlay[Int32.Parse(button.Name)].Click();
         }
-    
+
+
+        /// <summary>
+        /// Скачивание файлов по url.
+        /// </summary>
+        /// <param name="url">Принимает ссылку.</param>
+        /// <param name="path">Принимает путь для сохранения.</param>
+        /// <param name="file">Принимает имя файла.</param>
+        private void Download(string link, string name)
+        {
+            WebClient webload = new WebClient();
+            webload.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+            webload.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDown);
+
+            webload.DownloadFileAsync(new Uri(link), name);
+            Environment.ExpandEnvironmentVariables(PATH_DOWNLOAD);
+        }
+
+        private void ProgressDown(object sender, DownloadProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+            textBox1.Text = "Загружено :" + e.ProgressPercentage + " %";
+        }
+
+        private void Completed(object sender, AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+            }
+            else
+            {
+                textBox1.Text = "Загрузка файла завершена";
+            }
+        }
 
         // !!! на МузоФон не работает.
         private void buttonFindFormat_Click(object sender, EventArgs e)
@@ -853,7 +900,11 @@ namespace SportMusic
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DirectoryInfo dir = new DirectoryInfo("D:\\Музыка\\Легенды советской эстрады 70-80 годы");
+            if (listBox1.Items.Count > 0)
+            {
+                listBox1.Items.Clear();
+            }
+            DirectoryInfo dir = new DirectoryInfo(".\\Download");
             FileInfo[] files = dir.GetFiles("*.mp3");
 
             foreach (FileInfo fi in files)
@@ -924,6 +975,12 @@ namespace SportMusic
             this.Hide();
             f.ShowDialog();
             this.Show();
+        }
+
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.settings.volume = trackBar1.Value;
         }
 
         private void button2_Click(object sender, EventArgs e)
