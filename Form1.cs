@@ -117,6 +117,7 @@ namespace SportMusic
 
         int durationTrack;
         int durationSetUser;
+        bool noFoundTrack = false;
 
         public Form1()
         {
@@ -333,14 +334,20 @@ namespace SportMusic
                     }
 
                     ShowPreloaderTracksForm();
-                   
+
+                    //if (noFoundTrack)
+                    //{
+                    //    MessageBox.Show("Запрашиваемые треки не найдены");
+                    //    noFoundTrack = false;
+                    //}
+
                 }
                 else
                 {
                     // Здесь будет Яндекс.
                 }
-            }
-            
+            }                       
+
             buttonSearch.Enabled = true;
         }
 
@@ -457,6 +464,12 @@ namespace SportMusic
             {
 
                 int durationTrack = TimeStringToInt(listDuration[i].Text);
+
+                if (durationTrack == -1)
+                {
+                    continue;
+                }
+                    
                 int durationSetUser = TimeStringToInt(comboBoxDuration.Text);
 
                 if ((durationTrack < durationSetUser) || (durationSetUser == -1))
@@ -470,7 +483,6 @@ namespace SportMusic
                                                                 listTracks[i].Text + ".mp3");
                     listTrackOptions.Add(trackOptions);
                 }
-
             }
 
             return listTrackOptions;
@@ -544,93 +556,103 @@ namespace SportMusic
             int leftComboBoxFormats = 680;
             int leftButtonDownload = 750;
 
-            if (listTrackOptions.Count < count)
+            if (noFoundTrack)
             {
-                count = listTrackOptions.Count;
-            }            
-
-            for (int i = 0; i < count; i++)
+                MessageBox.Show("Запрашиваемые треки не найдены");
+                noFoundTrack = false;                
+            }
+            else
             {
-                Label labelNum = new Label();
-                labelNum.Width = 30;
-                labelNum.Left = leftLabelNum;
-                labelNum.Top = i * distanceTop;
-                labelNum.Text = (i + 1).ToString() + ".";
-                panel.Controls.Add(labelNum);
+                if (listTrackOptions.Count < count)
+                {
+                    count = listTrackOptions.Count;
+                }
 
-                CheckBox checkBoxSelectTrack = new CheckBox();
-                checkBoxSelectTrack.Width = 20;
-                checkBoxSelectTrack.Name = i.ToString();
-                checkBoxSelectTrack.Left = leftCheckBoxSelectTrack;
-                checkBoxSelectTrack.Top = i * distanceTop;
-                checkBoxSelectTrack.CheckedChanged += checkBoxSelect_CheckedChanged;                
-                panel.Controls.Add(checkBoxSelectTrack);
+                for (int i = 0; i < count; i++)
+                {
+                    Label labelNum = new Label();
+                    labelNum.Width = 30;
+                    labelNum.Left = leftLabelNum;
+                    labelNum.Top = i * distanceTop;
+                    labelNum.Text = (i + 1).ToString() + ".";
+                    panel.Controls.Add(labelNum);
 
-                Button buttonPlay = new Button();
-                buttonPlay.Name = i.ToString();
-                buttonPlay.Width = 40;
-                buttonPlay.Left = leftButtonPlay;
-                buttonPlay.Top = i * distanceTop;
-                buttonPlay.Text = "Play";
-                buttonPlay.Click += buttonPlay_Click;
-                panel.Controls.Add(buttonPlay);
+                    CheckBox checkBoxSelectTrack = new CheckBox();
+                    checkBoxSelectTrack.Width = 20;
+                    checkBoxSelectTrack.Name = i.ToString();
+                    checkBoxSelectTrack.Left = leftCheckBoxSelectTrack;
+                    checkBoxSelectTrack.Top = i * distanceTop;
+                    checkBoxSelectTrack.CheckedChanged += checkBoxSelect_CheckedChanged;
+                    panel.Controls.Add(checkBoxSelectTrack);
 
-                Label labelArtist = new Label();
-                labelArtist.Left = leftLabelArtist;
-                labelArtist.Top = i * distanceTop;
-                labelArtist.Text = listTrackOptions[i].Artist;
-                panel.Controls.Add(labelArtist);
+                    Button buttonPlay = new Button();
+                    buttonPlay.Name = i.ToString();
+                    buttonPlay.Width = 40;
+                    buttonPlay.Left = leftButtonPlay;
+                    buttonPlay.Top = i * distanceTop;
+                    buttonPlay.Text = "Play";
+                    buttonPlay.Click += buttonPlay_Click;
+                    panel.Controls.Add(buttonPlay);
 
-                Label labelTrack = new Label();
-                labelTrack.Width = 300;
-                labelTrack.Left = leftLabelTrack;
-                labelTrack.Top = i * distanceTop;
-                labelTrack.Text = listTrackOptions[i].Track;
-                panel.Controls.Add(labelTrack);
+                    Label labelArtist = new Label();
+                    labelArtist.Left = leftLabelArtist;
+                    labelArtist.Top = i * distanceTop;
+                    labelArtist.Text = listTrackOptions[i].Artist;
+                    panel.Controls.Add(labelArtist);
 
-                Label labelDuration = new Label();
-                labelDuration.Width = 40;
-                labelDuration.Left = leftDurationTrack;
-                labelDuration.Top = i * distanceTop;
-                labelDuration.Text = listTrackOptions[i].Duration;
-                panel.Controls.Add(labelDuration);
+                    Label labelTrack = new Label();
+                    labelTrack.Width = 300;
+                    labelTrack.Left = leftLabelTrack;
+                    labelTrack.Top = i * distanceTop;
+                    labelTrack.Text = listTrackOptions[i].Track;
+                    panel.Controls.Add(labelTrack);
 
-                /*
-                Button buttonFindFormat = new Button();
-                buttonFindFormat.Name = i.ToString();
-                buttonFindFormat.Width = 80;
-                buttonFindFormat.Left = leftButtonFindFormat;
-                buttonFindFormat.Top = 10 + i * distanceTop;
-                buttonFindFormat.Text = "Запросить";
-                buttonFindFormat.Click += buttonFindFormat_Click;                
-                buttonFindFormat.Enabled = false;                
-                panel.Controls.Add(buttonFindFormat);
-                                
-                ComboBox comboBoxSelectFormat = new ComboBox();
-                comboBoxSelectFormat.Name = "comboBoxFindFormat_" + i.ToString();
-                comboBoxSelectFormat.Width = 80;
-                comboBoxSelectFormat.Left = leftComboBoxFormats;
-                comboBoxSelectFormat.Top = 10 + i * distanceTop;
-                buttonFindFormat.Click += buttonFindFormat_Click;
-                comboBoxSelectFormat.Enabled = false;
-                panel.Controls.Add(comboBoxSelectFormat);
-                */
+                    Label labelDuration = new Label();
+                    labelDuration.Width = 40;
+                    labelDuration.Left = leftDurationTrack;
+                    labelDuration.Top = i * distanceTop;
+                    labelDuration.Text = listTrackOptions[i].Duration;
+                    panel.Controls.Add(labelDuration);
 
-                Button buttonDownload = new Button();
-                buttonDownload.Name = i.ToString();
-                buttonDownload.Width = 80;
-                buttonDownload.Left = leftButtonDownload;
-                buttonDownload.Top = i * distanceTop;
-                buttonDownload.Text = "Скачать";
-                buttonDownload.Click += buttonDownload_Click;
-                buttonDownload.Enabled = true;
-                panel.Controls.Add(buttonDownload);
+                    /*
+                    Button buttonFindFormat = new Button();
+                    buttonFindFormat.Name = i.ToString();
+                    buttonFindFormat.Width = 80;
+                    buttonFindFormat.Left = leftButtonFindFormat;
+                    buttonFindFormat.Top = 10 + i * distanceTop;
+                    buttonFindFormat.Text = "Запросить";
+                    buttonFindFormat.Click += buttonFindFormat_Click;                
+                    buttonFindFormat.Enabled = false;                
+                    panel.Controls.Add(buttonFindFormat);
+
+                    ComboBox comboBoxSelectFormat = new ComboBox();
+                    comboBoxSelectFormat.Name = "comboBoxFindFormat_" + i.ToString();
+                    comboBoxSelectFormat.Width = 80;
+                    comboBoxSelectFormat.Left = leftComboBoxFormats;
+                    comboBoxSelectFormat.Top = 10 + i * distanceTop;
+                    buttonFindFormat.Click += buttonFindFormat_Click;
+                    comboBoxSelectFormat.Enabled = false;
+                    panel.Controls.Add(comboBoxSelectFormat);
+                    */
+
+                    Button buttonDownload = new Button();
+                    buttonDownload.Name = i.ToString();
+                    buttonDownload.Width = 80;
+                    buttonDownload.Left = leftButtonDownload;
+                    buttonDownload.Top = i * distanceTop;
+                    buttonDownload.Text = "Скачать";
+                    buttonDownload.Click += buttonDownload_Click;
+                    buttonDownload.Enabled = true;
+                    panel.Controls.Add(buttonDownload);
+                }
+
+                if (count != 0)
+                {
+                    checkBoxSelectAll.Enabled = true;
+                }
+
             }
 
-            if(count != 0)
-            {
-                checkBoxSelectAll.Enabled = true;
-            }
         }
 
         /// <summary>
@@ -921,6 +943,7 @@ namespace SportMusic
 
         public void LoadTraksThread(object sender, EventArgs e)
         {
+            
             //Создние нового процесса. 
             ThreadPool.QueueUserWorkItem((object o) =>
             {
@@ -928,13 +951,19 @@ namespace SportMusic
                 if (pageSearchMuzoFon == null)
                 {
                     pageSearchMuzoFon = new PageSearchMuzoFon(browser);
-                }
+                }                               
 
                 listArtists = browser.FindElements(pageSearchMuzoFon.TextArtistBy).ToList();
                 listTracks = browser.FindElements(pageSearchMuzoFon.TextTrackBy).ToList();
                 listDuration = browser.FindElements(pageSearchMuzoFon.TextDurationBy).ToList();
                 listDownload = browser.FindElements(pageSearchMuzoFon.IconDownloadBy).ToList();
-                listPlay = browser.FindElements(pageSearchMuzoFon.IconPlayBy).ToList();                
+                listPlay = browser.FindElements(pageSearchMuzoFon.IconPlayBy).ToList();
+
+                if (listArtists.Count == 0)
+                {
+                    //MessageBox.Show("Запрашиваемые треки не найдены");
+                    noFoundTrack = true;
+                }
 
                 for (int i = 0; i < listArtists.Count; i++)
                 {
@@ -942,7 +971,7 @@ namespace SportMusic
 
                     if ((durationTrack < durationSetUser) || (durationSetUser == -1))
                     {
-                        TrackOptions trackOptions = new TrackOptions(
+                    TrackOptions trackOptions = new TrackOptions(
                                                                     i,
                                                                     listArtists[i].Text,
                                                                     listTracks[i].Text,
@@ -952,15 +981,16 @@ namespace SportMusic
                         listTrackOptions.Add(trackOptions);
                     }
                 }
+                            
 
                 //Обращение к элементам формы основного потока и закрытие прелоадера в основном потоке.
                 this.Invoke(new MethodInvoker(() =>
                 {                    
-                    formPreloaderTracks.Close();
                     ShowFromSiteToForm(listTrackOptions, panelResult, SetCountShowTracks());
+                    formPreloaderTracks.Close();                                       
 
                 }));
-            });
+            });            
 
         }
 
@@ -976,6 +1006,16 @@ namespace SportMusic
                     pageHomeMuzoFonGenre = new PageHomeMuzoFon(browser);
                 }
 
+                browser.Manage().Window.Maximize();
+
+                //IJavaScriptExecutor javaEx = (IJavaScriptExecutor)browser;
+                
+                //javaEx.ExecuteScript("$('module-popular').click(function(){$('module-popular').show();});");
+
+                //IWebElement before = browser.FindElement(By.CssSelector(".module-popular"));
+                //javaEx.ExecuteScript("arguments[0].click()", before);
+
+
                 listGenreMuzoFon = browser.FindElements(pageHomeMuzoFon.ButtonGenreBy).ToList();
 
                 for (int i = 0; i < listGenreMuzoFon.Count; i++)
@@ -990,7 +1030,7 @@ namespace SportMusic
                 this.Invoke(new MethodInvoker(() =>
                 {
 
-                    comboBoxGenre.Items.Add("--- Отменить выбор ---");
+                    //comboBoxGenre.Items.Add("--- Отменить выбор ---");
 
                     for (int i = 0; i < 18; i++)
                     {
@@ -1025,7 +1065,7 @@ namespace SportMusic
                 this.Invoke(new MethodInvoker(() =>
                 {
 
-                    comboBoxMood.Items.Add("--- Отменить выбор ---");
+                    //comboBoxMood.Items.Add("--- Отменить выбор ---");
 
                     foreach (IWebElement element in listMoodMuzoFon)
                     {

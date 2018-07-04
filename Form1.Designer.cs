@@ -31,35 +31,37 @@
             this.panelControl = new System.Windows.Forms.Panel();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.comboBoxCount = new System.Windows.Forms.ComboBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.comboBoxDuration = new System.Windows.Forms.ComboBox();
             this.buttonSearch = new System.Windows.Forms.Button();
-            this.radioButtonYandexSound = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBoxArtistTrack = new System.Windows.Forms.TextBox();
             this.buttonClearTrackArtist = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonClearGenre = new System.Windows.Forms.Button();
             this.comboBoxGenre = new System.Windows.Forms.ComboBox();
-            this.radioButtonMuzoFon = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonClearMood = new System.Windows.Forms.Button();
             this.comboBoxMood = new System.Windows.Forms.ComboBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.comboBoxCount = new System.Windows.Forms.ComboBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.comboBoxDuration = new System.Windows.Forms.ComboBox();
+            this.radioButtonYandexSound = new System.Windows.Forms.RadioButton();
+            this.radioButtonMuzoFon = new System.Windows.Forms.RadioButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
             this.panelResult = new System.Windows.Forms.Panel();
             this.panelHead = new System.Windows.Forms.Panel();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.panelControl.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.panelHead.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelControl
@@ -98,6 +100,44 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.comboBoxCount);
+            this.groupBox6.Location = new System.Drawing.Point(711, 71);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(138, 45);
+            this.groupBox6.TabIndex = 25;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Количество треков";
+            // 
+            // comboBoxCount
+            // 
+            this.comboBoxCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCount.FormattingEnabled = true;
+            this.comboBoxCount.Location = new System.Drawing.Point(25, 19);
+            this.comboBoxCount.Name = "comboBoxCount";
+            this.comboBoxCount.Size = new System.Drawing.Size(75, 21);
+            this.comboBoxCount.TabIndex = 16;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.comboBoxDuration);
+            this.groupBox5.Location = new System.Drawing.Point(567, 72);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(138, 45);
+            this.groupBox5.TabIndex = 24;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Длительность треков";
+            // 
+            // comboBoxDuration
+            // 
+            this.comboBoxDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDuration.FormattingEnabled = true;
+            this.comboBoxDuration.Location = new System.Drawing.Point(32, 19);
+            this.comboBoxDuration.Name = "comboBoxDuration";
+            this.comboBoxDuration.Size = new System.Drawing.Size(72, 21);
+            this.comboBoxDuration.TabIndex = 15;
+            // 
             // buttonSearch
             // 
             this.buttonSearch.Enabled = false;
@@ -108,17 +148,6 @@
             this.buttonSearch.Text = "Искать";
             this.buttonSearch.UseVisualStyleBackColor = true;
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
-            // 
-            // radioButtonYandexSound
-            // 
-            this.radioButtonYandexSound.AutoSize = true;
-            this.radioButtonYandexSound.Enabled = false;
-            this.radioButtonYandexSound.Location = new System.Drawing.Point(723, 27);
-            this.radioButtonYandexSound.Name = "radioButtonYandexSound";
-            this.radioButtonYandexSound.Size = new System.Drawing.Size(103, 17);
-            this.radioButtonYandexSound.TabIndex = 10;
-            this.radioButtonYandexSound.Text = "ЯндексМузыка";
-            this.radioButtonYandexSound.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
@@ -180,17 +209,6 @@
             this.comboBoxGenre.TabIndex = 14;
             this.comboBoxGenre.SelectedIndexChanged += new System.EventHandler(this.comboBoxGenre_SelectedIndexChanged);
             // 
-            // radioButtonMuzoFon
-            // 
-            this.radioButtonMuzoFon.AutoSize = true;
-            this.radioButtonMuzoFon.Location = new System.Drawing.Point(597, 27);
-            this.radioButtonMuzoFon.Name = "radioButtonMuzoFon";
-            this.radioButtonMuzoFon.Size = new System.Drawing.Size(74, 17);
-            this.radioButtonMuzoFon.TabIndex = 9;
-            this.radioButtonMuzoFon.Text = "МузоФон";
-            this.radioButtonMuzoFon.UseVisualStyleBackColor = true;
-            this.radioButtonMuzoFon.CheckedChanged += new System.EventHandler(this.radioButtonMuzoFon_CheckedChanged);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.buttonClearMood);
@@ -222,59 +240,43 @@
             this.comboBoxMood.TabIndex = 13;
             this.comboBoxMood.SelectedIndexChanged += new System.EventHandler(this.comboBoxMood_SelectedIndexChanged);
             // 
-            // groupBox6
+            // radioButtonYandexSound
             // 
-            this.groupBox6.Controls.Add(this.comboBoxCount);
-            this.groupBox6.Location = new System.Drawing.Point(711, 71);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(138, 45);
-            this.groupBox6.TabIndex = 25;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Количество треков";
+            this.radioButtonYandexSound.AutoSize = true;
+            this.radioButtonYandexSound.Enabled = false;
+            this.radioButtonYandexSound.Location = new System.Drawing.Point(723, 19);
+            this.radioButtonYandexSound.Name = "radioButtonYandexSound";
+            this.radioButtonYandexSound.Size = new System.Drawing.Size(103, 17);
+            this.radioButtonYandexSound.TabIndex = 10;
+            this.radioButtonYandexSound.Text = "ЯндексМузыка";
+            this.radioButtonYandexSound.UseVisualStyleBackColor = true;
             // 
-            // comboBoxCount
+            // radioButtonMuzoFon
             // 
-            this.comboBoxCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCount.FormattingEnabled = true;
-            this.comboBoxCount.Location = new System.Drawing.Point(25, 19);
-            this.comboBoxCount.Name = "comboBoxCount";
-            this.comboBoxCount.Size = new System.Drawing.Size(75, 21);
-            this.comboBoxCount.TabIndex = 16;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.comboBoxDuration);
-            this.groupBox5.Location = new System.Drawing.Point(567, 72);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(138, 45);
-            this.groupBox5.TabIndex = 24;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Длительность треков";
-            // 
-            // comboBoxDuration
-            // 
-            this.comboBoxDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDuration.FormattingEnabled = true;
-            this.comboBoxDuration.Location = new System.Drawing.Point(32, 19);
-            this.comboBoxDuration.Name = "comboBoxDuration";
-            this.comboBoxDuration.Size = new System.Drawing.Size(72, 21);
-            this.comboBoxDuration.TabIndex = 15;
+            this.radioButtonMuzoFon.AutoSize = true;
+            this.radioButtonMuzoFon.Location = new System.Drawing.Point(597, 19);
+            this.radioButtonMuzoFon.Name = "radioButtonMuzoFon";
+            this.radioButtonMuzoFon.Size = new System.Drawing.Size(74, 17);
+            this.radioButtonMuzoFon.TabIndex = 9;
+            this.radioButtonMuzoFon.Text = "МузоФон";
+            this.radioButtonMuzoFon.UseVisualStyleBackColor = true;
+            this.radioButtonMuzoFon.CheckedChanged += new System.EventHandler(this.radioButtonMuzoFon_CheckedChanged);
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.groupBox7);
             this.groupBox4.Controls.Add(this.radioButtonYandexSound);
             this.groupBox4.Controls.Add(this.radioButtonMuzoFon);
-            this.groupBox4.Controls.Add(this.checkBoxSelectAll);
             this.groupBox4.Location = new System.Drawing.Point(9, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(869, 65);
+            this.groupBox4.Size = new System.Drawing.Size(869, 50);
             this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
             // 
             // checkBoxSelectAll
             // 
             this.checkBoxSelectAll.AutoSize = true;
-            this.checkBoxSelectAll.Location = new System.Drawing.Point(30, 27);
+            this.checkBoxSelectAll.Location = new System.Drawing.Point(37, 17);
             this.checkBoxSelectAll.Name = "checkBoxSelectAll";
             this.checkBoxSelectAll.Size = new System.Drawing.Size(15, 14);
             this.checkBoxSelectAll.TabIndex = 4;
@@ -284,9 +286,9 @@
             // panelResult
             // 
             this.panelResult.AutoScroll = true;
-            this.panelResult.Location = new System.Drawing.Point(12, 263);
+            this.panelResult.Location = new System.Drawing.Point(12, 228);
             this.panelResult.Name = "panelResult";
-            this.panelResult.Size = new System.Drawing.Size(891, 395);
+            this.panelResult.Size = new System.Drawing.Size(891, 401);
             this.panelResult.TabIndex = 10;
             // 
             // panelHead
@@ -294,14 +296,24 @@
             this.panelHead.Controls.Add(this.groupBox4);
             this.panelHead.Location = new System.Drawing.Point(12, 168);
             this.panelHead.Name = "panelHead";
-            this.panelHead.Size = new System.Drawing.Size(891, 68);
+            this.panelHead.Size = new System.Drawing.Size(891, 54);
             this.panelHead.TabIndex = 12;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.checkBoxSelectAll);
+            this.groupBox7.Location = new System.Drawing.Point(6, 7);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(90, 37);
+            this.groupBox7.TabIndex = 0;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Выбрать все";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(964, 662);
+            this.ClientSize = new System.Drawing.Size(964, 632);
             this.Controls.Add(this.panelHead);
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.panelResult);
@@ -312,15 +324,17 @@
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.panelControl.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.panelHead.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -346,9 +360,10 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox checkBoxSelectAll;
         private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.Panel panelResult;
         private System.Windows.Forms.Panel panelHead;
+        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.GroupBox groupBox7;
     }
 }
 
