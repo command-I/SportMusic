@@ -77,7 +77,7 @@ namespace SportMusic
                 track.date_add = Convert.ToDateTime(row.Cells[11].Value.ToString());
                 user_Tracks.Add(track);
             }
-            Edit_MyPlaylist f = new Edit_MyPlaylist("Добавить", user_Tracks,-1, author,login,name,surname);
+            Edit_MyPlaylist f = new Edit_MyPlaylist("Добавить", user_Tracks, -1, author,login,name,surname);
             f.ShowDialog();
 
         }

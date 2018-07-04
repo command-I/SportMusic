@@ -266,7 +266,7 @@ namespace SportMusic
                         context.Entry(playlist).State = EntityState.Added;
                         context.SaveChanges();
 
-                        int? position = context.User_Track_Playlist.Max(a => a.position);
+                        int? position = context.User_Track_Playlist.Where(a=>a.playlist_id == id).Max(a => a.position);
                         if (position == null)
                             position = 0;
                         foreach (User_Track track in tracks)
@@ -298,6 +298,18 @@ namespace SportMusic
                             context.Entry(playlist).State = EntityState.Modified;
                             context.SaveChanges();
 
+                            //Удалили все связанные данные из таблицы User_Track_Playlist
+                            context.User_Track_Playlist.RemoveRange(context.User_Track_Playlist.Where(a => a.playlist_id == id));
+                            context.SaveChanges();
+
+                            int? position = context.User_Track_Playlist.Where(a => a.playlist_id == id).Max(a => a.position);
+                            if (position == null)
+                                position = 0;
+                            foreach (User_Track track in tracks)
+                            {
+                                position++;
+                                User_Track_Playlist_Edit("Добавить", playlist.id, track.track_id, position, -1);
+                            }
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message); }
                         break;
@@ -330,7 +342,7 @@ namespace SportMusic
         /// <param name="id"></param>
         /// <param name="playlist_id"></param>
         /// <param name="track_id"></param>
-        public void User_Track_Playlist_Edit(string command, int playlist_id, int track_id, int? position, int id=0)
+        public void User_Track_Playlist_Edit(string command, int playlist_id, int track_id, int? position=0, int id=0)
         {
             switch (command)
             {
@@ -350,25 +362,25 @@ namespace SportMusic
 
                         break;
                     }
-                case "Редактировать":
-                    {
-                        try
-                        {
-                            //Добавление в треки пользователя
-                            User_Track_Playlist user_Track_Playlist = context.User_Track_Playlist.Find(id);
+                //case "Редактировать":
+                //    {
+                //        try
+                //        {
+                //            List<User_Track_Playlist> list = context.User_Track_Playlist.Where(a => a.playlist_id == playlist_id).ToList();
 
-                            user_Track_Playlist.id = id;
-                            user_Track_Playlist.playlist_id = playlist_id;
-                            user_Track_Playlist.track_id = track_id;
-                            user_Track_Playlist.position = position;
+                //            foreach (User_Track_Playlist temp in list)
+                //            {
+                //                User_Track_Playlist_Edit("Удалить", temp.playlist_id, temp.track_id,0,temp.id);
+                //            }
+                            
 
-                            context.Entry(user_Track_Playlist).State = EntityState.Modified;
-                            context.SaveChanges();
+                //            User_Track_Playlist_Edit("Добавить", playlist_id, track_id);
+                            
 
-                        }
-                        catch (Exception ex) { Console.WriteLine(ex.Message); }
-                        break;
-                    }
+                //        }
+                //        catch (Exception ex) { Console.WriteLine(ex.Message); }
+                //        break;
+                //    }
                 case "Удалить":
                     {
                         try

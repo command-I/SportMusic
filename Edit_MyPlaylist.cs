@@ -12,7 +12,7 @@ namespace SportMusic
 {
     public partial class Edit_MyPlaylist : Form
     {
-        int id;
+        int author;
         string name;
         string surname;
         string login;
@@ -21,9 +21,9 @@ namespace SportMusic
         List<User_Track> user_Tracks = new List<User_Track>();
         Intensiv2018Entities context = new Intensiv2018Entities();
         DatabaseFunctions functions = new DatabaseFunctions();
-        public Edit_MyPlaylist(string command, List<User_Track> list, int list_id, int id,string login, string name, string surname)
+        public Edit_MyPlaylist(string command, List<User_Track> list, int list_id, int author, string login, string name, string surname)
         {
-            this.id = id;
+            this.author = author;
             this.name = name;
             this.surname = surname;
             this.login = login;
@@ -55,7 +55,7 @@ namespace SportMusic
                 {
                     TimeSpan full_duration = new TimeSpan(); //заглушка
                     DatabaseFunctions functions = new DatabaseFunctions();
-                    functions.PlaylistEdit(command, -1, user_Tracks, id, surname, name, textBox_Title_Playlist.Text, full_duration);
+                    functions.PlaylistEdit(command,list_id, user_Tracks, author, surname, name, textBox_Title_Playlist.Text, full_duration);
                 }
                 else
                 {
@@ -75,19 +75,51 @@ namespace SportMusic
 
         private void buttonUp_Click(object sender, EventArgs e)
         {
-            Intensiv2018Entities context = new Intensiv2018Entities();
-
             int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
-            //    //получить значение id выбранной строки
-            int current_position = Convert.ToInt32(dataGridView1[3, CurrentRow].Value);
-            int previous_position = Convert.ToInt32(dataGridView1[3, CurrentRow-1].Value);
+            if (CurrentRow != 0)
+            {
+                //получить значение id выбранной строки
+                int current_id = Convert.ToInt32(dataGridView1[0, CurrentRow].Value);
+                int previous_id = Convert.ToInt32(dataGridView1[0, CurrentRow - 1].Value);
 
-            int previous_track_id = Convert.ToInt32(dataGridView1[2, CurrentRow - 1].Value);
-            int current_track_id = Convert.ToInt32(dataGridView1[2, CurrentRow].Value);
+                var current_track = user_Tracks.FindIndex(a => a.id == current_id);
+                var previous_track = user_Tracks.FindIndex(a => a.id == previous_id);
 
-            functions.User_Track_Playlist_Edit("Редактировать",list_id,previous_track_id, current_position);
-            functions.User_Track_Playlist_Edit("Редактировать", list_id, current_track_id, previous_position);
+                var temp = user_Tracks[current_track];
+                user_Tracks[current_track] = user_Tracks[previous_track];
+                user_Tracks[previous_track] = temp;
 
+                dataGridView1.DataSource = user_Tracks;
+                dataGridView1.Refresh();
+
+                dataGridView1.Rows[previous_track].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, previous_track];
+            }
+        }
+
+        private void buttonDown_Click(object sender, EventArgs e)
+        {
+            int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
+            if (CurrentRow < dataGridView1.RowCount-1)
+            {
+                //получить значение id выбранной строки
+                int current_id = Convert.ToInt32(dataGridView1[0, CurrentRow].Value);
+                int next_id = Convert.ToInt32(dataGridView1[0, CurrentRow + 1].Value);
+
+                var current_track = user_Tracks.FindIndex(a => a.id == current_id);
+                var next_track = user_Tracks.FindIndex(a => a.id == next_id);
+
+                var temp = user_Tracks[current_track];
+                user_Tracks[current_track] = user_Tracks[next_track];
+                user_Tracks[next_track] = temp;
+
+                dataGridView1.DataSource = user_Tracks;
+                dataGridView1.Refresh();
+
+                dataGridView1.Rows[next_track].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, next_track];
+                //dataGridView1.CurrentCell = dataGridView1.Rows[next_id].Cells[0];
+            }
         }
     }
 }
