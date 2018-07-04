@@ -121,10 +121,10 @@ namespace SportMusic
         public Form1()
         {
             InitializeComponent();
-            StartPosition = FormStartPosition.CenterScreen;            
-            panelHead.Visible = false;
+            StartPosition = FormStartPosition.CenterScreen;                        
             panelControl.Visible = false;
             panelResult.Visible = false;
+            panelHead.Visible = false;
 
             ChromeOptions options = new ChromeOptions();
             ChromeDriverService service = ChromeDriverService.CreateDefaultService();
@@ -146,18 +146,19 @@ namespace SportMusic
             comboBoxMood.Items.Clear();
             comboBoxGenre.Items.Clear();
 
-            textBoxArtistTrack.Text = "Трек, исполнитель";
-            comboBoxMood.Text = "Настроение";
-            comboBoxDuration.Text = "Длительность";
-            comboBoxCount.Text = "Количество";
-            comboBoxGenre.Text = "Жанр";
+            textBoxArtistTrack.Text = "";
+            comboBoxMood.Text = "";            
 
             comboBoxCount.Items.Clear();
+            comboBoxCount.Items.Add("1");
+            comboBoxCount.Items.Add("3");
+            comboBoxCount.Items.Add("5");
             comboBoxCount.Items.Add("10");
             comboBoxCount.Items.Add("20");
             comboBoxCount.Items.Add("30");
             comboBoxCount.Items.Add("50");
             comboBoxCount.Items.Add("100");
+            comboBoxCount.Text = comboBoxCount.Items[7].ToString();
 
             comboBoxDuration.Items.Clear();
             comboBoxDuration.Items.Add("Любая");
@@ -170,16 +171,22 @@ namespace SportMusic
             comboBoxDuration.Items.Add("04:00");
             comboBoxDuration.Items.Add("04:30");
             comboBoxDuration.Items.Add("05:00");
+            comboBoxDuration.Text = comboBoxDuration.Items[0].ToString();
 
             textBoxArtistTrack.Enabled = true;
             comboBoxDuration.Enabled = true;
             comboBoxCount.Enabled = true;
-
-            buttonSave.Enabled = false;
-            buttonSearch.Enabled = false;
             comboBoxMood.Enabled = true;
             comboBoxGenre.Enabled = true;
             radioButtonMuzoFon.Checked = true;
+
+            buttonSave.Enabled = false;
+            buttonSearch.Enabled = false;
+            buttonClearGenre.Enabled = false;
+            buttonClearMood.Enabled = false;
+            buttonClearTrackArtist.Enabled = false;            
+            checkBoxSelectAll.Enabled = false;
+            
 
         }
 
@@ -195,9 +202,6 @@ namespace SportMusic
             ShowPreloaderGenreForm();
             ShowPreloaderMoodForm();
             FormElementInit();           
-
-            //CatalogGenreMuzoFon();
-            //CatalogMoodMuzoFon();
 
             if (pageHomeMuzoFon == null)
             {
@@ -247,23 +251,7 @@ namespace SportMusic
             }
 
         }
-
-        ///// <summary>
-        ///// Выводит индикатор загрузки в отдельном потоке.
-        ///// </summary>
-        //void FormPreloader()
-        //{
-        //    Form form = new Form();
-        //    form.FormBorderStyle = FormBorderStyle.None;
-        //    form.Width = 100;
-        //    form.Height = 100;
-        //    form.Top = this.Top/2;
-        //    form.Left = this.Left/2;
-        //    PictureBox pictureBox = new PictureBox();
-        //    pictureBox.ImageLocation = "E:\\001.gif";
-        //    form.Controls.Add(pictureBox);
-        //    form.ShowDialog();            
-        //}
+       
 
         /// <summary>
         /// Действия по нажатию на кнопку "Поиск".
@@ -272,6 +260,9 @@ namespace SportMusic
         /// <param name="e"></param>
         private void buttonSearch_Click(object sender, EventArgs e)
         {
+
+            checkBoxSelectAll.Checked = false;
+            checkBoxSelectAll.Enabled = false;
 
             if (listArtists != null)
             {
@@ -305,7 +296,7 @@ namespace SportMusic
 
             panelResult.Controls.Clear();
 
-            if ((textBoxArtistTrack.Text == "Трек, исполнитель") && (comboBoxMood.Text == "Настроение") && (comboBoxGenre.Text == "Жанр"))
+            if ((textBoxArtistTrack.Text == "") && (comboBoxMood.Text == "") && (comboBoxGenre.Text == ""))
             {
                 MessageBox.Show("Необходимо выбрать один из критериев поиска");
             }
@@ -342,9 +333,7 @@ namespace SportMusic
                     }
 
                     ShowPreloaderTracksForm();
-                    //LoadTracksFromSite();
-
-                   // ShowFromSiteToForm(listTrackOptions, panelResult, SetCountShowTracks());
+                   
                 }
                 else
                 {
@@ -496,10 +485,10 @@ namespace SportMusic
         {
 
             int distanceTop = 40;
-            int leftLabelArtist = 150;
-            int leftLabelTrack = 250;
-            int leftDurationTrack = 450;
-            int leftDownloadUrl = 500;
+            int leftLabelArtist = 160;
+            int leftLabelTrack = 270;
+            int leftDurationTrack = 500;
+            int leftDownloadUrl = 600;
 
 
             for (int i = 0; i < listTrackOptions.Count; i++)
@@ -547,25 +536,25 @@ namespace SportMusic
             int leftCheckBoxSelectTrack = 40;
 
             int leftButtonPlay = 70;
-            int leftLabelArtist = 120;
-            int leftLabelTrack = 230;
-            int leftDurationTrack = 450;
+            int leftLabelArtist = 150;
+            int leftLabelTrack = 300;
+            int leftDurationTrack = 630;
 
             int leftButtonFindFormat = 520;
-            int leftComboBoxFormats = 620;
-            int leftButtonDownload = 720;
+            int leftComboBoxFormats = 680;
+            int leftButtonDownload = 750;
 
             if (listTrackOptions.Count < count)
             {
                 count = listTrackOptions.Count;
-            }
+            }            
 
             for (int i = 0; i < count; i++)
             {
                 Label labelNum = new Label();
                 labelNum.Width = 30;
                 labelNum.Left = leftLabelNum;
-                labelNum.Top = 10 + i * distanceTop;
+                labelNum.Top = i * distanceTop;
                 labelNum.Text = (i + 1).ToString() + ".";
                 panel.Controls.Add(labelNum);
 
@@ -573,36 +562,36 @@ namespace SportMusic
                 checkBoxSelectTrack.Width = 20;
                 checkBoxSelectTrack.Name = i.ToString();
                 checkBoxSelectTrack.Left = leftCheckBoxSelectTrack;
-                checkBoxSelectTrack.Top = 10 + i * distanceTop;
-                checkBoxSelectTrack.CheckedChanged += checkBoxSelect_CheckedChanged;
+                checkBoxSelectTrack.Top = i * distanceTop;
+                checkBoxSelectTrack.CheckedChanged += checkBoxSelect_CheckedChanged;                
                 panel.Controls.Add(checkBoxSelectTrack);
 
                 Button buttonPlay = new Button();
                 buttonPlay.Name = i.ToString();
                 buttonPlay.Width = 40;
                 buttonPlay.Left = leftButtonPlay;
-                buttonPlay.Top = 10 + i * distanceTop;
+                buttonPlay.Top = i * distanceTop;
                 buttonPlay.Text = "Play";
                 buttonPlay.Click += buttonPlay_Click;
                 panel.Controls.Add(buttonPlay);
 
                 Label labelArtist = new Label();
                 labelArtist.Left = leftLabelArtist;
-                labelArtist.Top = 10 + i * distanceTop;
+                labelArtist.Top = i * distanceTop;
                 labelArtist.Text = listTrackOptions[i].Artist;
                 panel.Controls.Add(labelArtist);
 
                 Label labelTrack = new Label();
-                labelTrack.Width = 200;
+                labelTrack.Width = 300;
                 labelTrack.Left = leftLabelTrack;
-                labelTrack.Top = 10 + i * distanceTop;
+                labelTrack.Top = i * distanceTop;
                 labelTrack.Text = listTrackOptions[i].Track;
                 panel.Controls.Add(labelTrack);
 
                 Label labelDuration = new Label();
                 labelDuration.Width = 40;
                 labelDuration.Left = leftDurationTrack;
-                labelDuration.Top = 10 + i * distanceTop;
+                labelDuration.Top = i * distanceTop;
                 labelDuration.Text = listTrackOptions[i].Duration;
                 panel.Controls.Add(labelDuration);
 
@@ -631,13 +620,16 @@ namespace SportMusic
                 buttonDownload.Name = i.ToString();
                 buttonDownload.Width = 80;
                 buttonDownload.Left = leftButtonDownload;
-                buttonDownload.Top = 10 + i * distanceTop;
+                buttonDownload.Top = i * distanceTop;
                 buttonDownload.Text = "Скачать";
                 buttonDownload.Click += buttonDownload_Click;
                 buttonDownload.Enabled = true;
                 panel.Controls.Add(buttonDownload);
+            }
 
-
+            if(count != 0)
+            {
+                checkBoxSelectAll.Enabled = true;
             }
         }
 
@@ -651,20 +643,21 @@ namespace SportMusic
             if (textBoxArtistTrack.Text != "")
             {
                 buttonClearTrackArtist.Enabled = true;
-            }
-
-            if ((textBoxArtistTrack.Text == "") || (textBoxArtistTrack.Text == "Трек, исполнитель"))
-            {
-                comboBoxMood.Enabled = true;
-                comboBoxGenre.Enabled = true;
+                comboBoxMood.Enabled = false;
+                comboBoxGenre.Enabled = false;
+                buttonSearch.Enabled = true;
+                buttonClearGenre.Enabled = false;
+                buttonClearMood.Enabled = false;
             }
             else
             {
-                comboBoxMood.Enabled = false;
-                comboBoxGenre.Enabled = false;
+                buttonClearTrackArtist.Enabled = false;
+                comboBoxMood.Enabled = true;
+                comboBoxGenre.Enabled = true;
+                buttonSearch.Enabled = false;
             }
-
-            buttonSearch.Enabled = true;
+            
+         
         }
 
         /// <summary>
@@ -720,73 +713,7 @@ namespace SportMusic
 
             }
         }
-
-        /// <summary>
-        /// Загрузка категории спорт в селектор "Настроение".
-        /// </summary>
-        private void CatalogMoodMuzoFon()
-        {
-            if (pageHomeMuzoFon == null)
-            {
-                pageHomeMuzoFon = new PageHomeMuzoFon(browser);
-            }
-
-            browser.FindElement(pageHomeMuzoFon.LinkSportMusicBy).Click();
-
-            PageSportMuzoFon pageSportMuzoFon = new PageSportMuzoFon();
-            listMoodMuzoFon = browser.FindElements(pageSportMuzoFon.LinkCatalogSportMusicBy).ToList();
-
-            comboBoxMood.Items.Add("--- Отменить выбор ---");
-
-            foreach (IWebElement element in listMoodMuzoFon)
-            {
-                comboBoxMood.Items.Add(element.Text);
-            }
-
-            //comboBoxMood.Text = listMoodMuzoFon[0].Text;
-            comboBoxMood.Enabled = true;
-            buttonSearch.Enabled = true;
-
-        }
-
-        /// <summary>
-        /// Загрузка категорий в селектор "Жанр".
-        /// </summary>
-        private void CatalogGenreMuzoFon()
-        {
-            if (pageHomeMuzoFon == null)
-            {
-                pageHomeMuzoFon = new PageHomeMuzoFon(browser);
-            }
-
-            listGenreMuzoFon = browser.FindElements(pageHomeMuzoFon.ButtonGenreBy).ToList();
-
-            for (int i = 0; i < listGenreMuzoFon.Count; i++)
-            {
-                if ((listGenreMuzoFon[i].Text == "Все сборники"))
-                {
-                    listGenreMuzoFon.RemoveAt(i);
-                }
-            }
-
-            comboBoxGenre.Items.Add("--- Отменить выбор ---");
-
-            for (int i = 0; i < 18; i++)
-            {
-                comboBoxGenre.Items.Add(listGenreMuzoFon[i].Text);
-            }
-            /**
-            foreach (IWebElement element in listGenreMuzoFon)
-            {
-                comboBoxGenre.Items.Add(element.Text);            
-            }
-            **/
-
-            //comboBoxGenre.Text = listGenreMuzoFon[0].Text;
-            comboBoxGenre.Enabled = true;
-            buttonSearch.Enabled = true;
-
-        }
+       
 
         /// <summary>
         /// При поиске по "Настроение" блокируется выбор по "Жанр" и "Артист-Трек".
@@ -795,18 +722,21 @@ namespace SportMusic
         /// <param name="e"></param>
         private void comboBoxMood_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ComboBox comboBox = (ComboBox)sender;
+            ComboBox comboBox = (ComboBox)sender;            
 
-            if (comboBox.SelectedIndex == 0)
+            if (comboBox.Text != "")
             {
-                comboBoxGenre.Enabled = true;
-                textBoxArtistTrack.Enabled = true;
-                comboBoxMood.SelectedText = "Настроение";
-            }
-            else
-            {
+                buttonClearMood.Enabled = true;
                 comboBoxGenre.Enabled = false;
                 textBoxArtistTrack.Enabled = false;
+                buttonClearTrackArtist.Enabled = false;
+                buttonClearGenre.Enabled = false;
+                buttonSearch.Enabled = true;
+            }
+            else
+            {      
+                comboBoxGenre.Enabled = true;
+                textBoxArtistTrack.Enabled = true;             
             }
         }
 
@@ -818,17 +748,20 @@ namespace SportMusic
         private void comboBoxGenre_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
-
-            if (comboBox.SelectedIndex == 0)
+            
+            if (comboBox.Text != "")
             {
-                comboBoxMood.Enabled = true;
-                textBoxArtistTrack.Enabled = true;
-                comboBoxGenre.SelectedText = "Жанр";
+                buttonClearGenre.Enabled = true;
+                comboBoxMood.Enabled = false;
+                textBoxArtistTrack.Enabled = false;
+                buttonClearTrackArtist.Enabled = false;
+                buttonClearMood.Enabled = false;
+                buttonSearch.Enabled = true;
             }
             else
             {
-                comboBoxMood.Enabled = false;
-                textBoxArtistTrack.Enabled = false;
+                comboBoxMood.Enabled = true;
+                textBoxArtistTrack.Enabled = true;           
             }
         }
 
@@ -839,16 +772,13 @@ namespace SportMusic
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            textBoxArtistTrack.Text = "";
             Button button = (Button)sender;
+
+            textBoxArtistTrack.Text = "";            
             button.Enabled = false;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void Form1_Shown(object sender, EventArgs e)
         {
             FormElementInit();           
@@ -1104,12 +1034,12 @@ namespace SportMusic
 
                     //comboBoxMood.Text = listMoodMuzoFon[0].Text;
                     comboBoxMood.Enabled = true;
-                    buttonSearch.Enabled = true;
+   //                 buttonSearch.Enabled = true;
 
-                    formPreloaderMood.Close();
-                    panelHead.Visible = true;
+                    formPreloaderMood.Close();                    
                     panelControl.Visible = true;
                     panelResult.Visible = true;
+                    panelHead.Visible = true;
 
                 }));
             });
@@ -1118,16 +1048,45 @@ namespace SportMusic
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            comboBoxGenre.Text = "Жанр";
+            buttonClearGenre.Enabled = false;
+            buttonSearch.Enabled = false;
+            comboBoxGenre.SelectedIndex = -1;            
             comboBoxMood.Enabled = true;
-            textBoxArtistTrack.Enabled = true;
+            textBoxArtistTrack.Enabled = true;            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            comboBoxMood.Text = "Настроение";
+            buttonClearMood.Enabled = false;
+            buttonSearch.Enabled = false;
+            comboBoxMood.SelectedIndex = -1;
             comboBoxGenre.Enabled = true;
             textBoxArtistTrack.Enabled = true;
+        }
+
+        /// <summary>
+        /// Выделяет или отменяет выделение всез треков.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+
+            if(checkBox.Checked == true)
+            {
+                foreach (var element in panelResult.Controls.OfType<CheckBox>())
+                {
+                    element.Checked = true;
+                }
+            }
+            else
+            {
+                foreach (var element in panelResult.Controls.OfType<CheckBox>())
+                {
+                    element.Checked = false;
+                }
+            }
         }
     }
 }
