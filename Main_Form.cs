@@ -364,12 +364,11 @@ namespace SportMusic
             string name;
             string url;
             int index = Int32.Parse(button.Name);
-            listDownload[index].Click();
+            listDownload[index].FindElement(By.XPath($"/html/body/div[2]/div[1]/div[4]/div/ul/li[1]/div[1]/ul/li[3]/a")).ToString();
 
             name = ".\\Download\\" + listTracks[index].Text + ".mp3";
             url = listDownload[index].GetAttribute("href");
             //textBox1.Text = url;
-
             //MessageBox.Show(url);
             Download(url, name);
         }
