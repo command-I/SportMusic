@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Edit_MyPlaylist));
             this.label1 = new System.Windows.Forms.Label();
             this.label_Name = new System.Windows.Forms.Label();
             this.label_Login = new System.Windows.Forms.Label();
@@ -40,6 +41,8 @@
             this.button_Save = new System.Windows.Forms.Button();
             this.textBox_Title_Playlist = new System.Windows.Forms.TextBox();
             this.label_Title_Playlist = new System.Windows.Forms.Label();
+            this.buttonDown = new System.Windows.Forms.Button();
+            this.buttonUp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,7 +76,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(674, 402);
+            this.button5.Location = new System.Drawing.Point(685, 402);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(103, 38);
             this.button5.TabIndex = 14;
@@ -83,7 +86,7 @@
             // 
             // button_Delete
             // 
-            this.button_Delete.Location = new System.Drawing.Point(674, 208);
+            this.button_Delete.Location = new System.Drawing.Point(685, 208);
             this.button_Delete.Name = "button_Delete";
             this.button_Delete.Size = new System.Drawing.Size(103, 38);
             this.button_Delete.TabIndex = 13;
@@ -92,7 +95,7 @@
             // 
             // button_Download
             // 
-            this.button_Download.Location = new System.Drawing.Point(674, 120);
+            this.button_Download.Location = new System.Drawing.Point(685, 120);
             this.button_Download.Name = "button_Download";
             this.button_Download.Size = new System.Drawing.Size(103, 38);
             this.button_Download.TabIndex = 12;
@@ -101,7 +104,7 @@
             // 
             // button_Listen
             // 
-            this.button_Listen.Location = new System.Drawing.Point(674, 76);
+            this.button_Listen.Location = new System.Drawing.Point(685, 76);
             this.button_Listen.Name = "button_Listen";
             this.button_Listen.Size = new System.Drawing.Size(103, 38);
             this.button_Listen.TabIndex = 10;
@@ -114,7 +117,7 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(24, 76);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 76);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(628, 364);
@@ -122,7 +125,7 @@
             // 
             // button_Add
             // 
-            this.button_Add.Location = new System.Drawing.Point(674, 164);
+            this.button_Add.Location = new System.Drawing.Point(685, 164);
             this.button_Add.Name = "button_Add";
             this.button_Add.Size = new System.Drawing.Size(103, 38);
             this.button_Add.TabIndex = 18;
@@ -131,7 +134,7 @@
             // 
             // button_Save
             // 
-            this.button_Save.Location = new System.Drawing.Point(674, 358);
+            this.button_Save.Location = new System.Drawing.Point(685, 358);
             this.button_Save.Name = "button_Save";
             this.button_Save.Size = new System.Drawing.Size(103, 38);
             this.button_Save.TabIndex = 19;
@@ -155,11 +158,32 @@
             this.label_Title_Playlist.TabIndex = 21;
             this.label_Title_Playlist.Text = "Название плейлиста";
             // 
+            // buttonDown
+            // 
+            this.buttonDown.Image = ((System.Drawing.Image)(resources.GetObject("buttonDown.Image")));
+            this.buttonDown.Location = new System.Drawing.Point(646, 104);
+            this.buttonDown.Name = "buttonDown";
+            this.buttonDown.Size = new System.Drawing.Size(30, 30);
+            this.buttonDown.TabIndex = 23;
+            this.buttonDown.UseVisualStyleBackColor = true;
+            // 
+            // buttonUp
+            // 
+            this.buttonUp.Image = ((System.Drawing.Image)(resources.GetObject("buttonUp.Image")));
+            this.buttonUp.Location = new System.Drawing.Point(646, 76);
+            this.buttonUp.Name = "buttonUp";
+            this.buttonUp.Size = new System.Drawing.Size(30, 30);
+            this.buttonUp.TabIndex = 22;
+            this.buttonUp.UseVisualStyleBackColor = true;
+            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
+            // 
             // Edit_MyPlaylist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonDown);
+            this.Controls.Add(this.buttonUp);
             this.Controls.Add(this.label_Title_Playlist);
             this.Controls.Add(this.textBox_Title_Playlist);
             this.Controls.Add(this.button_Save);
@@ -195,5 +219,7 @@
         private System.Windows.Forms.Button button_Save;
         private System.Windows.Forms.TextBox textBox_Title_Playlist;
         private System.Windows.Forms.Label label_Title_Playlist;
+        private System.Windows.Forms.Button buttonDown;
+        private System.Windows.Forms.Button buttonUp;
     }
 }

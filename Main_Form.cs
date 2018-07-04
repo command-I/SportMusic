@@ -99,6 +99,7 @@ namespace SportMusic
         /// Ссылка на форму.
         /// </summary>
         Form2 form2;
+        
 
 
         /// <summary>

@@ -220,6 +220,20 @@ namespace SportMusic
             return context.User_Track.OrderBy(a => a.id).Where(a=>a.author == id).ToList();
         }
 
+        public List<User_Track> Search_User_Track(int id, string artist="", string title="", string genre="", string mood="")
+        {
+            List<User_Track> list = context.User_Track.OrderBy(a => a.id).Where(a => a.author == id).ToList();
+            if (artist != "")
+                list = list.Where(a => a.artist == artist).ToList();
+            if (title != "")
+                list = list.Where(a => a.title == title).ToList();
+            if (genre != "")
+                list = list.Where(a => a.genre == genre).ToList();
+            if (mood != "")
+                list = list.Where(a => a.mood == mood).ToList();
+            return list;
+        }
+
         /// <summary>
         /// Работа с таблицей Playlist (Плейлисты)
         /// Функции добавления, редактирования, удаления 
@@ -238,8 +252,8 @@ namespace SportMusic
                 case "Добавить":
                     {
                         Playlist playlist = new Playlist();
-                        string full_title= title + "Автор: " + surname + " " + name;
-
+                        string full_title= title ;
+                        
                         playlist.id = id;
                         playlist.author = author;
                         playlist.title = full_title;
@@ -252,9 +266,13 @@ namespace SportMusic
                         context.Entry(playlist).State = EntityState.Added;
                         context.SaveChanges();
 
+                        int? position = context.User_Track_Playlist.Max(a => a.position);
+                        if (position == null)
+                            position = 0;
                         foreach (User_Track track in tracks)
                         {
-                            User_Track_Playlist_Edit("Добавить", -1, playlist.id, track.track_id);
+                            position++;
+                            User_Track_Playlist_Edit("Добавить", playlist.id, track.track_id, position, -1);
                         }
 
                         break;
@@ -266,7 +284,7 @@ namespace SportMusic
                             //Добавление в треки пользователя
                             Playlist playlist = context.Playlist.Find(id);
 
-                            string full_title = title + ". Автор: " + surname + " " + name;
+                            string full_title = title;
 
                             playlist.id = id;
                             playlist.author = author;
@@ -312,7 +330,7 @@ namespace SportMusic
         /// <param name="id"></param>
         /// <param name="playlist_id"></param>
         /// <param name="track_id"></param>
-        public void User_Track_Playlist_Edit(string command, int id, int playlist_id, int track_id)
+        public void User_Track_Playlist_Edit(string command, int playlist_id, int track_id, int? position, int id=0)
         {
             switch (command)
             {
@@ -323,6 +341,7 @@ namespace SportMusic
                         user_Track_Playlist.id = id;
                         user_Track_Playlist.playlist_id = playlist_id;
                         user_Track_Playlist.track_id = track_id;
+                        user_Track_Playlist.position = position;
 
                         context.Entry(user_Track_Playlist).State = EntityState.Added;
                         context.SaveChanges();
@@ -341,6 +360,7 @@ namespace SportMusic
                             user_Track_Playlist.id = id;
                             user_Track_Playlist.playlist_id = playlist_id;
                             user_Track_Playlist.track_id = track_id;
+                            user_Track_Playlist.position = position;
 
                             context.Entry(user_Track_Playlist).State = EntityState.Modified;
                             context.SaveChanges();

@@ -114,6 +114,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="playlist_id" Type="int" Nullable="false" />
           <Property Name="track_id" Type="int" Nullable="false" />
+          <Property Name="position" Type="int" />
         </EntityType>
         <Association Name="FK_Edit_Playlist_Playlist">
           <End Role="Playlist" Type="Self.Playlist" Multiplicity="1" />
@@ -554,6 +555,7 @@
           <Property Name="track_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Playlist" Relationship="Intensiv2018Model.FK_User_Track_Playlist_Playlist" FromRole="User_Track_Playlist" ToRole="Playlist" />
           <NavigationProperty Name="Track" Relationship="Intensiv2018Model.FK_User_Track_Playlist_Track" FromRole="User_Track_Playlist" ToRole="Track" />
+          <Property Name="position" Type="Int32" />
         </EntityType>
         <Association Name="FK_User_Track_Playlist_Playlist">
           <End Type="Intensiv2018Model.Playlist" Role="Playlist" Multiplicity="1" />
@@ -797,6 +799,7 @@
           <EntitySetMapping Name="User_Track_Playlist">
             <EntityTypeMapping TypeName="Intensiv2018Model.User_Track_Playlist">
               <MappingFragment StoreEntitySet="User_Track_Playlist">
+                <ScalarProperty Name="position" ColumnName="position" />
                 <ScalarProperty Name="track_id" ColumnName="track_id" />
                 <ScalarProperty Name="playlist_id" ColumnName="playlist_id" />
                 <ScalarProperty Name="id" ColumnName="id" />

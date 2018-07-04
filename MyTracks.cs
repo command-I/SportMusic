@@ -81,5 +81,34 @@ namespace SportMusic
             f.ShowDialog();
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string artist = "";
+            string title = "";
+            string genre = "";
+            string mood = "";
+
+            if (textBox_Artist.Text == "" && textBox_Title.Text == "" && textBox_Genre.Text == "" && textBox_Mood.Text == "")
+            {
+                MessageBox.Show("Для поиска введите значение хотя бы в одно поисковое поле");
+                RefreshDGV();
+            }
+            else
+            {
+                if (textBox_Artist.Text != "")
+                    artist = textBox_Artist.Text;
+                if (textBox_Title.Text != "")
+                    title = textBox_Title.Text;
+                if (textBox_Genre.Text != "")
+                    genre = textBox_Genre.Text;
+                if (textBox_Mood.Text != "")
+                    mood = textBox_Mood.Text;
+
+                dataGridView1.DataSource = functions.Search_User_Track(author, artist, title, genre, mood);
+                dataGridView1.Columns.RemoveAt(13); //удаление лишних полей
+                dataGridView1.Columns.RemoveAt(12);
+            }
+        }
     }
 }

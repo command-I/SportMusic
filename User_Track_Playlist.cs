@@ -17,6 +17,7 @@ namespace SportMusic
         public int id { get; set; }
         public int playlist_id { get; set; }
         public int track_id { get; set; }
+        public Nullable<int> position { get; set; }
     
         public virtual Playlist Playlist { get; set; }
         public virtual Track Track { get; set; }

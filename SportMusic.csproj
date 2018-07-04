@@ -8,11 +8,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>SportMusic</RootNamespace>
     <AssemblyName>SportMusic</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -213,8 +214,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\arrow-down.png" />
+    <Content Include="Resources\arrow-up.png" />
     <None Include="Resources\tab_c_73.bmp" />
     <None Include="img\play-button.png" />
+    <None Include="img\arrow-down.png" />
+    <None Include="img\arrow-up.png" />
     <Content Include="img\eye pass.png" />
     <Content Include="img\green_dialbut_611.png" />
     <Content Include="img\tab_c_73.png" />
