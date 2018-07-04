@@ -62,10 +62,6 @@
             this.историяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label_Login = new System.Windows.Forms.Label();
             this.label_Name = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();

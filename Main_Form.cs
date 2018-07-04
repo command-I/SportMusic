@@ -110,6 +110,7 @@ namespace SportMusic
         string name;
         string surname;
         List<string> music, path;
+
         public Main_Form(int id, string login, string name, string surname)
         {
             this.id = id;
