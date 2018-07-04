@@ -837,7 +837,11 @@ namespace SportMusic
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DirectoryInfo dir = new DirectoryInfo("D:\\Музыка\\Легенды советской эстрады 70-80 годы");
+            if (listBox1.Items.Count > 0)
+            {
+                listBox1.Items.Clear();
+            }
+            DirectoryInfo dir = new DirectoryInfo(".\\Download");
             FileInfo[] files = dir.GetFiles("*.mp3");
 
             foreach (FileInfo fi in files)
