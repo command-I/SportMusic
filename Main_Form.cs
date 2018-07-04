@@ -361,10 +361,17 @@ namespace SportMusic
         {
             Button button = (Button)sender;
 
+            string name;
+            string url;
             int index = Int32.Parse(button.Name);
             listDownload[index].Click();
 
-            DownloadFromLink(listDownload[index].GetAttribute("href"), PATH_DOWNLOAD, listTracks[index].Text + ".mp3");
+            name = ".\\Download\\" + listTracks[index].Text + ".mp3";
+            url = listDownload[index].GetAttribute("href");
+            //textBox1.Text = url;
+
+            //MessageBox.Show(url);
+            Download(url, name);
         }
 
         /// <summary>
@@ -374,10 +381,44 @@ namespace SportMusic
         /// <param name="e"></param>
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            Button button = (Button)sender;            
-            listPlay[Int32.Parse(button.Name)].Click();                        
+            Button button = (Button)sender;
+            listPlay[Int32.Parse(button.Name)].Click();
         }
-    
+
+
+        /// <summary>
+        /// Скачивание файлов по url.
+        /// </summary>
+        /// <param name="url">Принимает ссылку.</param>
+        /// <param name="path">Принимает путь для сохранения.</param>
+        /// <param name="file">Принимает имя файла.</param>
+        private void Download(string link, string name)
+        {
+            WebClient webload = new WebClient();
+            webload.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+            webload.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDown);
+
+            webload.DownloadFileAsync(new Uri(link), name);
+            Environment.ExpandEnvironmentVariables(PATH_DOWNLOAD);
+        }
+
+        private void ProgressDown(object sender, DownloadProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+            textBox1.Text = "Загружено :" + e.ProgressPercentage + " %";
+        }
+
+        private void Completed(object sender, AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+            }
+            else
+            {
+                textBox1.Text = "Загрузка файла завершена";
+            }
+        }
 
         // !!! на МузоФон не работает.
         private void buttonFindFormat_Click(object sender, EventArgs e)
