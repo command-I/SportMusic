@@ -62,7 +62,9 @@ namespace SportMusic
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Form ifm = new Authorization();
+            ifm.Show();
+            this.Hide;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
