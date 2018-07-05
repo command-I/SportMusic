@@ -901,10 +901,10 @@ namespace SportMusic
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (listBox1.Items.Count > 0)
-            {
-                listBox1.Items.Clear();
-            }
+            music.Clear();
+            path.Clear();
+            listBox1.Items.Clear();
+
             DirectoryInfo dir = new DirectoryInfo(".\\Download");
             FileInfo[] files = dir.GetFiles("*.mp3");
 
