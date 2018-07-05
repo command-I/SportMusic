@@ -24,14 +24,14 @@ namespace SportMusic.selenium
         /// <param name="duration">Принимает строку со значением времени.</param>
         /// <param name="url">Принимает url.</param>
         /// <param name="name">Иринимает имя файла</param>
-        public TrackOptions(int num, string artist, string track, string duration, string url, string name)
+        public TrackOptions(int num, string artist, string track, string duration, string url, string file)
         {
             Num = num;
             Artist = artist;
             Track = track;
             Duration = duration;
             DownloadUrl = url;
-            FileName = name;
+            FileName = file;
         }
 
         /// <summary>
@@ -48,12 +48,24 @@ namespace SportMusic.selenium
         /// </summary>
         /// <param name="time">Принимает строку со значением времени.</param>
         /// <returns>Возврашает количество секунд.</returns>
-        private int TimeStringToInt(string time)
+        public int TimeStringToInt(string time)
         {
-            int minDec = Int32.Parse(time[0].ToString()) * 600;
-            int minEd = Int32.Parse(time[1].ToString()) * 60;
-            int secDec = Int32.Parse(time[3].ToString()) * 10;
-            int secEd = Int32.Parse(time[4].ToString());
+            int minDec;
+            int minEd;
+            int secDec;
+            int secEd;
+
+            try
+            {
+                minDec = Int32.Parse(time[0].ToString()) * 600;
+                minEd = Int32.Parse(time[1].ToString()) * 60;
+                secDec = Int32.Parse(time[3].ToString()) * 10;
+                secEd = Int32.Parse(time[4].ToString());
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
 
             return minDec + minEd + secDec + secEd;
         }

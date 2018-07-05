@@ -14,15 +14,18 @@ namespace SportMusic.pages
     /// </summary>
     public class PageSearchMuzoFon
     {
+        public IWebDriver Browser { get; set; }
+
         /// <summary>
         /// Конструктор страницы поиска сайта МузоФон.
         /// </summary>
         /// <param name="browser">Принимает драйвер.</param>
         public PageSearchMuzoFon(IWebDriver browser)
-        {            
-            browser.Manage().Window.Minimize();
-            PageFactory.InitElements(browser, this);
-        }       
+        {
+            Browser = browser;
+            //Browser.Manage().Window.Minimize();
+            PageFactory.InitElements(Browser, this);
+        }
 
         /// <summary>
         /// Иконка "Play".
@@ -59,6 +62,27 @@ namespace SportMusic.pages
         [FindsBy(How = How.CssSelector, Using = "div.duration")]
         public IWebElement TextDuration { get; set; }
         public By TextDurationBy { get { return By.CssSelector("div.duration"); } }
+
+        /// <summary>
+        /// Длительность трека.
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = ".error-503")]
+        public IWebElement TextErrorFind { get; set; }
+        public By TextErrorFindBy { get { return By.CssSelector(".error-503"); } }
+
+
+        public IWebElement GetElement(By Locator)
+        {
+            List<IWebElement> element = Browser.FindElements(TextErrorFindBy).ToList();
+            if (element.Count > 0)
+            {
+                return element[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
 
     }
 }

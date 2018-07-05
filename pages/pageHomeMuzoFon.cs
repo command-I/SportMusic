@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.PageObjects;
 
 namespace SportMusic.pages
@@ -14,13 +14,16 @@ namespace SportMusic.pages
     /// </summary>
     public class PageHomeMuzoFon
     {
-        readonly public string urlMuzoFon = "https://muzofond.org/";
+        public IWebDriver Browser { get; set; }
+
+        readonly public string Url = "https://muzofond.org/";
 
         public PageHomeMuzoFon(IWebDriver browser)
-        {            
-            browser.Manage().Window.Minimize();            
-            browser.Navigate().GoToUrl(urlMuzoFon);            
-            PageFactory.InitElements(browser, this);
+        {
+            Browser = browser;
+            Browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            Browser.Navigate().GoToUrl(Url);
+            PageFactory.InitElements(Browser, this);
         }
 
         /// <summary>
@@ -59,14 +62,13 @@ namespace SportMusic.pages
         /// </summary>
         [FindsBy(How = How.LinkText, Using = "Саундтреки")]
         public IWebElement LinkSoundTraks { get; set; }
-        
+
         /// <summary>
         /// Кнопка выбора категории "Жанр".
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = ".module-popular a")]
         public IWebElement ButtonGenre { get; set; }
         public By ButtonGenreBy { get { return By.CssSelector(".module-popular a"); } }
-
 
     }
 

@@ -154,6 +154,11 @@
     <Compile Include="pages\PageSportMuzoFon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="selenium\ICleaner.cs" />
+    <Compile Include="selenium\IDownloader.cs" />
+    <Compile Include="selenium\IParser.cs" />
+    <Compile Include="selenium\ITrackFinder.cs" />
+    <Compile Include="selenium\MuzoFon.cs" />
     <Compile Include="selenium\TrackOptions.cs" />
     <Compile Include="SysUser.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
