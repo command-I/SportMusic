@@ -47,26 +47,36 @@ namespace SportMusic
             Application.Exit();
         }
 
+        private bool Validation()
+        {
+            if (textBox1.Text.Length <= 50 && textBox2.Text.Length <= 50)
+                return true;
+            return false;
+        }
+
         private void button2_Click_1(object sender, EventArgs e)
         {
-            Intensiv2018Entities asd = new Intensiv2018Entities();
+            if (Validation())
+            {
+                Intensiv2018Entities asd = new Intensiv2018Entities();
 
-            SysUser user = new SysUser();
-            user = asd.SysUsers.Where(a => a.login == textBox1.Text && a.pass == textBox2.Text).FirstOrDefault();
-            if (user.role != "Тренер" && user.role != "Администратор")
-            {
-                MessageBox.Show("Такого пользователя в системе нет");
+                SysUser user = new SysUser();
+                user = asd.SysUsers.Where(a => a.login == textBox1.Text && a.pass == textBox2.Text).FirstOrDefault();
+                if (user.role != "Тренер" && user.role != "Администратор")
+                {
+                    MessageBox.Show("Такого пользователя в системе нет");
+                }
+                else
+                {
+                    Form ifrm = new Main_Form(user.id, user.login, user.name, user.surname);
+                    this.Hide(); // скрываем форму авторизации
+                    ifrm.ShowDialog(); // отображаем Главную форму
+                    this.Show(); //Снова открываем авторизацию
+
+                }
             }
-            else
-            {
-                Form ifrm = new Main_Form(user.id, user.login,user.name, user.surname);
-                this.Hide(); // скрываем форму авторизации
-                ifrm.ShowDialog(); // отображаем Главную форму
-                this.Show(); //Снова открываем авторизацию
-                
-            }
-            
-            
+            else MessageBox.Show("Данные не прошли валидацию");
+
         }
     }
 }
