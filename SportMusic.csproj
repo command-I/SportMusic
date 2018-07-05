@@ -73,6 +73,12 @@
     <Compile Include="Edit_MyPlaylist.Designer.cs">
       <DependentUpon>Edit_MyPlaylist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Edit_MyTrack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit_MyTrack.Designer.cs">
+      <DependentUpon>Edit_MyTrack.cs</DependentUpon>
+    </Compile>
     <Compile Include="Edit_Playlist.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
@@ -166,6 +172,9 @@
     </Compile>
     <EmbeddedResource Include="Edit_MyPlaylist.resx">
       <DependentUpon>Edit_MyPlaylist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edit_MyTrack.resx">
+      <DependentUpon>Edit_MyTrack.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main_Form.resx">
       <DependentUpon>Main_Form.cs</DependentUpon>

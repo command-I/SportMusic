@@ -82,13 +82,30 @@ namespace SportMusic
 
         private void button_Delete_Click(object sender, EventArgs e)
         {
+            
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
                 int CurrentRow = row.Index;
                 //    //получить значение id выбранной строки
                 int valueId = Convert.ToInt32(dataGridView1[0, CurrentRow].Value);
 
-                //functions.PlaylistEdit("Удалить", valueId,);
+                Intensiv2018Entities context = new Intensiv2018Entities();
+                List<User_Track_Playlist> user_Track_Playlists = context.User_Track_Playlist.Where(a => a.playlist_id == valueId).ToList();
+
+                List<Track> tracks = new List<Track>();
+                foreach (User_Track_Playlist temp in user_Track_Playlists)
+                {
+                    tracks.Add(context.Tracks1.Where(a => a.id == temp.track_id).FirstOrDefault());
+                }
+
+                List<User_Track> list = new List<User_Track>();
+                foreach (Track track in tracks)
+                {
+                    User_Track user = context.User_Track.Where(a => a.track_id == track.id).FirstOrDefault();
+                    list.Add(context.User_Track.Where(a => a.track_id == track.id).FirstOrDefault());
+                }
+
+                functions.PlaylistEdit("Удалить", valueId, list);
             }
             RefreshDGV();
         }
@@ -113,6 +130,11 @@ namespace SportMusic
         private void buttonUp_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 

@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1b1cbe21515c424687e1bd3103ffbda0" Name="Diagram1">
-        <EntityTypeShape EntityType="Intensiv2018Model.Edit_Playlist" Width="1.5" PointX="0.5" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Intensiv2018Model.Edit_Playlist" Width="1.5" PointX="9.375" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Intensiv2018Model.Edit_Track" Width="1.5" PointX="7.375" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Intensiv2018Model.Edit_User" Width="1.5" PointX="0.5" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Intensiv2018Model.Playlist" Width="1.5" PointX="0.5" PointY="12.625" IsExpanded="true" />
@@ -14,8 +14,8 @@
         <AssociationConnector Association="Intensiv2018Model.FK_Edit_Playlist_Playlist" ManuallyRouted="false" />
         <AssociationConnector Association="Intensiv2018Model.FK_Edit_Track_User_Track" ManuallyRouted="false" />
         <AssociationConnector Association="Intensiv2018Model.FK_User_Playlist_Playlist" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Intensiv2018Model.Track" Width="1.5" PointX="4.25" PointY="15.125" />
-        <EntityTypeShape EntityType="Intensiv2018Model.User_Track_Playlist" Width="1.5" PointX="6.5" PointY="17.625" />
+        <EntityTypeShape EntityType="Intensiv2018Model.Track" Width="1.5" PointX="5.125" PointY="12.125" />
+        <EntityTypeShape EntityType="Intensiv2018Model.User_Track_Playlist" Width="1.5" PointX="9.25" PointY="9.625" />
         <AssociationConnector Association="Intensiv2018Model.FK_User_Track_Playlist_Playlist" />
         <AssociationConnector Association="Intensiv2018Model.FK_User_Track_Playlist_Track" />
         <EntityTypeShape EntityType="Intensiv2018Model.SysUser" Width="1.5" PointX="3" PointY="9.625" />

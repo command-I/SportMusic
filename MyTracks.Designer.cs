@@ -48,6 +48,7 @@
             this.textBox_Genre = new System.Windows.Forms.TextBox();
             this.label_Mood = new System.Windows.Forms.Label();
             this.textBox_Mood = new System.Windows.Forms.TextBox();
+            this.button_Edit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,7 +61,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 98);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(628, 340);
+            this.dataGridView1.Size = new System.Drawing.Size(628, 384);
             this.dataGridView1.TabIndex = 0;
             // 
             // button_Listen
@@ -93,7 +94,7 @@
             // 
             // button_Delete
             // 
-            this.button_Delete.Location = new System.Drawing.Point(662, 200);
+            this.button_Delete.Location = new System.Drawing.Point(664, 244);
             this.button_Delete.Name = "button_Delete";
             this.button_Delete.Size = new System.Drawing.Size(103, 38);
             this.button_Delete.TabIndex = 4;
@@ -103,7 +104,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(662, 400);
+            this.button5.Location = new System.Drawing.Point(664, 444);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(103, 38);
             this.button5.TabIndex = 5;
@@ -185,7 +186,7 @@
             // 
             this.richTextBox1.Enabled = false;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(662, 278);
+            this.richTextBox1.Location = new System.Drawing.Point(664, 322);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(109, 116);
             this.richTextBox1.TabIndex = 13;
@@ -195,7 +196,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(662, 259);
+            this.label4.Location = new System.Drawing.Point(664, 303);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(72, 13);
             this.label4.TabIndex = 14;
@@ -233,11 +234,22 @@
             this.textBox_Mood.Size = new System.Drawing.Size(119, 20);
             this.textBox_Mood.TabIndex = 17;
             // 
+            // button_Edit
+            // 
+            this.button_Edit.Location = new System.Drawing.Point(662, 200);
+            this.button_Edit.Name = "button_Edit";
+            this.button_Edit.Size = new System.Drawing.Size(103, 38);
+            this.button_Edit.TabIndex = 19;
+            this.button_Edit.Text = "Изменить";
+            this.button_Edit.UseVisualStyleBackColor = true;
+            this.button_Edit.Click += new System.EventHandler(this.button_Edit_Click);
+            // 
             // MyTracks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(783, 450);
+            this.ClientSize = new System.Drawing.Size(783, 498);
+            this.Controls.Add(this.button_Edit);
             this.Controls.Add(this.label_Mood);
             this.Controls.Add(this.textBox_Mood);
             this.Controls.Add(this.label5);
@@ -289,5 +301,6 @@
         private System.Windows.Forms.TextBox textBox_Genre;
         private System.Windows.Forms.Label label_Mood;
         private System.Windows.Forms.TextBox textBox_Mood;
+        private System.Windows.Forms.Button button_Edit;
     }
 }

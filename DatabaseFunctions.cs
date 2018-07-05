@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 
 namespace SportMusic
 {
     class DatabaseFunctions
     {
-        public static Intensiv2018Entities context = new Intensiv2018Entities();
+        public Intensiv2018Entities context = new Intensiv2018Entities();
 
         public DatabaseFunctions()
         {
@@ -139,7 +137,7 @@ namespace SportMusic
         /// <param name="sourse"></param>
         /// <param name="path"></param>
         /// <param name="duration"></param>
-        public void User_Track_Edit(string command, int id, int author=0, string artist="", string title="", string genre="", string mood="", int bitrate=0,
+        public void User_Track_Edit(string command, int id, int? author=0, string artist="", string title="", string genre="", string mood="", int? bitrate=0,
             string sourse="", string path="", TimeSpan duration=new TimeSpan())
         {
             switch (command)
@@ -318,6 +316,12 @@ namespace SportMusic
                     {
                         try
                         {
+
+                            foreach (User_Track track in tracks)
+                            {
+                                context.User_Track_Playlist.RemoveRange(context.User_Track_Playlist.Where(a => a.track_id == track.track_id));
+                            }
+                            
                             Playlist playlist = context.Playlist.Find(id);
                             context.Entry(playlist).State = EntityState.Deleted;
                             context.SaveChanges();

@@ -17,6 +17,7 @@ namespace SportMusic
         public string login;
         public string name;
         public string surname;
+        public List<User_Track> tracks = new List<User_Track>();
         public MyTracks(int id, string login, string name, string surname)
         {
             this.author = id;
@@ -40,9 +41,12 @@ namespace SportMusic
 
         private void RefreshDGV()
         {
-            dataGridView1.DataSource = functions.Get_User_Track(author);
+            tracks = functions.Get_User_Track(author);
+            dataGridView1.DataSource = tracks;
             dataGridView1.Columns.RemoveAt(13); //удаление лишних полей
             dataGridView1.Columns.RemoveAt(12);
+            dataGridView1.Update();
+            dataGridView1.Refresh();
         }
 
         private void button_Delete_Click(object sender, EventArgs e)
@@ -52,7 +56,12 @@ namespace SportMusic
                 int CurrentRow = row.Index;
                 //    //получить значение id выбранной строки
                 int valueId = Convert.ToInt32(dataGridView1[0, CurrentRow].Value);
+                int track_id = Convert.ToInt32(dataGridView1[2, CurrentRow].Value);
+                functions.context.User_Track_Playlist.RemoveRange(functions.context.User_Track_Playlist.Where(a=>a.track_id == track_id));
+                functions.context.SaveChanges();
+
                 functions.User_Track_Edit("Удалить", valueId);
+
             }
             RefreshDGV();
         }
@@ -109,6 +118,20 @@ namespace SportMusic
                 dataGridView1.Columns.RemoveAt(13); //удаление лишних полей
                 dataGridView1.Columns.RemoveAt(12);
             }
+        }
+
+        private void button_Edit_Click(object sender, EventArgs e)
+        {
+            int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
+            //    //получить значение id выбранной строки
+            int valueId = Convert.ToInt32(dataGridView1[0, CurrentRow].Value);
+
+            User_Track track = functions.context.User_Track.Where(a => a.id == valueId).FirstOrDefault();
+            Edit_MyTrack f = new Edit_MyTrack(track);
+            f.ShowDialog();
+
+            RefreshDGV();
+
         }
     }
 }

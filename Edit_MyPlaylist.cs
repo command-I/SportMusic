@@ -31,6 +31,8 @@ namespace SportMusic
             this.command = command;
             this.list_id = list_id;
             InitializeComponent();
+            this.Width = 816;
+            this.Height = 489;
             label_Login.Text = login;
             label_Name.Text = surname + " " + name;
             if (list_id > 0)
@@ -85,15 +87,18 @@ namespace SportMusic
                 var current_track = user_Tracks.FindIndex(a => a.id == current_id);
                 var previous_track = user_Tracks.FindIndex(a => a.id == previous_id);
 
-                var temp = user_Tracks[current_track];
-                user_Tracks[current_track] = user_Tracks[previous_track];
-                user_Tracks[previous_track] = temp;
+                var temp = user_Tracks[CurrentRow];
+                user_Tracks[CurrentRow] = user_Tracks[previous_track];
+                user_Tracks[CurrentRow-1] = temp;
+
+                dataGridView1.DataSource = null;
 
                 dataGridView1.DataSource = user_Tracks;
+                
                 dataGridView1.Refresh();
 
-                dataGridView1.Rows[previous_track].Selected = true;
-                dataGridView1.CurrentCell = dataGridView1[0, previous_track];
+                dataGridView1.Rows[CurrentRow-1].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, CurrentRow-1];
             }
         }
 
@@ -109,17 +114,66 @@ namespace SportMusic
                 var current_track = user_Tracks.FindIndex(a => a.id == current_id);
                 var next_track = user_Tracks.FindIndex(a => a.id == next_id);
 
-                var temp = user_Tracks[current_track];
-                user_Tracks[current_track] = user_Tracks[next_track];
-                user_Tracks[next_track] = temp;
+                var temp = user_Tracks[CurrentRow];
+                user_Tracks[CurrentRow] = user_Tracks[next_track];
+                user_Tracks[CurrentRow+1] = temp;
+
+                dataGridView1.DataSource = null;
 
                 dataGridView1.DataSource = user_Tracks;
+                
                 dataGridView1.Refresh();
 
-                dataGridView1.Rows[next_track].Selected = true;
-                dataGridView1.CurrentCell = dataGridView1[0, next_track];
+                dataGridView1.Rows[CurrentRow+1].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, CurrentRow+1];
                 //dataGridView1.CurrentCell = dataGridView1.Rows[next_id].Cells[0];
             }
+        }
+
+        private void button_Add_Click(object sender, EventArgs e)
+        {
+            this.Width = 1323;
+            this.Height = 489;
+            List<User_Track> tracks = functions.Get_User_Track(author);
+            dataGridView2.DataSource = tracks;
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView2.SelectedRows)
+            {
+                User_Track track = new User_Track();
+                track.id = Convert.ToInt32(row.Cells[0].Value.ToString());
+                track.author = Convert.ToInt32(row.Cells[1].Value.ToString());
+                track.track_id = Convert.ToInt32(row.Cells[2].Value.ToString());
+                track.artist = row.Cells[3].Value.ToString();
+                track.title = row.Cells[4].Value.ToString();
+                track.genre = row.Cells[5].Value.ToString();
+                track.mood = row.Cells[6].Value.ToString();
+                track.bitrate = Convert.ToInt32(row.Cells[7].Value.ToString());
+                track.source = row.Cells[8].Value.ToString();
+                track.path = row.Cells[9].Value.ToString();
+                track.duration = TimeSpan.Parse(row.Cells[10].Value.ToString());
+                track.date_add = Convert.ToDateTime(row.Cells[11].Value.ToString());
+                user_Tracks.Add(track);
+            }
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = user_Tracks;
+            
+            dataGridView1.Refresh();
+            this.Width = 816;
+            this.Height = 489;
+        }
+
+        private void button_Delete_Click(object sender, EventArgs e)
+        {
+            int CurrentRow = dataGridView1.SelectedCells[0].RowIndex;
+            user_Tracks.RemoveAt(CurrentRow);
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = user_Tracks;
+            
+            dataGridView1.Refresh();
         }
     }
 }
