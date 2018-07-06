@@ -16,9 +16,9 @@ namespace SportMusic
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Authorization());
+            Application.Run(new Authorization());
             //Application.Run(new Main_Form(1, "","",""));
-            Application.Run(new loadForm());
+            //Application.Run(new loadForm());
         }
     }
 }
