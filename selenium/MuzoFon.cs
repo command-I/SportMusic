@@ -12,11 +12,11 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Net;
 using System.IO;
-
+using System.ComponentModel;
 
 namespace SportMusic.selenium
 {
-    class MuzoFon : ITrackFinder, IParser, IDownloader, ICleaner
+    class MuzoFon : ITrackFinder, IParser, ICleaner
     {
         public readonly Main_Form mainForm;
 
@@ -244,16 +244,55 @@ namespace SportMusic.selenium
         }
 
 
-        public void DownloadBrowser(int index)
+        public void DownLoadind(int index, string target)
         {
-            ListDownloads[index].Click();
-            DownloadFromLink(ListDownloads[index].GetAttribute("href"), PATH_DOWNLOAD, ListTracks[index].Text + ".mp3");
+            string name;
+            string url;
+            url = ListDownloads[index].GetAttribute("href").ToString();
+
+            name = target+ "\\" + ListTracks[index].Text + ".mp3";
+            url = ListDownloads[index].GetAttribute("href");
+            //mainForm.textBox1.Text = url;
+            MessageBox.Show(url);
+            
+            Download(url, name);
+           
+
+
+            //ListDownloads[index].Click();
+            //DownloadFromLink(ListDownloads[index].GetAttribute("href"), PATH_DOWNLOAD, ListTracks[index].Text + ".mp3");
         }
 
-        public void DownloadFromLink(string url, string path, string file)
+        private void Download(string link, string name)
         {
-            WebClient client = new WebClient();
-            client.DownloadFile(url, path + file);
+            WebClient webload = new WebClient();
+            webload.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+            webload.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDown);
+
+            webload.DownloadFileAsync(new Uri(link), name);
+        }
+
+
+        private void ProgressDown(object sender, DownloadProgressChangedEventArgs e)
+        {
+            mainForm.bunifuProgressBar1.Value = e.ProgressPercentage;
+            mainForm.textBox1.Text = "Загружено :" + e.ProgressPercentage + " %";
+            if (mainForm.bunifuProgressBar1.Value == 100)
+            {
+                mainForm.textBox1.Text = "Загрузка завершена";
+            }
+        }
+
+        private void Completed(object sender, AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+            }
+            else
+            {
+                //mainForm.textBox1.Text = "Загрузка файла завершена";
+            }
         }
 
         public void ClearLists()

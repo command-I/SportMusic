@@ -57,7 +57,10 @@ namespace SportMusic
         string login;
         string name;
         string surname;
+
         List<string> music, path;
+        string targetDir = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+        public string TargetDir { get { return targetDir; } }
 
         public Main_Form(int id, string login, string name, string surname)
         {
@@ -71,6 +74,7 @@ namespace SportMusic
 
             InitializeComponent();
 
+            SetupDir();
             label_Login.Text = login;
             label_Name.Text = surname + " " + name;
            
@@ -100,7 +104,18 @@ namespace SportMusic
         }
 
 
-
+        private void SetupDir ()
+        {
+            if (!Directory.Exists(targetDir + "\\SportMusic\\Downloads"))
+            {
+                Directory.CreateDirectory(targetDir + "\\SportMusic\\Downloads");
+                targetDir += "\\SportMusic\\Downloads";
+            }
+            else
+            {
+                targetDir = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\SportMusic\\Downloads";
+            }
+        }
         //-----------------//-------------------//-------------------------//-----------------------------//-----------------------//---------
 
 
@@ -288,14 +303,14 @@ namespace SportMusic
 
             if (comboBoxMood.Enabled)
             {
-                muzoFonMood.DownloadBrowser(index);
+                muzoFonMood.DownLoadind(index, TargetDir);
             }
             else
             {
-                muzoFon.DownloadBrowser(index);
+                muzoFon.DownLoadind(index, TargetDir);
             }
         }
-
+  
         /// <summary>
         /// Действия по нажатию на кнопку "Play".
         /// </summary>
@@ -779,96 +794,15 @@ namespace SportMusic
         /// <param name="url">Принимает ссылку.</param>
         /// <param name="path">Принимает путь для сохранения.</param>
         /// <param name="file">Принимает имя файла.</param>
-        private void Download(string link, string name)
-        {
-            WebClient webload = new WebClient();
-            webload.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-            webload.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDown);
-
-            webload.DownloadFileAsync(new Uri(link), name);
-            Environment.ExpandEnvironmentVariables(muzoFon.PATH_DOWNLOAD);
-        }
-
-
-        private void ProgressDown(object sender, DownloadProgressChangedEventArgs e)
-        {
-            progressBar1.Value = e.ProgressPercentage;
-            textBox1.Text = "Загружено :" + e.ProgressPercentage + " %";
-        }
-
-        private void Completed(object sender, AsyncCompletedEventArgs e)
-        {
-            if (e.Error != null)
-            {
-                MessageBox.Show(e.Error.Message);
-            }
-            else
-            {
-                textBox1.Text = "Загрузка файла завершена";
-            }
-        }
-
-
-        private void button1_rename_Click(object sender, EventArgs e)
-        {
-            music.Clear();
-            path.Clear();
-            listBox1.Items.Clear();
-
-            DirectoryInfo dir = new DirectoryInfo(".\\Download");
-            FileInfo[] files = dir.GetFiles("*.mp3");
-
-            foreach (FileInfo fi in files)
-            {
-                listBox1.Items.Add(fi.ToString());
-                path.Add(fi.FullName);
-            }
-        }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             axWindowsMediaPlayer1.URL = path[listBox1.SelectedIndex];
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            axWindowsMediaPlayer1.Ctlcontrols.play();
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             axWindowsMediaPlayer1.Ctlcontrols.stop();
-        }
-
-        bool paused = false;
-        private void button6_Click(object sender, EventArgs e)
-        {
-            if (paused == false)
-            {
-                axWindowsMediaPlayer1.Ctlcontrols.pause();
-                paused = true;
-            } else
-            {
-                axWindowsMediaPlayer1.Ctlcontrols.play();
-                paused = false;
-            }
-
-            
-        }
-
-        private void button5_Click_1(object sender, EventArgs e)
-        {
-            axWindowsMediaPlayer1.Ctlcontrols.fastForward();
-        }
-
-        private void tabPageSearch_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void моиКомпозицииToolStripMenuItem_Click(object sender, EventArgs e)
@@ -877,7 +811,6 @@ namespace SportMusic
             this.Hide();
             f.ShowDialog();
             this.Show();
-            
         }
 
         private void моиПлейлистыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -894,15 +827,62 @@ namespace SportMusic
             axWindowsMediaPlayer1.settings.volume = trackBar1.Value;
         }
 
-        private void radioButtonMuzoFon_CheckedChanged_1(object sender, EventArgs e)
+        private void button7_Click(object sender, EventArgs e)
         {
-
+            Application.Exit();
         }
 
-       
-
-        private void button2_rename_Click(object sender, EventArgs e)
+        private void button1_Click_3(object sender, EventArgs e)
         {
+            music.Clear();
+            path.Clear();
+            listBox1.Items.Clear();
+            
+            {
+                DirectoryInfo dir = new DirectoryInfo(targetDir);
+                FileInfo[] files = dir.GetFiles("*.mp3");
+
+                foreach (FileInfo fi in files)
+                {
+                    listBox1.Items.Add(fi.ToString());
+                    path.Add(fi.FullName);
+                }
+            }
+        }
+
+        private void bunifuTrackbar1_ValueChanged(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.currentPosition = trackBar1.Value;
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.play();
+        }
+
+        bool paused = false;
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            if (paused == false)
+            {
+                axWindowsMediaPlayer1.Ctlcontrols.pause();
+                paused = true;
+            }
+            else
+            {
+                axWindowsMediaPlayer1.Ctlcontrols.play();
+                paused = false;
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.fastForward();
+        }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 music.AddRange(openFileDialog1.SafeFileNames);

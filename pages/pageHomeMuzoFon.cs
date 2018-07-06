@@ -69,7 +69,7 @@ namespace SportMusic.pages
         [FindsBy(How = How.CssSelector, Using = ".module-popular a")]
         public IWebElement ButtonGenre { get; set; }
         public By ButtonGenreBy { get { return By.CssSelector(".module-popular a"); } }
-
+        
     }
 
 }

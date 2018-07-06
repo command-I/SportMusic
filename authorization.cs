@@ -59,7 +59,7 @@ namespace SportMusic
             }
             else
             {
-                Form ifrm = new Main_Form(user.id, user.login,user.name, user.surname);
+                Form ifrm = new loadForm(user.id, user.login,user.name, user.surname);
                 this.Hide(); // скрываем форму авторизации
                 ifrm.ShowDialog(); // отображаем Главную форму
                 this.Show(); //Снова открываем авторизацию
